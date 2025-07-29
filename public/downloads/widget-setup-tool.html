@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Think-Habit 그룹 위젯 설치 도구 - 5분만에 설치 완료!</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
+        .step-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .code-output {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+        .theme-option {
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            margin: 10px;
+            display: inline-block;
+            width: 200px;
+        }
+        .theme-option.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            margin-bottom: 20px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #667eea;
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+        .copy-button {
+            background: #374151;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+            margin-bottom: 10px;
+        }
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .alert-info {
+            background: #eff6ff;
+            border: 1px solid #3b82f6;
+            color: #1e40af;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Think-Habit 그룹 위젯</h1>
+            <p>5분만에 우리 단체 홈페이지에 추가하기</p>
+        </div>
+
+        <!-- 진행 상황 표시 -->
+        <div class="card">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress" style="width: 20%"></div>
+            </div>
+            <div id="step-indicator" style="text-align: center; color: #6b7280;">
+                1단계 / 4단계 - 단체 정보 입력
+            </div>
+        </div>
+
+        <!-- 1단계: 단체 정보 -->
+        <div class="card step active" id="step-1">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <h2>단체 정보를 입력해주세요</h2>
+                <p>위젯에 표시될 단체 정보를 입력합니다</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="groupName">단체 이름</label>
+                <input type="text" id="groupName" class="form-control" placeholder="예: 사랑의교회, 강남구청, ABC동아리" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="groupId">단체 고유 ID (영문/숫자만)</label>
+                <input type="text" id="groupId" class="form-control" placeholder="예: church-2024, gangnam-office, abc-club" required>
+                <small style="color: #6b7280;">위젯 데이터를 구분하는 고유 식별자입니다</small>
+            </div>
+            
+            <div class="navigation">
+                <div></div>
+                <button class="btn btn-primary" onclick="nextStep(2)">다음 단계</button>
+            </div>
+        </div>
+
+        <!-- 2단계: 위젯 기능 선택 -->
+        <div class="card step" id="step-2">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <h2>위젯에서 사용할 기능을 선택하세요</h2>
+                <p>필요한 기능만 선택하면 더 깔끔한 위젯을 만들 수 있습니다</p>
+            </div>
+            
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="feature-journal" checked>
+                    <label for="feature-journal">📝 일지 작성 폼</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="feature-leaderboard" checked>
+                    <label for="feature-leaderboard">🏆 순위표</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="feature-activity" checked>
+                    <label for="feature-activity">📋 활동 피드</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="feature-stats" checked>
+                    <label for="feature-stats">📊 통계</label>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="prevStep(1)">이전</button>
+                <button class="btn btn-primary" onclick="nextStep(3)">다음 단계</button>
+            </div>
+        </div>
+
+        <!-- 3단계: 테마 선택 -->
+        <div class="card step" id="step-3">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <h2>위젯 테마를 선택하세요</h2>
+                <p>홈페이지 디자인에 맞는 테마를 골라보세요</p>
+            </div>
+            
+            <div style="text-align: center;">
+                <div class="theme-option selected" data-theme="light" onclick="selectTheme('light')">
+                    <strong>라이트 테마</strong>
+                    <p style="font-size: 0.9em; color: #6b7280;">밝고 깔끔한 디자인</p>
+                </div>
+                <div class="theme-option" data-theme="dark" onclick="selectTheme('dark')">
+                    <strong>다크 테마</strong>
+                    <p style="font-size: 0.9em; color: #6b7280;">어둡고 모던한 디자인</p>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="widgetHeight">위젯 높이 (픽셀)</label>
+                <input type="number" id="widgetHeight" class="form-control" value="600" min="300" max="1000">
+                <small style="color: #6b7280;">권장: 600px (300px~1000px)</small>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="prevStep(2)">이전</button>
+                <button class="btn btn-primary" onclick="nextStep(4)">코드 생성</button>
+            </div>
+        </div>
+
+        <!-- 4단계: 코드 생성 -->
+        <div class="card step" id="step-4">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <h2>위젯 코드가 생성되었습니다!</h2>
+                <p>아래 코드를 복사해서 홈페이지에 붙여넣으세요</p>
+            </div>
+            
+            <div class="alert alert-info">
+                <strong>💡 사용 방법:</strong>
+                <ol style="margin: 10px 0 0 20px;">
+                    <li>아래 코드를 전체 복사하세요</li>
+                    <li>홈페이지의 위젯을 넣고 싶은 위치에 붙여넣으세요</li>
+                    <li>저장하고 새로고침하면 위젯이 나타납니다!</li>
+                </ol>
+            </div>
+            
+            <button class="copy-button" onclick="copyCode()">📋 코드 복사</button>
+            <div class="code-output" id="generated-code">
+                <!-- 생성된 코드가 여기에 표시됩니다 -->
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="prevStep(3)">이전</button>
+                <button class="btn btn-primary" onclick="window.open('SIMPLE_INSTALL_GUIDE.md')">설치 가이드 보기</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let config = {
+            theme: 'light',
+            features: {
+                journal: true,
+                leaderboard: true,
+                activity: true,
+                stats: true
+            }
+        };
+
+        function nextStep(step) {
+            if (step === 2) {
+                // 1단계 검증
+                const groupName = document.getElementById('groupName').value;
+                const groupId = document.getElementById('groupId').value;
+                if (!groupName || !groupId) {
+                    alert('단체 이름과 고유 ID는 필수입력입니다.');
+                    return;
+                }
+                config.groupName = groupName;
+                config.groupId = groupId;
+            } else if (step === 3) {
+                // 2단계 - 기능 선택 저장
+                config.features.journal = document.getElementById('feature-journal').checked;
+                config.features.leaderboard = document.getElementById('feature-leaderboard').checked;
+                config.features.activity = document.getElementById('feature-activity').checked;
+                config.features.stats = document.getElementById('feature-stats').checked;
+            } else if (step === 4) {
+                // 3단계 - 테마 선택 저장
+                config.height = document.getElementById('widgetHeight').value;
+                generateCode();
+            }
+            
+            // 단계 전환
+            document.getElementById('step-' + currentStep).classList.remove('active');
+            document.getElementById('step-' + step).classList.add('active');
+            currentStep = step;
+            
+            // 진행률 업데이트
+            updateProgress();
+        }
+
+        function prevStep(step) {
+            document.getElementById('step-' + currentStep).classList.remove('active');
+            document.getElementById('step-' + step).classList.add('active');
+            currentStep = step;
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progress = (currentStep / 4) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+            
+            const steps = ['단체 정보 입력', '기능 선택', '테마 설정', '코드 생성'];
+            document.getElementById('step-indicator').textContent = 
+                currentStep + '단계 / 4단계 - ' + steps[currentStep-1];
+        }
+
+        function selectTheme(theme) {
+            // 기존 선택 해제
+            document.querySelectorAll('.theme-option').forEach(function(el) {
+                el.classList.remove('selected');
+            });
+            // 새 선택 적용
+            document.querySelector('[data-theme="' + theme + '"]').classList.add('selected');
+            config.theme = theme;
+        }
+
+        function generateCode() {
+            const code = '<!-- Think-Habit 그룹 위젯 시작 -->\n' +
+                '<div id="think-habit-widget-' + config.groupId + '" style="width: 100%; max-width: 800px; margin: 20px auto;"></div>\n\n' +
+                '<script>\n' +
+                '  // ' + config.groupName + ' 위젯 설정\n' +
+                '  const widgetConfig = {\n' +
+                '    groupId: \'' + config.groupId + '\',\n' +
+                '    groupName: \'' + config.groupName + '\',\n' +
+                '    theme: \'' + config.theme + '\',\n' +
+                '    height: ' + config.height + ',\n' +
+                '    showJournalForm: ' + config.features.journal + ',\n' +
+                '    showLeaderboard: ' + config.features.leaderboard + ',\n' +
+                '    showRecentActivity: ' + config.features.activity + ',\n' +
+                '    showStats: ' + config.features.stats + ',\n' +
+                '    language: \'ko\'\n' +
+                '  };\n\n' +
+                '  // 위젯 자동 로드 (데모용)\n' +
+                '  document.getElementById(\'think-habit-widget-' + config.groupId + '\').innerHTML = \n' +
+                '    \'<div style="text-align: center; padding: 40px; border: 2px dashed #e5e7eb; border-radius: 8px;">\' +\n' +
+                '    \'<h3>🎯 ' + config.groupName + ' Think-Habit 위젯</h3>\' +\n' +
+                '    \'<p>실제 위젯이 여기에 표시됩니다!</p>\' +\n' +
+                '    \'<p style="color: #6b7280; font-size: 0.9em;">테마: ' + config.theme + ' | 높이: ' + config.height + 'px</p>\' +\n' +
+                '    \'</div>\';\n' +
+                '</' + 'script>\n' +
+                '<!-- Think-Habit 그룹 위젯 끝 -->';
+
+            document.getElementById('generated-code').textContent = code;
+        }
+
+        function copyCode() {
+            const code = document.getElementById('generated-code').textContent;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(code).then(function() {
+                    alert('✅ 코드가 클립보드에 복사되었습니다!');
+                });
+            } else {
+                // 복사 실패시 선택 상태로 만들기
+                const range = document.createRange();
+                range.selectNode(document.getElementById('generated-code'));
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                alert('코드를 선택했습니다. Ctrl+C로 복사하세요.');
+            }
+        }
+
+        // 그룹 ID 자동 생성
+        document.getElementById('groupName').addEventListener('input', function() {
+            const groupName = this.value;
+            const groupId = groupName
+                .toLowerCase()
+                .replace(/[^a-z0-9가-힣\s]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/[가-힣]/g, 'kr') + '-2024';
+            document.getElementById('groupId').value = groupId;
+        });
+    </script>
+</body>
+</html>

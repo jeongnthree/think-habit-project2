@@ -1,0 +1,123 @@
+.notification-bell {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-bell:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.notification-bell:active {
+  transform: scale(0.95);
+}
+
+.bell-icon {
+  font-size: 20px;
+  transition: transform 0.2s ease;
+}
+
+.notification-bell:hover .bell-icon {
+  transform: scale(1.1);
+}
+
+.notification-bell.animate .bell-icon {
+  animation: bell-ring 0.8s ease-in-out;
+}
+
+@keyframes bell-ring {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: rotate(-10deg);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: rotate(10deg);
+  }
+}
+
+.notification-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: #ef4444;
+  color: white;
+  border-radius: 10px;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  border: 2px solid white;
+  animation: badge-pulse 2s infinite;
+}
+
+@keyframes badge-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* 다크 모드 지원 */
+@media (prefers-color-scheme: dark) {
+  .notification-bell:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .notification-badge {
+    border-color: #1f2937;
+  }
+}
+
+/* 접근성 개선 */
+@media (prefers-reduced-motion: reduce) {
+  .notification-bell.animate .bell-icon {
+    animation: none;
+  }
+
+  .notification-badge {
+    animation: none;
+  }
+
+  .bell-icon,
+  .notification-bell:hover .bell-icon {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* 고대비 모드 지원 */
+@media (prefers-contrast: high) {
+  .notification-bell {
+    border: 1px solid currentColor;
+  }
+
+  .notification-badge {
+    background: #000;
+    color: #fff;
+    border-color: #fff;
+  }
+}

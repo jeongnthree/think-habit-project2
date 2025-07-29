@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Think-Habit Group Widget Demo</title>
+    <style>
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+
+      .demo-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .demo-header {
+        text-align: center;
+        color: white;
+        margin-bottom: 40px;
+      }
+
+      .demo-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .demo-header p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 30px;
+      }
+
+      .demo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 30px;
+        margin-bottom: 40px;
+      }
+
+      .demo-section {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .demo-section h2 {
+        margin-top: 0;
+        color: #2d3748;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 10px;
+      }
+
+      .widget-container {
+        margin: 20px 0;
+      }
+
+      .config-panel {
+        background: #f7fafc;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+      }
+
+      .config-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .config-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .config-row label {
+        min-width: 120px;
+        font-weight: 500;
+        color: #4a5568;
+      }
+
+      .config-row input,
+      .config-row select {
+        flex: 1;
+        padding: 5px 10px;
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+
+      .config-row input[type='checkbox'] {
+        flex: none;
+        width: auto;
+      }
+
+      .theme-toggle {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .theme-btn {
+        padding: 8px 16px;
+        border: 2px solid #e2e8f0;
+        border-radius: 6px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .theme-btn.active {
+        border-color: #3b82f6;
+        background: #3b82f6;
+        color: white;
+      }
+
+      .code-section {
+        background: #1a202c;
+        color: #e2e8f0;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        font-size: 14px;
+        overflow-x: auto;
+      }
+
+      .code-section h3 {
+        margin-top: 0;
+        color: #60a5fa;
+      }
+
+      @media (max-width: 768px) {
+        .demo-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .demo-header h1 {
+          font-size: 2rem;
+        }
+
+        .config-row {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .config-row label {
+          min-width: auto;
+          margin-bottom: 5px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="demo-container">
+      <div class="demo-header">
+        <h1>🎯 Think-Habit Group Widget</h1>
+        <p>그룹 활동을 위한 임베드 가능한 React 위젯</p>
+        <div class="theme-toggle">
+          <button class="theme-btn active" onclick="setGlobalTheme('light')">
+            ☀️ 라이트
+          </button>
+          <button class="theme-btn" onclick="setGlobalTheme('dark')">
+            🌙 다크
+          </button>
+          <button class="theme-btn" onclick="setGlobalTheme('auto')">
+            🔄 자동
+          </button>
+        </div>
+      </div>
+
+      <div class="demo-grid">
+        <!-- 기본 위젯 -->
+        <div class="demo-section">
+          <h2>📊 기본 위젯</h2>
+          <div class="config-panel">
+            <div class="config-row">
+              <label>그룹 ID:</label>
+              <input
+                type="text"
+                id="basic-group-id"
+                value="demo-group-1"
+                onchange="updateBasicWidget()"
+              />
+            </div>
+            <div class="config-row">
+              <label>높이:</label>
+              <input
+                type="number"
+                id="basic-height"
+                value="500"
+                onchange="updateBasicWidget()"
+              />
+            </div>
+            <div class="config-row">
+              <label>순위표 표시:</label>
+              <input
+                type="checkbox"
+                id="basic-leaderboard"
+                checked
+                onchange="updateBasicWidget()"
+              />
+            </div>
+            <div class="config-row">
+              <label>활동 피드 표시:</label>
+              <input
+                type="checkbox"
+                id="basic-activity"
+                checked
+                onchange="updateBasicWidget()"
+              />
+            </div>
+          </div>
+          <div class="widget-container">
+            <div
+              id="basic-widget"
+              data-think-habit-widget
+              data-config='{"groupId":"demo-group-1","height":500,"showLeaderboard":true,"showRecentActivity":true,"showStats":true,"showProgress":true}'
+            ></div>
+          </div>
+        </div>
+
+        <!-- 일지 작성 위젯 -->
+        <div class="demo-section">
+          <h2>✍️ 일지 작성 위젯</h2>
+          <div class="config-panel">
+            <div class="config-row">
+              <label>일지 작성 폼:</label>
+              <input
+                type="checkbox"
+                id="journal-form"
+                checked
+                onchange="updateJournalWidget()"
+              />
+            </div>
+            <div class="config-row">
+              <label>격려 시스템:</label>
+              <input
+                type="checkbox"
+                id="journal-encouragement"
+                checked
+                onchange="updateJournalWidget()"
+              />
+            </div>
+            <div class="config-row">
+              <label>알림 활성화:</label>
+              <input
+                type="checkbox"
+                id="journal-notifications"
+                checked
+                onchange="updateJournalWidget()"
+              />
+            </div>
+          </div>
+          <div class="widget-container">
+            <div id="journal-widget"></div>
+          </div>
+        </div>
+
+        <!-- 컴팩트 위젯 -->
+        <div class="demo-section">
+          <h2>📱 컴팩트 위젯</h2>
+          <div class="config-panel">
+            <div class="config-row">
+              <label>최대 참가자:</label>
+              <input
+                type="number"
+                id="compact-max-participants"
+                value="3"
+                onchange="updateCompactWidget()"
+              />
+            </div>
+            <div class="config-row">
+              <label>자동 새로고침:</label>
+              <input
+                type="number"
+                id="compact-refresh"
+                value="30"
+                onchange="updateCompactWidget()"
+              />
+            </div>
+          </div>
+          <div class="widget-container">
+            <div id="compact-widget"></div>
+          </div>
+        </div>
+
+        <!-- 커스텀 스타일 위젯 -->
+        <div class="demo-section">
+          <h2>🎨 커스텀 스타일 위젯</h2>
+          <div class="config-panel">
+            <div class="config-row">
+              <label>배경색:</label>
+              <input
+                type="color"
+                id="custom-bg"
+                value="#f0f9ff"
+                onchange="updateCustomWidget()"
+              />
+            </div>
+            <div class="config-row">
+              <label>테두리 색:</label>
+              <input
+                type="color"
+                id="custom-border"
+                value="#0ea5e9"
+                onchange="updateCustomWidget()"
+              />
+            </div>
+            <div class="config-row">
+              <label>테두리 반지름:</label>
+              <input
+                type="range"
+                id="custom-radius"
+                min="0"
+                max="20"
+                value="12"
+                onchange="updateCustomWidget()"
+              />
+            </div>
+          </div>
+          <div class="widget-container">
+            <div id="custom-widget"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 사용법 가이드 -->
+      <div class="demo-section">
+        <h2>📖 사용법 가이드</h2>
+
+        <h3>1. HTML에 직접 임베드</h3>
+        <div class="code-section">
+          <pre><code>&lt;!-- CDN에서 위젯 로드 --&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/think-habit-group-widget@latest/dist/index.umd.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/think-habit-group-widget@latest/dist/style.css"&gt;
+
+&lt;!-- 위젯 컨테이너 --&gt;
+&lt;div data-think-habit-widget data-config='{
+  "groupId": "your-group-id",
+  "theme": "light",
+  "height": 500,
+  "showLeaderboard": true,
+  "showRecentActivity": true,
+  "showJournalForm": true,
+  "apiEndpoint": "https://your-api.com/api"
+}'&gt;&lt;/div&gt;</code></pre>
+        </div>
+
+        <h3>2. JavaScript로 동적 생성</h3>
+        <div class="code-section">
+          <pre><code>// 위젯 초기화
+ThinkHabitWidget.init('widget-container', {
+  groupId: 'your-group-id',
+  theme: 'dark',
+  height: 600,
+  showLeaderboard: true,
+  showRecentActivity: true,
+  showJournalForm: true,
+  enableNotifications: true,
+  refreshInterval: 30,
+  onEvent: (event) => {
+    console.log('Widget event:', event);
+  }
+});</code></pre>
+        </div>
+
+        <h3>3. React 컴포넌트로 사용</h3>
+        <div class="code-section">
+          <pre><code>import { ThinkHabitWidget } from 'think-habit-group-widget';
+
+function MyApp() {
+  const handleWidgetEvent = (event) => {
+    switch (event.type) {
+      case 'journal_submitted':
+        console.log('새 일지 작성:', event.data);
+        break;
+      case 'encouragement_sent':
+        console.log('격려 메시지 전송:', event.data);
+        break;
+    }
+  };
+
+  return (
+    &lt;ThinkHabitWidget
+      config={{
+        groupId: 'your-group-id',
+        theme: 'light',
+        height: 500,
+        showLeaderboard: true,
+        showRecentActivity: true,
+        showJournalForm: true,
+        onEvent: handleWidgetEvent
+      }}
+    /&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div id="root"></div>
+    <script type="module" src="/src/index.tsx"></script>
+
+    <script>
+      let currentTheme = 'light';
+
+      function setGlobalTheme(theme) {
+        currentTheme = theme;
+        document
+          .querySelectorAll('.theme-btn')
+          .forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+
+        // 모든 위젯의 테마 업데이트
+        updateAllWidgets();
+      }
+
+      function updateBasicWidget() {
+        const groupId = document.getElementById('basic-group-id').value;
+        const height = document.getElementById('basic-height').value;
+        const showLeaderboard =
+          document.getElementById('basic-leaderboard').checked;
+        const showActivity = document.getElementById('basic-activity').checked;
+
+        const config = {
+          groupId,
+          height: parseInt(height),
+          theme: currentTheme,
+          showLeaderboard,
+          showRecentActivity: showActivity,
+          showStats: true,
+          showProgress: true,
+        };
+
+        document
+          .getElementById('basic-widget')
+          .setAttribute('data-config', JSON.stringify(config));
+        reinitializeWidget('basic-widget');
+      }
+
+      function updateJournalWidget() {
+        const showForm = document.getElementById('journal-form').checked;
+        const showEncouragement = document.getElementById(
+          'journal-encouragement'
+        ).checked;
+        const enableNotifications = document.getElementById(
+          'journal-notifications'
+        ).checked;
+
+        const config = {
+          groupId: 'demo-group-2',
+          height: 600,
+          theme: currentTheme,
+          showJournalForm: showForm,
+          showEncouragement,
+          enableNotifications,
+          showStats: true,
+        };
+
+        if (window.ThinkHabitWidget) {
+          window.ThinkHabitWidget.init('journal-widget', config);
+        }
+      }
+
+      function updateCompactWidget() {
+        const maxParticipants = document.getElementById(
+          'compact-max-participants'
+        ).value;
+        const refreshInterval =
+          document.getElementById('compact-refresh').value;
+
+        const config = {
+          groupId: 'demo-group-3',
+          height: 300,
+          width: 350,
+          theme: currentTheme,
+          maxParticipants: parseInt(maxParticipants),
+          refreshInterval: parseInt(refreshInterval),
+          showLeaderboard: true,
+          showRecentActivity: false,
+        };
+
+        if (window.ThinkHabitWidget) {
+          window.ThinkHabitWidget.init('compact-widget', config);
+        }
+      }
+
+      function updateCustomWidget() {
+        const bgColor = document.getElementById('custom-bg').value;
+        const borderColor = document.getElementById('custom-border').value;
+        const borderRadius = document.getElementById('custom-radius').value;
+
+        const config = {
+          groupId: 'demo-group-4',
+          height: 400,
+          theme: currentTheme,
+          showStats: true,
+          showProgress: true,
+          customStyles: {
+            backgroundColor: bgColor,
+            borderColor: borderColor,
+            borderRadius: `${borderRadius}px`,
+            borderWidth: '2px',
+          },
+        };
+
+        if (window.ThinkHabitWidget) {
+          window.ThinkHabitWidget.init('custom-widget', config);
+        }
+      }
+
+      function updateAllWidgets() {
+        updateBasicWidget();
+        updateJournalWidget();
+        updateCompactWidget();
+        updateCustomWidget();
+      }
+
+      function reinitializeWidget(containerId) {
+        const container = document.getElementById(containerId);
+        if (container && window.ThinkHabitWidget) {
+          const config = JSON.parse(
+            container.getAttribute('data-config') || '{}'
+          );
+          container.innerHTML = '';
+          window.ThinkHabitWidget.init(containerId, config);
+        }
+      }
+
+      // 페이지 로드 후 위젯 초기화
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          updateAllWidgets();
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>

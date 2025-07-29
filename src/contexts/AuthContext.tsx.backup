@@ -1,0 +1,297 @@
+// contexts/AuthContext.tsx
+"use client";
+
+import React, { createContext, useContext, ReactNode } from "react";
+import { useAuth, UserProfile, UserRole } from "@/hooks/useAuth";
+import { User, Session } from "@supabase/supabase-js";
+
+// AuthContext에서 제공할 타입 정의
+export interface AuthContextType {
+  // 인증 상태
+  user: User | null;
+  profile: UserProfile | null;
+  session: Session | null;
+  loading: boolean;
+  error: string | null;
+  isAuthenticated: boolean;
+
+  // 인증 액션
+  signIn: (params: {
+    email: string;
+    password: string;
+    remember?: boolean;
+  }) => Promise<{ data: any; error: string | null }>;
+
+  signUp: (params: {
+    email: string;
+    password: string;
+    name: string;
+    phone?: string;
+    role?: UserRole;
+  }) => Promise<{ data: any; error: string | null }>;
+
+  signInWithGoogle: (redirectTo?: string) => Promise<{ error: string | null }>;
+
+  signOut: () => Promise<{ error: string | null }>;
+
+  resetPassword: (params: {
+    email: string;
+  }) => Promise<{ error: string | null }>;
+
+  updatePassword: (params: {
+    password: string;
+  }) => Promise<{ error: string | null }>;
+
+  updateProfile: (updates: {
+    name?: string;
+    phone?: string;
+    avatar_url?: string;
+    preferences?: UserProfile["profile"]["preferences"];
+  }) => Promise<{ error: string | null }>;
+
+  // 역할 확인
+  isLearner: () => boolean;
+  isSupervisor: () => boolean;
+  isAdmin: () => boolean;
+  isExpert: () => boolean;
+  hasPermission: (requiredRole: UserRole) => boolean;
+
+  // 유틸리티
+  refreshSession: () => Promise<{ data: any; error: string | null }>;
+  setError: (error: string | null) => void;
+}
+
+// AuthContext 생성
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+// AuthProvider Props 타입
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+/**
+ * 전역 인증 상태를 관리하는 Context Provider
+ * 앱의 최상위에서 인증 상태를 제공합니다.
+ */
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  // useAuth 훅에서 모든 인증 기능을 가져옴
+  const authData = useAuth();
+
+  // Context value 객체 생성
+  const contextValue: AuthContextType = {
+    // 상태
+    user: authData.user,
+    profile: authData.profile,
+    session: authData.session,
+    loading: authData.loading,
+    error: authData.error,
+    isAuthenticated: authData.isAuthenticated,
+
+    // 인증 액션
+    signIn: authData.signIn,
+    signUp: authData.signUp,
+    signOut: authData.signOut,
+    signInWithGoogle:
+      authData.signInWithGoogle ||
+      (async () => ({ error: "Google 로그인을 사용할 수 없습니다." })),
+    resetPassword: authData.resetPassword,
+    updatePassword: authData.updatePassword,
+    updateProfile: authData.updateProfile,
+
+    // 역할 확인 (직접 구현)
+    isLearner: () => authData.profile?.role === 1,
+    isSupervisor: () => authData.profile?.role === 2,
+    isAdmin: () => authData.profile?.role === 3,
+    isExpert: () => (authData.profile?.role || 0) >= 2,
+    hasPermission: (requiredRole: UserRole) =>
+      (authData.profile?.role || 0) >= requiredRole,
+
+    // 유틸리티
+    refreshSession: authData.refreshSession,
+    setError: authData.setError,
+  };
+
+  return (
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+  );
+};
+
+/**
+ * AuthContext를 사용하기 위한 커스텀 훅
+ * 컴포넌트에서 인증 상태에 접근할 때 사용합니다.
+ *
+ * @example
+ * ```tsx
+ * function MyComponent() {
+ *   const { user, isAuthenticated, signOut } = useAuthContext();
+ *
+ *   if (!isAuthenticated) {
+ *     return <LoginForm />;
+ *   }
+ *
+ *   return <UserDashboard user={user} onSignOut={signOut} />;
+ * }
+ * ```
+ */
+export const useAuthContext = (): AuthContextType => {
+  const context = useContext(AuthContext);
+
+  if (context === undefined) {
+    throw new Error(
+      "useAuthContext must be used within an AuthProvider. " +
+        "Wrap your app with <AuthProvider> to use authentication features.",
+    );
+  }
+
+  return context;
+};
+
+/**
+ * 인증이 필요한 컴포넌트를 감싸는 HOC (Higher-Order Component)
+ * 로그인하지 않은 사용자를 자동으로 로그인 페이지로 리다이렉트합니다.
+ *
+ * @param WrappedComponent - 보호할 컴포넌트
+ * @param options - 추가 옵션
+ * @returns 보호된 컴포넌트
+ *
+ * @example
+ * ```tsx
+ * const ProtectedDashboard = withAuth(Dashboard, {
+ *   requiredRole: 2, // 감독 이상 권한 필요
+ *   redirectTo: '/login'
+ * });
+ * ```
+ */
+export function withAuth<P extends object>(
+  WrappedComponent: React.ComponentType<P>,
+  options: {
+    requiredRole?: UserRole;
+    redirectTo?: string;
+    fallback?: React.ComponentType;
+  } = {},
+) {
+  const {
+    requiredRole,
+    redirectTo = "/auth/login",
+    fallback: FallbackComponent,
+  } = options;
+
+  return function WithAuthComponent(props: P) {
+    const { isAuthenticated, loading, hasPermission, profile } =
+      useAuthContext();
+
+    // 로딩 중일 때
+    if (loading) {
+      if (FallbackComponent) {
+        return <FallbackComponent />;
+      }
+      return (
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+        </div>
+      );
+    }
+
+    // 인증되지 않은 사용자
+    if (!isAuthenticated) {
+      if (typeof window !== "undefined") {
+        window.location.href = redirectTo;
+      }
+      return null;
+    }
+
+    // 권한이 부족한 사용자
+    if (requiredRole && !hasPermission(requiredRole)) {
+      return (
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">
+              접근 권한이 없습니다
+            </h1>
+            <p className="text-gray-600 mb-4">
+              이 페이지에 접근하려면 {requiredRole === 2 ? "감독" : "관리자"}{" "}
+              권한이 필요합니다.
+            </p>
+            <p className="text-sm text-gray-500">
+              현재 권한: {profile?.role_name || "알 수 없음"}
+            </p>
+          </div>
+        </div>
+      );
+    }
+
+    // 모든 조건을 만족하면 원래 컴포넌트 렌더링
+    return <WrappedComponent {...props} />;
+  };
+}
+
+/**
+ * 역할별 조건부 렌더링을 위한 컴포넌트
+ * 특정 역할의 사용자에게만 콘텐츠를 표시합니다.
+ *
+ * @example
+ * ```tsx
+ * <RoleGuard roles={[2, 3]} fallback={<div>권한이 없습니다</div>}>
+ *   <AdminPanel />
+ * </RoleGuard>
+ * ```
+ */
+interface RoleGuardProps {
+  roles: UserRole[];
+  children: ReactNode;
+  fallback?: ReactNode;
+  requireAll?: boolean; // true면 모든 역할 필요, false면 하나만 있으면 됨
+}
+
+export const RoleGuard: React.FC<RoleGuardProps> = ({
+  roles,
+  children,
+  fallback = null,
+  requireAll = false,
+}) => {
+  const { profile, isAuthenticated } = useAuthContext();
+
+  if (!isAuthenticated || !profile) {
+    return <>{fallback}</>;
+  }
+
+  const userRole = profile.role;
+  const hasAccess = requireAll
+    ? roles.every((role) => userRole >= role)
+    : roles.some((role) => userRole >= role);
+
+  return hasAccess ? <>{children}</> : <>{fallback}</>;
+};
+
+/**
+ * 로딩 상태를 관리하는 컴포넌트
+ * 인증 상태 확인 중일 때 로딩 화면을 표시합니다.
+ */
+interface AuthLoadingProps {
+  children: ReactNode;
+  fallback?: ReactNode;
+}
+
+export const AuthLoading: React.FC<AuthLoadingProps> = ({
+  children,
+  fallback,
+}) => {
+  const { loading } = useAuthContext();
+
+  if (loading) {
+    return (
+      <>
+        {fallback || (
+          <div className="fixed inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <p className="text-gray-600">인증 상태를 확인하고 있습니다...</p>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  }
+
+  return <>{children}</>;
+};

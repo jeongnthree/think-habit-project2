@@ -1,0 +1,180 @@
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
+
+// 구글 사용자 정보 인터페이스
+interface GoogleUserInfo {
+  id: string;
+  email: string;
+  name: string;
+  picture?: string;
+  given_name?: string;
+  family_name?: string;
+  locale?: string;
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const { userInfo, accessToken, idToken } = await request.json();
+
+    if (!userInfo || !userInfo.email) {
+      return NextResponse.json(
+        { error: '사용자 정보가 필요합니다.' },
+        { status: 400 }
+      );
+    }
+
+    const supabase = createRouteHandlerClient({ cookies });
+
+    // 구글 사용자 정보로 Supabase 인증 처리
+    const { data: authData, error: authError } =
+      await supabase.auth.signInWithIdToken({
+        provider: 'google',
+        token: idToken || accessToken,
+      });
+
+    if (authError) {
+      console.error('Supabase 구글 인증 오류:', authError);
+
+      // ID 토큰이 없는 경우 이메일로 사용자 찾기/생성
+      return await handleEmailBasedAuth(supabase, userInfo);
+    }
+
+    // 사용자 프로필 정보 업데이트/생성
+    const user = await upsertUserProfile(supabase, userInfo, authData.user.id);
+
+    return NextResponse.json({
+      success: true,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.full_name || user.name,
+        avatar: user.avatar_url || userInfo.picture,
+        provider: 'google',
+      },
+      session: authData.session,
+    });
+  } catch (error) {
+    console.error('Google 로그인 처리 오류:', error);
+    return NextResponse.json(
+      { error: '로그인 처리 중 오류가 발생했습니다.' },
+      { status: 500 }
+    );
+  }
+}
+
+// 이메일 기반 인증 처리 (ID 토큰이 없는 경우)
+async function handleEmailBasedAuth(supabase: any, userInfo: GoogleUserInfo) {
+  try {
+    // 기존 사용자 확인
+    const { data: existingUser, error: userError } = await supabase
+      .from('users')
+      .select('*')
+      .eq('email', userInfo.email)
+      .single();
+
+    if (userError && userError.code !== 'PGRST116') {
+      throw userError;
+    }
+
+    let userId: string;
+
+    if (existingUser) {
+      // 기존 사용자 로그인
+      userId = existingUser.id;
+
+      // 구글 프로바이더 정보 업데이트
+      await supabase
+        .from('users')
+        .update({
+          google_id: userInfo.id,
+          avatar_url: userInfo.picture,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', userId);
+    } else {
+      // 새 사용자 생성
+      const { data: newUser, error: createError } =
+        await supabase.auth.admin.createUser({
+          email: userInfo.email,
+          email_confirm: true,
+          user_metadata: {
+            full_name: userInfo.name,
+            avatar_url: userInfo.picture,
+            provider: 'google',
+            google_id: userInfo.id,
+          },
+        });
+
+      if (createError) {
+        throw createError;
+      }
+
+      userId = newUser.user.id;
+
+      // 사용자 프로필 생성
+      await upsertUserProfile(supabase, userInfo, userId);
+    }
+
+    // 세션 생성
+    const { data: sessionData, error: sessionError } =
+      await supabase.auth.admin.generateLink({
+        type: 'magiclink',
+        email: userInfo.email,
+      });
+
+    if (sessionError) {
+      throw sessionError;
+    }
+
+    return NextResponse.json({
+      success: true,
+      user: {
+        id: userId,
+        email: userInfo.email,
+        name: userInfo.name,
+        avatar: userInfo.picture,
+        provider: 'google',
+      },
+      requiresSignIn: true, // 클라이언트에서 추가 인증 필요
+    });
+  } catch (error) {
+    console.error('이메일 기반 인증 오류:', error);
+    throw error;
+  }
+}
+
+// 사용자 프로필 업데이트/생성
+async function upsertUserProfile(
+  supabase: any,
+  userInfo: GoogleUserInfo,
+  userId: string
+) {
+  const profileData = {
+    id: userId,
+    email: userInfo.email,
+    full_name: userInfo.name,
+    name: userInfo.given_name || userInfo.name,
+    avatar_url: userInfo.picture,
+    google_id: userInfo.id,
+    provider: 'google',
+    locale: userInfo.locale || 'ko',
+    updated_at: new Date().toISOString(),
+  };
+
+  const { data, error } = await supabase
+    .from('users')
+    .upsert(profileData, {
+      onConflict: 'id',
+      ignoreDuplicates: false,
+    })
+    .select()
+    .single();
+
+  if (error) {
+    console.error('사용자 프로필 업데이트 오류:', error);
+    throw error;
+  }
+
+  return data;
+}

@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Think-Habit Journal 테스트 페이지</title>
+    <style>
+      :root {
+        --primary-color: #4a6fa5;
+        --primary-hover: #3a5a8a;
+        --secondary-color: #6c757d;
+        --success-color: #28a745;
+        --danger-color: #dc3545;
+        --light-bg: #f8f9fa;
+        --dark-text: #343a40;
+        --light-text: #f8f9fa;
+        --border-color: #dee2e6;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: var(--dark-text);
+        background-color: var(--light-bg);
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .app-title {
+        font-size: 24px;
+        color: var(--primary-color);
+      }
+
+      .version-info {
+        font-size: 14px;
+        color: var(--secondary-color);
+      }
+
+      .card {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .card-title {
+        font-size: 18px;
+        margin-bottom: 15px;
+        color: var(--primary-color);
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        font-size: 16px;
+      }
+
+      textarea.form-control {
+        min-height: 100px;
+        resize: vertical;
+      }
+
+      .btn {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        transition:
+          color 0.15s ease-in-out,
+          background-color 0.15s ease-in-out,
+          border-color 0.15s ease-in-out,
+          box-shadow 0.15s ease-in-out;
+        cursor: pointer;
+      }
+
+      .btn-primary {
+        color: white;
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+      }
+
+      .btn-primary:hover {
+        background-color: var(--primary-hover);
+        border-color: var(--primary-hover);
+      }
+
+      .btn-danger {
+        color: white;
+        background-color: var(--danger-color);
+        border-color: var(--danger-color);
+      }
+
+      .btn-danger:hover {
+        background-color: #bd2130;
+        border-color: #bd2130;
+      }
+
+      .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        border-radius: 0.2rem;
+      }
+
+      .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+      }
+
+      .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+      }
+
+      .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+      }
+
+      .journal-entry {
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      .journal-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+
+      .journal-title {
+        font-size: 18px;
+        font-weight: 500;
+      }
+
+      .journal-date {
+        font-size: 14px;
+        color: var(--secondary-color);
+      }
+
+      .journal-content {
+        white-space: pre-wrap;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: var(--secondary-color);
+      }
+
+      .tabs {
+        display: flex;
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 20px;
+      }
+
+      .tab {
+        padding: 10px 20px;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+      }
+
+      .tab.active {
+        border-bottom: 2px solid var(--primary-color);
+        color: var(--primary-color);
+        font-weight: 500;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: 4px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition:
+          opacity 0.3s,
+          transform 0.3s;
+      }
+
+      .notification.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 10px;
+        }
+
+        .header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .version-info {
+          margin-top: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1 class="app-title">Think-Habit Journal</h1>
+        <div class="version-info">v1.0.0 (웹)</div>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active" data-tab="login">로그인</div>
+        <div class="tab" data-tab="journal">일지</div>
+        <div class="tab" data-tab="settings">설정</div>
+      </div>
+
+      <div id="login-tab" class="tab-content active">
+        <div class="card">
+          <h2 class="card-title">로그인</h2>
+          <div id="login-form" style="display: block">
+            <div class="form-group">
+              <label for="email">이메일</label>
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                value="demo@example.com"
+                placeholder="이메일을 입력하세요"
+              />
+            </div>
+            <div class="form-group">
+              <label for="password">비밀번호</label>
+              <input
+                type="password"
+                id="password"
+                class="form-control"
+                value="password123"
+                placeholder="비밀번호를 입력하세요"
+              />
+            </div>
+            <button id="login-btn" class="btn btn-primary">로그인</button>
+          </div>
+
+          <div id="user-info" style="display: none">
+            <div class="alert alert-success">로그인 성공!</div>
+            <div class="form-group">
+              <label>사용자 이름</label>
+              <div id="user-name" class="form-control">테스트 사용자</div>
+            </div>
+            <div class="form-group">
+              <label>이메일</label>
+              <div id="user-email" class="form-control">demo@example.com</div>
+            </div>
+            <button id="logout-btn" class="btn btn-danger">로그아웃</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="journal-tab" class="tab-content">
+        <div class="card">
+          <h2 class="card-title">새 일지 작성</h2>
+          <div class="form-group">
+            <label for="journal-title">제목</label>
+            <input
+              type="text"
+              id="journal-title"
+              class="form-control"
+              placeholder="일지 제목을 입력하세요"
+            />
+          </div>
+          <div class="form-group">
+            <label for="journal-content">내용</label>
+            <textarea
+              id="journal-content"
+              class="form-control"
+              placeholder="오늘의 생각과 경험을 기록해보세요..."
+            ></textarea>
+          </div>
+          <button id="save-journal-btn" class="btn btn-primary">저장</button>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">일지 목록</h2>
+          <div id="journal-list">
+            <div class="empty-state">
+              <p>작성된 일지가 없습니다.</p>
+              <p>첫 번째 일지를 작성해보세요!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="settings-tab" class="tab-content">
+        <div class="card">
+          <h2 class="card-title">설정</h2>
+          <div class="form-group">
+            <label for="notification-setting">알림</label>
+            <select id="notification-setting" class="form-control">
+              <option value="all">모든 알림 허용</option>
+              <option value="important">중요 알림만 허용</option>
+              <option value="none">알림 끄기</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="dark-mode-setting" /> 다크 모드
+            </label>
+          </div>
+          <div class="form-group">
+            <label>로컬 스토리지 관리</label>
+            <button id="clear-storage-btn" class="btn btn-danger">
+              모든 데이터 초기화
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <script>
+      // 사용자 상태
+      let isLoggedIn = false;
+      let currentUser = null;
+
+      // 일지 데이터
+      let journals = [];
+
+      // DOM 요소
+      const loginForm = document.getElementById("login-form");
+      const userInfo = document.getElementById("user-info");
+      const loginBtn = document.getElementById("login-btn");
+      const logoutBtn = document.getElementById("logout-btn");
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+      const userNameElement = document.getElementById("user-name");
+      const userEmailElement = document.getElementById("user-email");
+      const journalTitleInput = document.getElementById("journal-title");
+      const journalContentInput = document.getElementById("journal-content");
+      const saveJournalBtn = document.getElementById("save-journal-btn");
+      const journalListElement = document.getElementById("journal-list");
+      const clearStorageBtn = document.getElementById("clear-storage-btn");
+      const notificationElement = document.getElementById("notification");
+      const tabs = document.querySelectorAll(".tab");
+      const tabContents = document.querySelectorAll(".tab-content");
+
+      // 탭 전환 기능
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const tabId = tab.getAttribute("data-tab");
+
+          // 로그인 상태 확인
+          if (tabId !== "login" && !isLoggedIn) {
+            showNotification("로그인이 필요합니다.");
+            return;
+          }
+
+          // 탭 활성화
+          tabs.forEach((t) => t.classList.remove("active"));
+          tabContents.forEach((c) => c.classList.remove("active"));
+
+          tab.classList.add("active");
+          document.getElementById(`${tabId}-tab`).classList.add("active");
+        });
+      });
+
+      // 로그인 기능
+      loginBtn.addEventListener("click", () => {
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        if (!email || !password) {
+          showNotification("이메일과 비밀번호를 입력해주세요.");
+          return;
+        }
+
+        // 간단한 로그인 처리 (실제로는 서버 인증 필요)
+        currentUser = {
+          id: "1",
+          name: "테스트 사용자",
+          email: email,
+        };
+
+        // 로컬 스토리지에 사용자 정보 저장
+        localStorage.setItem("user", JSON.stringify(currentUser));
+        localStorage.setItem(
+          "tokens",
+          JSON.stringify({
+            accessToken: "mock-token-" + Date.now(),
+            refreshToken: "mock-refresh-token",
+            expiresAt: Date.now() + 3600000, // 1시간 후 만료
+          }),
+        );
+
+        // UI 업데이트
+        userNameElement.textContent = currentUser.name;
+        userEmailElement.textContent = currentUser.email;
+        loginForm.style.display = "none";
+        userInfo.style.display = "block";
+        isLoggedIn = true;
+
+        // 일지 탭으로 전환
+        document.querySelector('[data-tab="journal"]').click();
+
+        // 알림 표시
+        showNotification("로그인 성공!");
+
+        // 일지 데이터 로드
+        loadJournals();
+      });
+
+      // 로그아웃 기능
+      logoutBtn.addEventListener("click", () => {
+        // 로컬 스토리지에서 사용자 정보 삭제
+        localStorage.removeItem("user");
+        localStorage.removeItem("tokens");
+
+        // UI 업데이트
+        loginForm.style.display = "block";
+        userInfo.style.display = "none";
+        isLoggedIn = false;
+        currentUser = null;
+
+        // 로그인 탭으로 전환
+        document.querySelector('[data-tab="login"]').click();
+
+        // 알림 표시
+        showNotification("로그아웃되었습니다.");
+      });
+
+      // 일지 저장 기능
+      saveJournalBtn.addEventListener("click", () => {
+        const title = journalTitleInput.value.trim();
+        const content = journalContentInput.value.trim();
+
+        if (!title || !content) {
+          showNotification("제목과 내용을 입력해주세요.");
+          return;
+        }
+
+        // 새 일지 생성
+        const newJournal = {
+          id: Date.now().toString(),
+          title,
+          content,
+          createdAt: new Date().toISOString(),
+          userId: currentUser.id,
+        };
+
+        // 일지 목록에 추가
+        journals.push(newJournal);
+
+        // 로컬 스토리지에 저장
+        saveJournals();
+
+        // UI 업데이트
+        renderJournals();
+
+        // 입력 필드 초기화
+        journalTitleInput.value = "";
+        journalContentInput.value = "";
+
+        // 알림 표시
+        showNotification("일지가 저장되었습니다.");
+      });
+
+      // 로컬 스토리지 초기화 기능
+      clearStorageBtn.addEventListener("click", () => {
+        if (
+          confirm(
+            "모든 데이터를 초기화하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+          )
+        ) {
+          localStorage.clear();
+          journals = [];
+          renderJournals();
+
+          // 로그인 상태 초기화
+          loginForm.style.display = "block";
+          userInfo.style.display = "none";
+          isLoggedIn = false;
+          currentUser = null;
+
+          // 로그인 탭으로 전환
+          document.querySelector('[data-tab="login"]').click();
+
+          // 알림 표시
+          showNotification("모든 데이터가 초기화되었습니다.");
+        }
+      });
+
+      // 일지 목록 렌더링
+      function renderJournals() {
+        if (journals.length === 0) {
+          journalListElement.innerHTML = `
+          <div class="empty-state">
+            <p>작성된 일지가 없습니다.</p>
+            <p>첫 번째 일지를 작성해보세요!</p>
+          </div>
+        `;
+          return;
+        }
+
+        journalListElement.innerHTML = "";
+
+        // 최신 일지가 위에 오도록 정렬
+        const sortedJournals = [...journals].sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+        );
+
+        sortedJournals.forEach((journal) => {
+          const journalElement = document.createElement("div");
+          journalElement.className = "journal-entry";
+          journalElement.innerHTML = `
+          <div class="journal-header">
+            <div class="journal-title">${escapeHtml(journal.title)}</div>
+            <button class="btn btn-danger btn-sm delete-journal" data-id="${journal.id}">삭제</button>
+          </div>
+          <div class="journal-date">${formatDate(journal.createdAt)}</div>
+          <div class="journal-content">${escapeHtml(journal.content)}</div>
+        `;
+
+          journalListElement.appendChild(journalElement);
+
+          // 삭제 버튼 이벤트 리스너
+          const deleteBtn = journalElement.querySelector(".delete-journal");
+          deleteBtn.addEventListener("click", () => {
+            deleteJournal(journal.id);
+          });
+        });
+      }
+
+      // 일지 삭제 기능
+      function deleteJournal(id) {
+        journals = journals.filter((journal) => journal.id !== id);
+        saveJournals();
+        renderJournals();
+        showNotification("일지가 삭제되었습니다.");
+      }
+
+      // 일지 데이터 로드
+      function loadJournals() {
+        try {
+          const savedJournals = localStorage.getItem("journals");
+          if (savedJournals) {
+            journals = JSON.parse(savedJournals);
+            renderJournals();
+          }
+        } catch (error) {
+          console.error("일지 데이터 로드 실패:", error);
+        }
+      }
+
+      // 일지 데이터 저장
+      function saveJournals() {
+        try {
+          localStorage.setItem("journals", JSON.stringify(journals));
+        } catch (error) {
+          console.error("일지 데이터 저장 실패:", error);
+        }
+      }
+
+      // 알림 표시 기능
+      function showNotification(message) {
+        notificationElement.textContent = message;
+        notificationElement.classList.add("show");
+
+        setTimeout(() => {
+          notificationElement.classList.remove("show");
+        }, 3000);
+      }
+
+      // 날짜 포맷팅
+      function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleString("ko-KR", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      }
+
+      // HTML 이스케이프
+      function escapeHtml(unsafe) {
+        return unsafe
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      // 페이지 로드 시 초기화
+      document.addEventListener("DOMContentLoaded", () => {
+        // 저장된 사용자 정보 확인
+        const savedUser = localStorage.getItem("user");
+        if (savedUser) {
+          try {
+            currentUser = JSON.parse(savedUser);
+            userNameElement.textContent = currentUser.name;
+            userEmailElement.textContent = currentUser.email;
+            loginForm.style.display = "none";
+            userInfo.style.display = "block";
+            isLoggedIn = true;
+
+            // 일지 데이터 로드
+            loadJournals();
+          } catch (error) {
+            console.error("사용자 정보 파싱 실패:", error);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

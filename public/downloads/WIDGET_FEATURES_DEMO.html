@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Think-Habit 그룹 위젯 - 전체 기능 데모</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid #e5e7eb;
+        }
+        .feature-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .feature-icon {
+            font-size: 2em;
+            margin-right: 15px;
+        }
+        .feature-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #1f2937;
+        }
+        .demo-section {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .mock-widget {
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            background: white;
+            min-height: 200px;
+        }
+        .tab-nav {
+            display: flex;
+            border-bottom: 2px solid #e5e7eb;
+            margin-bottom: 15px;
+        }
+        .tab-button {
+            padding: 10px 20px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            font-weight: 500;
+        }
+        .tab-button.active {
+            border-bottom-color: #667eea;
+            color: #667eea;
+        }
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            background: #f9fafb;
+            border-radius: 5px;
+        }
+        .rank-badge {
+            background: #667eea;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            margin-right: 10px;
+        }
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            border-left: 3px solid #10b981;
+            background: #f0fdf4;
+            border-radius: 0 5px 5px 0;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 5px;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        .stat-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #10b981;
+            transition: width 0.3s;
+        }
+        .encouragement-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+        .user-card {
+            padding: 10px;
+            background: #f9fafb;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .user-card:hover {
+            background: #e5e7eb;
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-left: 4px solid #10b981;
+            z-index: 1000;
+            min-width: 300px;
+        }
+        .config-example {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Think-Habit 그룹 위젯</h1>
+            <h2>전체 기능 데모 & 가이드</h2>
+            <p>위젯에서 사용할 수 있는 모든 기능을 확인하고 체험해보세요</p>
+        </div>
+
+        <div class="feature-grid">
+            <!-- 1. 전체 통계 (StatsOverview) -->
+            <div class="feature-card">
+                <div class="feature-header">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">전체 통계 대시보드</div>
+                </div>
+                <p>그룹의 전체적인 활동 현황을 한눈에 볼 수 있습니다.</p>
+                
+                <div class="demo-section">
+                    <h4>📈 실시간 통계</h4>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">127</div>
+                            <div>총 일지</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24</div>
+                            <div>활성 회원</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">78%</div>
+                            <div>완료율</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">12</div>
+                            <div>오늘 활동</div>
+                        </div>
+                    </div>
+                    
+                    <h4>📊 진행률</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 78%"></div>
+                    </div>
+                    <p>전체 목표의 78% 달성</p>
+                </div>
+
+                <div class="config-example">
+showStats: true,
+showProgress: true
+                </div>
+            </div>
+
+            <!-- 2. 순위표 (Leaderboard) -->
+            <div class="feature-card">
+                <div class="feature-header">
+                    <div class="feature-icon">🏆</div>
+                    <div class="feature-title">실시간 순위표</div>
+                </div>
+                <p>참가자들의 순위와 점수를 실시간으로 표시합니다.</p>
+                
+                <div class="demo-section">
+                    <h4>🥇 TOP 참가자</h4>
+                    <div class="leaderboard-item">
+                        <div class="rank-badge">1</div>
+                        <div style="flex: 1;">
+                            <strong>김민수</strong>
+                            <div style="font-size: 0.9em; color: #6b7280;">830점 • 7일 연속</div>
+                        </div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="rank-badge">2</div>
+                        <div style="flex: 1;">
+                            <strong>이영희</strong>
+                            <div style="font-size: 0.9em; color: #6b7280;">720점 • 5일 연속</div>
+                        </div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="rank-badge">3</div>
+                        <div style="flex: 1;">
+                            <strong>박철호</strong>
+                            <div style="font-size: 0.9em; color: #6b7280;">690점 • 3일 연속</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="config-example">
+showLeaderboard: true,
+maxParticipants: 10
+                </div>
+            </div>
+
+            <!-- 3. 활동 피드 (ActivityFeed) -->
+            <div class="feature-card">
+                <div class="feature-header">
+                    <div class="feature-icon">📋</div>
+                    <div class="feature-title">실시간 활동 피드</div>
+                </div>
+                <p>그룹 내 최근 활동들을 실시간으로 업데이트합니다.</p>
+                
+                <div class="demo-section">
+                    <h4>🔥 최근 활동</h4>
+                    <div class="activity-item">
+                        <div style="margin-right: 10px;">📝</div>
+                        <div>
+                            <strong>김민수</strong>님이 새 일지를 작성했습니다
+                            <div style="font-size: 0.8em; color: #6b7280;">5분 전</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div style="margin-right: 10px;">🏆</div>
+                        <div>
+                            <strong>이영희</strong>님이 7일 연속 달성을 완료했습니다
+                            <div style="font-size: 0.8em; color: #6b7280;">12분 전</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div style="margin-right: 10px;">💬</div>
+                        <div>
+                            <strong>박철호</strong>님이 격려 메시지를 보냈습니다
+                            <div style="font-size: 0.8em; color: #6b7280;">18분 전</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="config-example">
+showRecentActivity: true,
+enableRealtime: true
+                </div>
+            </div>
+
+            <!-- 4. 일지 작성 폼 (JournalForm) -->
+            <div class="feature-card">
+                <div class="feature-header">
+                    <div class="feature-icon">📝</div>
+                    <div class="feature-title">일지 작성 폼</div>
+                </div>
+                <p>직접 위젯에서 일지를 작성하고 제출할 수 있습니다.</p>
+                
+                <div class="demo-section">
+                    <h4>✍️ 새 일지 작성</h4>
+                    <div class="form-group">
+                        <label>제목</label>
+                        <input type="text" class="form-control" placeholder="오늘의 감사한 일" value="오늘 배운 것들">
+                    </div>
+                    <div class="form-group">
+                        <label>카테고리</label>
+                        <select class="form-control">
+                            <option>감정 관리</option>
+                            <option>목표 달성</option>
+                            <option>자기계발</option>
+                            <option>인간관계</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>기분</label>
+                        <div style="display: flex; gap: 10px;">
+                            <span style="font-size: 1.5em; cursor: pointer;">😢</span>
+                            <span style="font-size: 1.5em; cursor: pointer;">😐</span>
+                            <span style="font-size: 1.5em; cursor: pointer; background: #fef3c7; padding: 5px; border-radius: 50%;">😊</span>
+                            <span style="font-size: 1.5em; cursor: pointer;">😄</span>
+                            <span style="font-size: 1.5em; cursor: pointer;">🤗</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>내용</label>
+                        <textarea class="form-control" rows="3" placeholder="오늘 있었던 일을 기록해보세요">오늘은 새로운 프로젝트를 시작했다. 처음에는 막막했지만...</textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="showNotification()">📝 일지 작성 완료</button>
+                </div>
+
+                <div class="config-example">
+showJournalForm: true,
+language: 'ko'
+                </div>
+            </div>
+
+            <!-- 5. 격려 시스템 (EncouragementPanel) -->
+            <div class="feature-card">
+                <div class="feature-header">
+                    <div class="feature-icon">💬</div>
+                    <div class="feature-title">격려 메시지 시스템</div>
+                </div>
+                <p>다른 참가자들에게 격려 메시지를 보낼 수 있습니다.</p>
+                
+                <div class="demo-section">
+                    <h4>👥 격려 보내기</h4>
+                    <div class="encouragement-panel">
+                        <div class="user-card" onclick="sendEncouragement('김민수')">
+                            <div style="font-size: 2em;">👤</div>
+                            <div>김민수</div>
+                            <div style="font-size: 0.8em; color: #6b7280;">1위</div>
+                        </div>
+                        <div class="user-card" onclick="sendEncouragement('이영희')">
+                            <div style="font-size: 2em;">👤</div>
+                            <div>이영희</div>
+                            <div style="font-size: 0.8em; color: #6b7280;">2위</div>
+                        </div>
+                        <div class="user-card" onclick="sendEncouragement('박철호')">
+                            <div style="font-size: 2em;">👤</div>
+                            <div>박철호</div>
+                            <div style="font-size: 0.8em; color: #6b7280;">3위</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.9em; color: #6b7280;">참가자를 클릭해서 격려 메시지를 보내보세요!</p>
+                </div>
+
+                <div class="config-example">
+showEncouragement: true,
+enableNotifications: true
+                </div>
+            </div>
+
+            <!-- 6. 알림 시스템 (NotificationContainer) -->
+            <div class="feature-card">
+                <div class="feature-header">
+                    <div class="feature-icon">🔔</div>
+                    <div class="feature-title">실시간 알림 시스템</div>
+                </div>
+                <p>중요한 이벤트와 업데이트를 실시간으로 알려줍니다.</p>
+                
+                <div class="demo-section">
+                    <h4>📢 알림 종류</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin: 8px 0; padding: 8px; background: #ecfdf5; border-left: 3px solid #10b981; border-radius: 0 5px 5px 0;">
+                            ✅ 일지 작성 완료
+                        </li>
+                        <li style="margin: 8px 0; padding: 8px; background: #eff6ff; border-left: 3px solid #3b82f6; border-radius: 0 5px 5px 0;">
+                            💬 새 격려 메시지 도착
+                        </li>
+                        <li style="margin: 8px 0; padding: 8px; background: #fef3c7; border-left: 3px solid #f59e0b; border-radius: 0 5px 5px 0;">
+                            🏆 새로운 달성 배지 획득
+                        </li>
+                        <li style="margin: 8px 0; padding: 8px; background: #fef2f2; border-left: 3px solid #ef4444; border-radius: 0 5px 5px 0;">
+                            ⚠️ 연결 오류 발생
+                        </li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="showNotification()">🔔 테스트 알림 보기</button>
+                </div>
+
+                <div class="config-example">
+enableNotifications: true,
+enableRealtime: true
+                </div>
+            </div>
+        </div>
+
+        <!-- 전체 설정 예제 -->
+        <div class="feature-card" style="grid-column: 1 / -1;">
+            <div class="feature-header">
+                <div class="feature-icon">⚙️</div>
+                <div class="feature-title">완전한 위젯 설정 예제</div>
+            </div>
+            <p>모든 기능을 활성화한 완전한 위젯 설정 코드입니다.</p>
+            
+            <div class="config-example">
+const widgetConfig = {
+  // 필수 설정
+  groupId: 'my-group-2024',
+  
+  // 표시 기능
+  showStats: true,           // 📊 통계 대시보드
+  showProgress: true,        // 📈 진행률 표시
+  showLeaderboard: true,     // 🏆 순위표
+  showRecentActivity: true,  // 📋 활동 피드
+  showJournalForm: true,     // 📝 일지 작성 폼
+  showEncouragement: true,   // 💬 격려 시스템
+  
+  // 디자인 설정
+  theme: 'light',           // 'light' | 'dark' | 'auto'
+  height: 600,              // 높이 (픽셀)
+  width: 800,               // 너비 (픽셀)
+  
+  // 기능 설정
+  maxParticipants: 10,      // 순위표 최대 표시 인원
+  refreshInterval: 30,      // 자동 새로고침 (초)
+  enableNotifications: true, // 🔔 알림 시스템
+  enableRealtime: true,     // ⚡ 실시간 업데이트
+  language: 'ko',           // 언어 설정
+  
+  // API 설정
+  apiEndpoint: 'https://api.think-habit.com',
+  
+  // 커스텀 스타일
+  customStyles: {
+    backgroundColor: '#f9fafb',
+    borderRadius: '12px',
+    boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
+  },
+  
+  // 이벤트 핸들러
+  onEvent: (event) => {
+    console.log('위젯 이벤트:', event);
+    
+    switch(event.type) {
+      case 'journal_submitted':
+        console.log('새 일지 작성:', event.data);
+        break;
+      case 'encouragement_sent':
+        console.log('격려 메시지 전송:', event.data);
+        break;
+      case 'data_refreshed':
+        console.log('데이터 새로고침:', event.data);
+        break;
+    }
+  }
+};
+
+// 위젯 초기화
+ThinkHabitWidget.init('widget-container', widgetConfig);
+            </div>
+        </div>
+
+        <!-- 탭 형태의 위젝 미리보기 -->
+        <div class="feature-card" style="grid-column: 1 / -1;">
+            <div class="feature-header">
+                <div class="feature-icon">👁️</div>
+                <div class="feature-title">실제 위젯 미리보기</div>
+            </div>
+            <p>실제 위젯이 어떻게 표시되는지 미리보기입니다.</p>
+            
+            <div class="mock-widget">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 style="margin: 0;">🎯 우리 교회 Think-Habit</h3>
+                    <div style="color: #6b7280;">24명 • 78% 완료</div>
+                </div>
+                
+                <div class="tab-nav">
+                    <button class="tab-button active" onclick="showTab('overview', this)">개요</button>
+                    <button class="tab-button" onclick="showTab('leaderboard', this)">순위</button>
+                    <button class="tab-button" onclick="showTab('activity', this)">활동</button>
+                    <button class="tab-button" onclick="showTab('journal', this)">일지 작성</button>
+                </div>
+                
+                <div id="tab-content">
+                    <div style="text-align: center; padding: 40px; color: #6b7280;">
+                        위의 탭을 클릭해서 각 기능을 확인해보세요!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 알림 컨테이너 -->
+    <div id="notification-container"></div>
+
+    <script>
+        function showNotification() {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center;">
+                    <div style="margin-right: 15px; font-size: 1.5em;">✅</div>
+                    <div>
+                        <div style="font-weight: bold;">일지 작성 완료!</div>
+                        <div style="font-size: 0.9em; color: #6b7280;">일지가 성공적으로 작성되었습니다.</div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        function sendEncouragement(name) {
+            const messages = [
+                `${name}님께 격려 메시지를 보냈습니다! 💪`,
+                `${name}님이 좋아할 거예요! 😊`,
+                `${name}님께 응원의 메시지가 전달되었습니다! 🎉`
+            ];
+            
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center;">
+                    <div style="margin-right: 15px; font-size: 1.5em;">💬</div>
+                    <div>
+                        <div style="font-weight: bold;">격려 메시지 전송</div>
+                        <div style="font-size: 0.9em; color: #6b7280;">${messages[Math.floor(Math.random() * messages.length)]}</div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        function showTab(tab, element) {
+            // 탭 버튼 활성화
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            if (element) {
+                element.classList.add('active');
+            } else {
+                // 기본적으로 첫 번째 탭을 활성화
+                document.querySelector('.tab-button').classList.add('active');
+            }
+            
+            const content = document.getElementById('tab-content');
+            
+            switch(tab) {
+                case 'overview':
+                    content.innerHTML = `
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-number">127</div>
+                                <div>총 일지</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">24</div>
+                                <div>활성 회원</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">78%</div>
+                                <div>완료율</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <h4>전체 진행률</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 78%"></div>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'leaderboard':
+                    content.innerHTML = `
+                        <div class="leaderboard-item">
+                            <div class="rank-badge">1</div>
+                            <div style="flex: 1;">
+                                <strong>김민수</strong>
+                                <div style="font-size: 0.9em; color: #6b7280;">830점 • 7일 연속</div>
+                            </div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="rank-badge">2</div>
+                            <div style="flex: 1;">
+                                <strong>이영희</strong>
+                                <div style="font-size: 0.9em; color: #6b7280;">720점 • 5일 연속</div>
+                            </div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="rank-badge">3</div>
+                            <div style="flex: 1;">
+                                <strong>박철호</strong>
+                                <div style="font-size: 0.9em; color: #6b7280;">690점 • 3일 연속</div>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'activity':
+                    content.innerHTML = `
+                        <div class="activity-item">
+                            <div style="margin-right: 10px;">📝</div>
+                            <div>
+                                <strong>김민수</strong>님이 새 일지를 작성했습니다
+                                <div style="font-size: 0.8em; color: #6b7280;">5분 전</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div style="margin-right: 10px;">🏆</div>
+                            <div>
+                                <strong>이영희</strong>님이 7일 연속 달성을 완료했습니다
+                                <div style="font-size: 0.8em; color: #6b7280;">12분 전</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div style="margin-right: 10px;">💬</div>
+                            <div>
+                                <strong>박철호</strong>님이 격려 메시지를 보냈습니다
+                                <div style="font-size: 0.8em; color: #6b7280;">18분 전</div>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'journal':
+                    content.innerHTML = `
+                        <div class="form-group">
+                            <label>제목</label>
+                            <input type="text" class="form-control" placeholder="오늘의 감사한 일">
+                        </div>
+                        <div class="form-group">
+                            <label>내용</label>
+                            <textarea class="form-control" rows="3" placeholder="오늘 있었던 일을 기록해보세요"></textarea>
+                        </div>
+                        <button class="btn btn-primary" onclick="showNotification()">📝 일지 작성</button>
+                    `;
+                    break;
+            }
+        }
+
+        // 페이지 로드시 기본 탭 표시
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstTab = document.querySelector('.tab-button');
+            showTab('overview', firstTab);
+        });
+    </script>
+</body>
+</html>

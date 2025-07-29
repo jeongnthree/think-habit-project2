@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Think-Habit Journal 테스트 페이지</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: #333;
+      }
+      .container {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        max-width: 600px;
+        width: 100%;
+        text-align: center;
+      }
+      h1 {
+        color: #4a6fa5;
+        margin-bottom: 1rem;
+      }
+      p {
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+      .btn {
+        background-color: #4a6fa5;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+      }
+      .btn:hover {
+        background-color: #3a5a8a;
+      }
+      .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+      }
+      .form-group label {
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+      .form-group input {
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+      }
+      .result {
+        margin-top: 1.5rem;
+        padding: 1rem;
+        background-color: #f0f7ff;
+        border-radius: 4px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Think-Habit Journal 테스트 페이지</h1>
+      <p>
+        이 페이지는 웹 환경에서 Think-Habit Journal 앱의 기본 기능을 테스트하기
+        위한 페이지입니다.
+      </p>
+
+      <div class="login-form">
+        <div class="form-group">
+          <label for="email">이메일</label>
+          <input
+            type="email"
+            id="email"
+            value="demo@example.com"
+            placeholder="이메일을 입력하세요"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">비밀번호</label>
+          <input
+            type="password"
+            id="password"
+            value="password123"
+            placeholder="비밀번호를 입력하세요"
+          />
+        </div>
+        <button class="btn" id="loginBtn">로그인</button>
+      </div>
+
+      <div class="result" id="result">
+        <h3>로그인 성공!</h3>
+        <p>사용자: <span id="userName">테스트 사용자</span></p>
+        <p>이메일: <span id="userEmail">demo@example.com</span></p>
+      </div>
+    </div>
+
+    <script>
+      // 간단한 로그인 기능 구현
+      document
+        .getElementById("loginBtn")
+        .addEventListener("click", function () {
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+
+          // 간단한 검증
+          if (email && password) {
+            // 로그인 성공 표시
+            document.getElementById("userEmail").textContent = email;
+            document.getElementById("result").style.display = "block";
+
+            // 로컬 스토리지에 사용자 정보 저장 (실제 앱 흉내)
+            const user = {
+              id: "1",
+              name: "테스트 사용자",
+              email: email,
+              avatar: "👤",
+            };
+
+            localStorage.setItem("user", JSON.stringify(user));
+            localStorage.setItem(
+              "tokens",
+              JSON.stringify({
+                accessToken: "mock-token-" + Date.now(),
+                refreshToken: "mock-refresh-token",
+                expiresAt: Date.now() + 3600000, // 1시간 후 만료
+              }),
+            );
+
+            console.log("로그인 성공:", user);
+          } else {
+            alert("이메일과 비밀번호를 입력해주세요.");
+          }
+        });
+
+      // 페이지 로드 시 저장된 사용자 정보 확인
+      window.addEventListener("DOMContentLoaded", function () {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+          const user = JSON.parse(storedUser);
+          document.getElementById("userEmail").textContent = user.email;
+          document.getElementById("userName").textContent = user.name;
+          document.getElementById("result").style.display = "block";
+          console.log("저장된 사용자 정보:", user);
+        }
+      });
+    </script>
+  </body>
+</html>

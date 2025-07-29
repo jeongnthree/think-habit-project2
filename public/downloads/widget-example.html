@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Think-Habit 그룹 위젯 예제 - 우리 교회</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background-color: #2563eb;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .content {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .widget-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9fafb;
+            border-radius: 8px;
+        }
+        .widget-title {
+            text-align: center;
+            color: #1f2937;
+            margin-bottom: 20px;
+        }
+        /* 위젯 컨테이너 스타일 */
+        #think-habit-widget {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            background-color: white;
+            min-height: 600px;
+        }
+        .instructions {
+            background-color: #fef3c7;
+            border: 1px solid #fbbf24;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .code-block {
+            background-color: #1f2937;
+            color: #f3f4f6;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: monospace;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🙏 우리 교회 Think-Habit 활동</h1>
+        <p>함께 성장하는 신앙 공동체</p>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <h2>📖 이번 주 묵상 주제</h2>
+            <p>이번 주는 '감사'를 주제로 매일 하나님께 감사한 일들을 기록하며 은혜를 나누고 있습니다.</p>
+            
+            <div class="instructions">
+                <strong>💡 사용 방법:</strong>
+                <ul>
+                    <li>아래 위젯에서 오늘의 감사 일지를 작성하세요</li>
+                    <li>다른 교우들의 일지를 읽고 격려해주세요</li>
+                    <li>순위표를 통해 꾸준히 참여하는 교우들을 확인하세요</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="widget-section">
+            <h2 class="widget-title">🎯 Think-Habit 그룹 활동 위젯</h2>
+            
+            <!-- 위젯이 표시될 컨테이너 -->
+            <div id="think-habit-widget">
+                <p style="text-align: center; color: #6b7280;">
+                    위젯을 로드하는 중입니다...
+                </p>
+            </div>
+        </div>
+
+        <div class="content">
+            <h3>이 위젯을 우리 교회 홈페이지에 추가하는 방법</h3>
+            
+            <p>아래 코드를 복사하여 홈페이지 HTML에 붙여넣으세요:</p>
+            
+            <div class="code-block">
+&lt;!-- Think-Habit 위젯 시작 --&gt;
+&lt;div id="think-habit-widget"&gt;&lt;/div&gt;
+&lt;script&gt;
+  // 위젯 설정
+  const widgetConfig = {
+    groupId: 'church-2024',        // 교회 고유 ID
+    theme: 'light',                // 테마
+    height: 600,                   // 높이
+    showLeaderboard: true,         // 순위표 표시
+    showRecentActivity: true,      // 활동 피드 표시
+    showJournalForm: true,         // 일지 작성 폼 표시
+    language: 'ko'                 // 한국어
+  };
+
+  // 위젯 로드
+  (function() {
+    // 실제 사용 시에는 Think-Habit 공식 CDN URL로 변경하세요
+    const script = document.createElement('script');
+    script.src = '/widget/index.js';
+    script.onload = function() {
+      if (window.ThinkHabitWidget) {
+        window.ThinkHabitWidget.init('think-habit-widget', widgetConfig);
+      }
+    };
+    document.body.appendChild(script);
+  })();
+&lt;/script&gt;
+&lt;!-- Think-Habit 위젯 끝 --&gt;
+            </div>
+        </div>
+    </div>
+
+    <!-- 실제 위젯 로드 스크립트 -->
+    <script>
+        // 데모용 위젯 초기화
+        // 실제 사용 시에는 다운로드한 위젯을 빌드하고 서버에 업로드한 후 사용하세요
+        document.addEventListener('DOMContentLoaded', function() {
+            // 데모 메시지 표시
+            const widgetContainer = document.getElementById('think-habit-widget');
+            widgetContainer.innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <h3 style="color: #374151;">🚧 위젯 데모</h3>
+                    <p style="color: #6b7280; margin: 20px 0;">
+                        실제 위젯을 사용하려면:
+                    </p>
+                    <ol style="text-align: left; display: inline-block; color: #6b7280;">
+                        <li>다운로드한 위젯 압축 해제</li>
+                        <li>npm install 실행</li>
+                        <li>npm run build 로 빌드</li>
+                        <li>dist 폴더의 파일을 서버에 업로드</li>
+                        <li>위 코드의 script.src를 실제 경로로 변경</li>
+                    </ol>
+                    <div style="margin-top: 30px; padding: 20px; background: #f3f4f6; border-radius: 8px;">
+                        <p style="color: #1f2937; font-weight: bold;">
+                            또는 Think-Habit 공식 CDN 사용:
+                        </p>
+                        <code style="background: #e5e7eb; padding: 5px 10px; border-radius: 4px;">
+                            https://cdn.think-habit.com/widget/v1/
+                        </code>
+                    </div>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

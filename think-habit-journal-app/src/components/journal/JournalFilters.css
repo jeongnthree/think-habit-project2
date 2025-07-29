@@ -1,0 +1,373 @@
+.journal-filters {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 메인 필터 */
+.filters-main {
+  padding: 1.5rem 2rem;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.search-section {
+  flex: 1;
+  max-width: 400px;
+}
+
+.search-input-container {
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  background: white;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 1rem;
+}
+
+.quick-filters {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.filter-select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: white;
+  color: #374151;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 120px;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.advanced-filters-toggle {
+  padding: 0.5rem 1rem;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  color: #374151;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.advanced-filters-toggle:hover {
+  background: #e5e7eb;
+}
+
+.advanced-filters-toggle.active {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+/* 고급 필터 */
+.filters-advanced {
+  padding: 1rem 2rem 1.5rem;
+  border-top: 1px solid #f3f4f6;
+  background: #fafafa;
+}
+
+.advanced-filter-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.custom-date-range {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.date-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.date-input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: white;
+  color: #374151;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.date-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* 필터 상태 */
+.filters-status {
+  padding: 1rem 2rem;
+  border-top: 1px solid #f3f4f6;
+  background: #fafafa;
+}
+
+.filter-results {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.results-count {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.reset-filters-button {
+  padding: 0.375rem 0.75rem;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  color: #374151;
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: all 0.2s;
+}
+
+.reset-filters-button:hover {
+  background: #e5e7eb;
+}
+
+/* 활성 필터 태그 */
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filter-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  background: #e0e7ff;
+  color: #3730a3;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.filter-tag button {
+  background: none;
+  border: none;
+  color: #6366f1;
+  cursor: pointer;
+  font-size: 0.875rem;
+  padding: 0;
+  margin-left: 0.25rem;
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.filter-tag button:hover {
+  background: #c7d2fe;
+}
+
+/* 다크 모드 지원 */
+@media (prefers-color-scheme: dark) {
+  .journal-filters {
+    background: #1f2937;
+    border-bottom-color: #374151;
+  }
+
+  .search-input,
+  .filter-select,
+  .date-input {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+
+  .search-input:focus,
+  .filter-select:focus,
+  .date-input:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+  }
+
+  .search-icon {
+    color: #6b7280;
+  }
+
+  .advanced-filters-toggle {
+    background: #374151;
+    border-color: #4b5563;
+    color: #d1d5db;
+  }
+
+  .advanced-filters-toggle:hover {
+    background: #4b5563;
+  }
+
+  .advanced-filters-toggle.active {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+  }
+
+  .filters-advanced,
+  .filters-status {
+    background: #374151;
+    border-top-color: #4b5563;
+  }
+
+  .filter-group label {
+    color: #d1d5db;
+  }
+
+  .custom-date-range {
+    border-top-color: #4b5563;
+  }
+
+  .results-count {
+    color: #9ca3af;
+  }
+
+  .reset-filters-button {
+    background: #4b5563;
+    border-color: #6b7280;
+    color: #d1d5db;
+  }
+
+  .reset-filters-button:hover {
+    background: #6b7280;
+  }
+
+  .filter-tag {
+    background: #1e3a8a;
+    color: #93c5fd;
+  }
+
+  .filter-tag button {
+    color: #60a5fa;
+  }
+
+  .filter-tag button:hover {
+    background: #1e40af;
+  }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .filters-main {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .search-section {
+    max-width: none;
+  }
+
+  .quick-filters {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .filter-select {
+    min-width: auto;
+    flex: 1;
+  }
+
+  .advanced-filter-row {
+    grid-template-columns: 1fr;
+  }
+
+  .custom-date-range {
+    flex-direction: column;
+  }
+
+  .filter-results {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+
+  .active-filters {
+    justify-content: center;
+  }
+}
+
+/* 접근성 개선 */
+.search-input:focus,
+.filter-select:focus,
+.date-input:focus,
+.advanced-filters-toggle:focus,
+.reset-filters-button:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* 애니메이션 감소 설정 */
+@media (prefers-reduced-motion: reduce) {
+  .search-input,
+  .filter-select,
+  .date-input,
+  .advanced-filters-toggle,
+  .reset-filters-button,
+  .filter-tag button {
+    transition: none;
+  }
+}

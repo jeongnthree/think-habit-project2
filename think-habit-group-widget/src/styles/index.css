@@ -1,0 +1,503 @@
+/* Think Habit Group Widget - Main Styles */
+
+/* CSS Reset for Widget */
+.think-habit-widget * {
+  box-sizing: border-box;
+}
+
+.think-habit-widget {
+  /* CSS 변수 정의 */
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  --info-color: #06b6d4;
+
+  /* 라이트 테마 */
+  --light-bg: #ffffff;
+  --light-text: #2d3748;
+  --light-text-secondary: #718096;
+  --light-border: #e2e8f0;
+  --light-surface: #f7fafc;
+  --light-surface-hover: #edf2f7;
+
+  /* 다크 테마 */
+  --dark-bg: #1a202c;
+  --dark-text: #ffffff;
+  --dark-text-secondary: #a0aec0;
+  --dark-border: #2d3748;
+  --dark-surface: #2d3748;
+  --dark-surface-hover: #4a5568;
+
+  /* 그림자 */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+
+  /* 간격 */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 20px;
+  --spacing-2xl: 24px;
+
+  /* 폰트 크기 */
+  --text-xs: 11px;
+  --text-sm: 12px;
+  --text-base: 14px;
+  --text-lg: 16px;
+  --text-xl: 18px;
+  --text-2xl: 20px;
+
+  /* 보더 반지름 */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  /* 트랜지션 */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.2s ease;
+  --transition-slow: 0.3s ease;
+}
+
+/* 기본 스타일 리셋 */
+.think-habit-widget h1,
+.think-habit-widget h2,
+.think-habit-widget h3,
+.think-habit-widget h4,
+.think-habit-widget h5,
+.think-habit-widget h6 {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.think-habit-widget p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.think-habit-widget button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+.think-habit-widget input,
+.think-habit-widget textarea,
+.think-habit-widget select {
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  outline: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+.think-habit-widget ul,
+.think-habit-widget ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 유틸리티 클래스 */
+.think-habit-widget .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.think-habit-widget .truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.think-habit-widget .line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.think-habit-widget .line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 플렉스 유틸리티 */
+.think-habit-widget .flex {
+  display: flex;
+}
+
+.think-habit-widget .flex-col {
+  flex-direction: column;
+}
+
+.think-habit-widget .items-center {
+  align-items: center;
+}
+
+.think-habit-widget .justify-center {
+  justify-content: center;
+}
+
+.think-habit-widget .justify-between {
+  justify-content: space-between;
+}
+
+.think-habit-widget .gap-1 {
+  gap: var(--spacing-xs);
+}
+.think-habit-widget .gap-2 {
+  gap: var(--spacing-sm);
+}
+.think-habit-widget .gap-3 {
+  gap: var(--spacing-md);
+}
+.think-habit-widget .gap-4 {
+  gap: var(--spacing-lg);
+}
+
+/* 텍스트 유틸리티 */
+.think-habit-widget .text-xs {
+  font-size: var(--text-xs);
+}
+.think-habit-widget .text-sm {
+  font-size: var(--text-sm);
+}
+.think-habit-widget .text-base {
+  font-size: var(--text-base);
+}
+.think-habit-widget .text-lg {
+  font-size: var(--text-lg);
+}
+
+.think-habit-widget .font-medium {
+  font-weight: 500;
+}
+.think-habit-widget .font-semibold {
+  font-weight: 600;
+}
+.think-habit-widget .font-bold {
+  font-weight: 700;
+}
+
+.think-habit-widget .text-center {
+  text-align: center;
+}
+.think-habit-widget .text-left {
+  text-align: left;
+}
+.think-habit-widget .text-right {
+  text-align: right;
+}
+
+/* 색상 유틸리티 */
+.think-habit-widget .text-primary {
+  color: var(--primary-color);
+}
+.think-habit-widget .text-success {
+  color: var(--success-color);
+}
+.think-habit-widget .text-warning {
+  color: var(--warning-color);
+}
+.think-habit-widget .text-error {
+  color: var(--error-color);
+}
+
+/* 버튼 기본 스타일 */
+.think-habit-widget .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.think-habit-widget .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.think-habit-widget .btn-primary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.think-habit-widget .btn-primary:hover:not(:disabled) {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.think-habit-widget .btn-secondary {
+  background: transparent;
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.think-habit-widget .btn-secondary:hover:not(:disabled) {
+  background: var(--primary-color);
+  color: white;
+}
+
+.think-habit-widget .btn-ghost {
+  background: transparent;
+  color: inherit;
+}
+
+.think-habit-widget .btn-ghost:hover:not(:disabled) {
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.think-habit-widget .btn-sm {
+  padding: var(--spacing-xs) var(--spacing-md);
+  font-size: var(--text-xs);
+}
+
+.think-habit-widget .btn-lg {
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--text-base);
+}
+
+/* 입력 필드 기본 스타일 */
+.think-habit-widget .input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  transition: all var(--transition-normal);
+}
+
+.think-habit-widget.theme-light .input {
+  border-color: var(--light-border);
+  background: var(--light-bg);
+  color: var(--light-text);
+}
+
+.think-habit-widget.theme-dark .input {
+  border-color: var(--dark-border);
+  background: var(--dark-surface);
+  color: var(--dark-text);
+}
+
+.think-habit-widget .input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.think-habit-widget .input::placeholder {
+  opacity: 0.6;
+}
+
+/* 카드 스타일 */
+.think-habit-widget .card {
+  border-radius: var(--radius-lg);
+  border: 1px solid;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.think-habit-widget.theme-light .card {
+  background: var(--light-bg);
+  border-color: var(--light-border);
+}
+
+.think-habit-widget.theme-dark .card {
+  background: var(--dark-surface);
+  border-color: var(--dark-border);
+}
+
+.think-habit-widget .card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.think-habit-widget .card-header {
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid;
+}
+
+.think-habit-widget.theme-light .card-header {
+  border-bottom-color: var(--light-border);
+}
+
+.think-habit-widget.theme-dark .card-header {
+  border-bottom-color: var(--dark-border);
+}
+
+.think-habit-widget .card-body {
+  padding: var(--spacing-lg);
+}
+
+.think-habit-widget .card-footer {
+  padding: var(--spacing-lg);
+  border-top: 1px solid;
+}
+
+.think-habit-widget.theme-light .card-footer {
+  border-top-color: var(--light-border);
+  background: var(--light-surface);
+}
+
+.think-habit-widget.theme-dark .card-footer {
+  border-top-color: var(--dark-border);
+  background: var(--dark-bg);
+}
+
+/* 배지 스타일 */
+.think-habit-widget .badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-xl);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.think-habit-widget .badge-primary {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--primary-color);
+}
+
+.think-habit-widget .badge-success {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success-color);
+}
+
+.think-habit-widget .badge-warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--warning-color);
+}
+
+.think-habit-widget .badge-error {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--error-color);
+}
+
+/* 스피너 */
+.think-habit-widget .spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+}
+
+.think-habit-widget.theme-light .spinner {
+  border-color: var(--light-border);
+  border-top-color: var(--primary-color);
+}
+
+.think-habit-widget.theme-dark .spinner {
+  border-color: var(--dark-border);
+  border-top-color: var(--primary-color);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 스크롤바 스타일 */
+.think-habit-widget ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.think-habit-widget ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.think-habit-widget.theme-light ::-webkit-scrollbar-thumb {
+  background: var(--light-border);
+  border-radius: 3px;
+}
+
+.think-habit-widget.theme-dark ::-webkit-scrollbar-thumb {
+  background: var(--dark-border);
+  border-radius: 3px;
+}
+
+.think-habit-widget ::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+
+/* 반응형 유틸리티 */
+@media (max-width: 640px) {
+  .think-habit-widget .sm\\:hidden {
+    display: none;
+  }
+
+  .think-habit-widget .sm\\:flex {
+    display: flex;
+  }
+
+  .think-habit-widget .sm\\:text-sm {
+    font-size: var(--text-sm);
+  }
+}
+
+/* 접근성 */
+@media (prefers-reduced-motion: reduce) {
+  .think-habit-widget * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 포커스 스타일 */
+.think-habit-widget *:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* 선택 스타일 */
+.think-habit-widget ::selection {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+/* 인쇄 스타일 */
+@media print {
+  .think-habit-widget {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+
+  .think-habit-widget .btn {
+    border: 1px solid #000;
+  }
+}

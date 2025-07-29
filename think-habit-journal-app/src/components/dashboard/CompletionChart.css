@@ -1,0 +1,283 @@
+.completion-chart {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  position: relative;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.chart-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.overall-rate {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.rate-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.rate-status {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.completion-list {
+  margin-bottom: 24px;
+}
+
+.completion-item {
+  margin-bottom: 20px;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.completion-item:hover {
+  background: #f3f4f6;
+  transform: translateY(-1px);
+}
+
+.completion-item:last-child {
+  margin-bottom: 0;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.item-category {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.item-count {
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.item-percentage {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.progress-container {
+  position: relative;
+}
+
+.progress-track {
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 4px;
+  position: relative;
+  transition: width 0.8s ease-out;
+  overflow: hidden;
+}
+
+.progress-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.chart-summary {
+  padding: 20px 0;
+  border-top: 1px solid #e5e7eb;
+  margin-bottom: 20px;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px;
+  background: #f9fafb;
+  border-radius: 8px;
+}
+
+.summary-label {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+  text-align: center;
+}
+
+.summary-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.donut-chart {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.progress-circle {
+  transition: stroke-dasharray 0.8s ease-out;
+}
+
+.donut-percentage {
+  font-size: 18px;
+  font-weight: 700;
+  fill: #1f2937;
+}
+
+.donut-label {
+  font-size: 12px;
+  font-weight: 500;
+  fill: #6b7280;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .completion-chart {
+    padding: 16px;
+  }
+
+  .chart-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .overall-rate {
+    align-items: center;
+  }
+
+  .completion-item {
+    padding: 12px;
+  }
+
+  .item-header {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .item-info {
+    align-items: center;
+    text-align: center;
+  }
+
+  .item-percentage {
+    text-align: center;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .donut-chart svg {
+    width: 100px;
+    height: 100px;
+  }
+
+  .donut-percentage {
+    font-size: 16px;
+  }
+
+  .donut-label {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .completion-chart {
+    padding: 12px;
+  }
+
+  .rate-value {
+    font-size: 20px;
+  }
+
+  .item-category {
+    font-size: 14px;
+  }
+
+  .item-count {
+    font-size: 12px;
+  }
+
+  .item-percentage {
+    font-size: 16px;
+  }
+
+  .summary-value {
+    font-size: 16px;
+  }
+
+  .donut-chart svg {
+    width: 80px;
+    height: 80px;
+  }
+
+  .donut-percentage {
+    font-size: 14px;
+  }
+}

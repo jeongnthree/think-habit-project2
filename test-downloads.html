@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Think-Habit 다운로드 테스트</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .download-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .download-card h3 {
+            margin-top: 0;
+            color: #2563eb;
+        }
+        .download-button {
+            display: inline-block;
+            width: 100%;
+            padding: 10px 20px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+        .download-button:hover {
+            background: #1d4ed8;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e0f2fe;
+            border-radius: 8px;
+        }
+        .file-info {
+            font-size: 0.9em;
+            color: #666;
+            margin: 10px 0;
+        }
+        .test-result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+    </style>
+</head>
+<body>
+    <h1>📥 Think-Habit 다운로드 테스트</h1>
+    
+    <div class="status">
+        <h2>테스트 상태</h2>
+        <div id="test-status">테스트를 시작하려면 아래 다운로드 버튼을 클릭하세요.</div>
+    </div>
+
+    <div class="download-grid">
+        <!-- 그룹 위젯 -->
+        <div class="download-card">
+            <h3>👥 Think-Habit 그룹 위젯</h3>
+            <p>팀과 함께 사용하는 데스크톱 그룹 활동 위젯</p>
+            <div class="file-info">
+                <div>파일명: think-habit-group-widget.zip</div>
+                <div>플랫폼: Windows/Mac/Linux</div>
+                <div>크기: ~18MB (예상)</div>
+            </div>
+            <a href="public/downloads/think-habit-group-widget.zip" 
+               class="download-button" 
+               onclick="testDownload(event, 'group-widget')">
+                📥 다운로드
+            </a>
+            <div id="group-widget-result" class="test-result"></div>
+        </div>
+
+        <!-- Windows 앱 -->
+        <div class="download-card">
+            <h3>🖥️ Windows 데스크톱 앱</h3>
+            <p>Windows용 Think-Habit Journal 앱</p>
+            <div class="file-info">
+                <div>파일명: think-habit-windows.exe</div>
+                <div>플랫폼: Windows 10/11</div>
+                <div>크기: 데모 파일</div>
+            </div>
+            <a href="public/downloads/think-habit-windows.exe" 
+               class="download-button" 
+               onclick="testDownload(event, 'windows')">
+                📥 다운로드
+            </a>
+            <div id="windows-result" class="test-result"></div>
+        </div>
+
+        <!-- Mac 앱 -->
+        <div class="download-card">
+            <h3>💻 Mac 데스크톱 앱</h3>
+            <p>macOS용 Think-Habit Journal 앱</p>
+            <div class="file-info">
+                <div>파일명: think-habit-mac.dmg</div>
+                <div>플랫폼: macOS 11.0+</div>
+                <div>크기: 데모 파일</div>
+            </div>
+            <a href="public/downloads/think-habit-mac.dmg" 
+               class="download-button" 
+               onclick="testDownload(event, 'mac')">
+                📥 다운로드
+            </a>
+            <div id="mac-result" class="test-result"></div>
+        </div>
+
+        <!-- Android 앱 -->
+        <div class="download-card">
+            <h3>📱 Android 앱</h3>
+            <p>Android용 Think-Habit 모바일 앱</p>
+            <div class="file-info">
+                <div>파일명: think-habit-android.apk</div>
+                <div>플랫폼: Android 8.0+</div>
+                <div>크기: 데모 파일</div>
+            </div>
+            <a href="public/downloads/think-habit-android.apk" 
+               class="download-button" 
+               onclick="testDownload(event, 'android')">
+                📥 다운로드
+            </a>
+            <div id="android-result" class="test-result"></div>
+        </div>
+    </div>
+
+    <div class="status" style="margin-top: 30px;">
+        <h2>📋 테스트 결과 요약</h2>
+        <div id="test-summary">
+            <p>다운로드 버튼을 클릭하여 각 파일의 다운로드를 테스트하세요.</p>
+        </div>
+    </div>
+
+    <script>
+        let testResults = {};
+
+        function testDownload(event, platform) {
+            event.preventDefault();
+            const url = event.target.href;
+            const filename = url.split('/').pop();
+            const resultDiv = document.getElementById(`${platform}-result`);
+            const statusDiv = document.getElementById('test-status');
+            
+            statusDiv.textContent = `${filename} 다운로드 테스트 중...`;
+            
+            // 파일 존재 여부 확인
+            fetch(url, { method: 'HEAD' })
+                .then(response => {
+                    if (response.ok) {
+                        // 파일이 존재하면 다운로드 시작
+                        testResults[platform] = true;
+                        resultDiv.className = 'test-result success';
+                        resultDiv.textContent = `✅ 파일 확인됨 - 다운로드 시작`;
+                        
+                        // 실제 다운로드
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = filename;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        
+                        statusDiv.textContent = `✅ ${filename} 다운로드 시작됨`;
+                    } else {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                })
+                .catch(error => {
+                    testResults[platform] = false;
+                    resultDiv.className = 'test-result error';
+                    resultDiv.textContent = `❌ 다운로드 실패: ${error.message}`;
+                    statusDiv.textContent = `❌ ${filename} 다운로드 실패`;
+                })
+                .finally(() => {
+                    updateSummary();
+                });
+        }
+
+        function updateSummary() {
+            const summaryDiv = document.getElementById('test-summary');
+            const total = Object.keys(testResults).length;
+            const success = Object.values(testResults).filter(r => r).length;
+            const failed = total - success;
+            
+            summaryDiv.innerHTML = `
+                <p><strong>테스트 완료:</strong> ${total}개 파일</p>
+                <p><strong>성공:</strong> ${success}개 ✅</p>
+                <p><strong>실패:</strong> ${failed}개 ❌</p>
+                ${failed > 0 ? '<p style="color: #991b1b;">⚠️ 일부 파일이 다운로드되지 않았습니다. 파일 경로를 확인하세요.</p>' : ''}
+                ${success === total && total > 0 ? '<p style="color: #065f46;">🎉 모든 다운로드가 성공적으로 완료되었습니다!</p>' : ''}
+            `;
+        }
+
+        // 페이지 로드 시 파일 존재 여부 미리 확인
+        window.onload = function() {
+            const files = [
+                { url: 'public/downloads/think-habit-group-widget.zip', name: 'group-widget' },
+                { url: 'public/downloads/think-habit-windows.exe', name: 'windows' },
+                { url: 'public/downloads/think-habit-mac.dmg', name: 'mac' },
+                { url: 'public/downloads/think-habit-android.apk', name: 'android' }
+            ];
+            
+            console.log('다운로드 파일 체크 시작...');
+            files.forEach(file => {
+                fetch(file.url, { method: 'HEAD' })
+                    .then(response => {
+                        console.log(`${file.name}: ${response.ok ? '존재' : '없음'}`);
+                    })
+                    .catch(error => {
+                        console.error(`${file.name}: 확인 실패`, error);
+                    });
+            });
+        };
+    </script>
+</body>
+</html>

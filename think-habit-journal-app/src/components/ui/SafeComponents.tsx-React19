@@ -1,0 +1,46 @@
+'use client';
+
+import React from 'react';
+import Link from 'next/link';
+import * as Icons from 'lucide-react';
+
+// Next.js Link 래퍼
+interface SafeLinkProps {
+  href: string;
+  children: React.ReactNode;
+  className?: string;
+  [key: string]: any;
+}
+
+export const SafeLink: React.FC<SafeLinkProps> = ({ href, children, ...props }) => {
+  return (
+    <Link href={href} {...props}>
+      {children}
+    </Link>
+  );
+};
+
+// 모든 아이콘 래퍼들
+export const BookOpen = (props: any) => React.createElement(Icons.BookOpen as any, props);
+export const Plus = (props: any) => React.createElement(Icons.Plus as any, props);
+export const Search = (props: any) => React.createElement(Icons.Search as any, props);
+export const Calendar = (props: any) => React.createElement(Icons.Calendar as any, props);
+export const Target = (props: any) => React.createElement(Icons.Target as any, props);
+export const TrendingUp = (props: any) => React.createElement(Icons.TrendingUp as any, props);
+export const Sparkles = (props: any) => React.createElement(Icons.Sparkles as any, props);
+export const ArrowLeft = (props: any) => React.createElement(Icons.ArrowLeft as any, props);
+export const CheckCircle = (props: any) => React.createElement(Icons.CheckCircle as any, props);
+export const Clock = (props: any) => React.createElement(Icons.Clock as any, props);
+export const AlertCircle = (props: any) => React.createElement(Icons.AlertCircle as any, props);
+export const WifiOff = (props: any) => React.createElement(Icons.WifiOff as any, props);
+export const Camera = (props: any) => React.createElement(Icons.Camera as any, props);
+export const CheckSquare = (props: any) => React.createElement(Icons.CheckSquare as any, props);
+export const MoreVertical = (props: any) => React.createElement(Icons.MoreVertical as any, props);
+export const Edit3 = (props: any) => React.createElement(Icons.Edit3 as any, props);
+export const Share2 = (props: any) => React.createElement(Icons.Share2 as any, props);
+export const Star = (props: any) => React.createElement(Icons.Star as any, props);
+export const Archive = (props: any) => React.createElement(Icons.Archive as any, props);
+export const Trash2 = (props: any) => React.createElement(Icons.Trash2 as any, props);
+export const Tag = (props: any) => React.createElement(Icons.Tag as any, props);
+export const MapPin = (props: any) => React.createElement(Icons.MapPin as any, props);
+export const Eye = (props: any) => React.createElement(Icons.Eye as any, props);

@@ -1,0 +1,519 @@
+.platform-specific-settings {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.platform-settings-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6b7280;
+}
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.settings-header h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.platform-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.platform-selector label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.platform-select {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+  min-width: 200px;
+}
+
+.platform-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.setting-section {
+  border: 1px solid #f3f4f6;
+  border-radius: 8px;
+  padding: 20px;
+  background: #fafafa;
+}
+
+.setting-section h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 16px 0;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.toggle-advanced {
+  background: none;
+  border: 1px solid #d1d5db;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggle-advanced:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.setting-item {
+  margin-bottom: 16px;
+}
+
+.setting-item:last-child {
+  margin-bottom: 0;
+}
+
+.setting-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+}
+
+.setting-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+
+.setting-item > label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.setting-input,
+.setting-select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+}
+
+.setting-input:focus,
+.setting-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* 프라이버시 설정 */
+.privacy-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.privacy-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.privacy-option:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.privacy-option input[type="radio"] {
+  margin-top: 2px;
+}
+
+.privacy-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.privacy-label strong {
+  font-size: 14px;
+  color: #1f2937;
+}
+
+.privacy-label small {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* 필터 옵션 */
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+}
+
+.filter-option input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+
+/* 태그 입력 */
+.tag-input {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 4px;
+  background: white;
+  min-height: 40px;
+}
+
+.tag-input:focus-within {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #e5e7eb;
+  color: #374151;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.tag-remove {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.tag-remove:hover {
+  background: #d1d5db;
+  color: #374151;
+}
+
+.tag-input-field {
+  border: none;
+  outline: none;
+  padding: 4px;
+  font-size: 14px;
+  flex: 1;
+  min-width: 100px;
+}
+
+/* 커스텀 규칙 */
+.custom-rules {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.custom-rule {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr auto;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+}
+
+.rule-field,
+.rule-condition,
+.rule-value,
+.rule-action {
+  padding: 6px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.rule-value {
+  font-size: 14px;
+}
+
+.remove-rule {
+  background: #fee2e2;
+  color: #dc2626;
+  border: none;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.remove-rule:hover {
+  background: #fecaca;
+  color: #b91c1c;
+}
+
+.add-rule-btn {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+}
+
+.add-rule-btn:hover {
+  background: #e5e7eb;
+  border-color: #9ca3af;
+}
+
+.advanced-settings {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .platform-specific-settings {
+    padding: 16px;
+  }
+
+  .settings-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .platform-selector {
+    justify-content: space-between;
+  }
+
+  .platform-select {
+    min-width: auto;
+    flex: 1;
+  }
+
+  .privacy-options {
+    gap: 8px;
+  }
+
+  .privacy-option {
+    padding: 8px;
+  }
+
+  .custom-rule {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .remove-rule {
+    justify-self: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .platform-specific-settings {
+    padding: 12px;
+  }
+
+  .setting-section {
+    padding: 16px;
+  }
+
+  .settings-header h3 {
+    font-size: 18px;
+  }
+
+  .platform-selector {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .tag-list {
+    gap: 2px;
+  }
+
+  .tag {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+}
+
+/* 다크 모드 지원 */
+@media (prefers-color-scheme: dark) {
+  .platform-specific-settings {
+    background: #1f2937;
+    border-color: #374151;
+  }
+
+  .settings-header {
+    border-bottom-color: #374151;
+  }
+
+  .settings-header h3 {
+    color: #f9fafb;
+  }
+
+  .platform-selector label {
+    color: #d1d5db;
+  }
+
+  .platform-select,
+  .setting-input,
+  .setting-select {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+
+  .setting-section {
+    background: #374151;
+    border-color: #4b5563;
+  }
+
+  .setting-section h4 {
+    color: #f9fafb;
+  }
+
+  .setting-label,
+  .filter-option {
+    color: #d1d5db;
+  }
+
+  .privacy-option {
+    background: #374151;
+    border-color: #4b5563;
+  }
+
+  .privacy-option:hover {
+    background: #4b5563;
+    border-color: #6b7280;
+  }
+
+  .privacy-label strong {
+    color: #f9fafb;
+  }
+
+  .privacy-label small {
+    color: #9ca3af;
+  }
+
+  .tag-input {
+    background: #374151;
+    border-color: #4b5563;
+  }
+
+  .tag {
+    background: #4b5563;
+    color: #d1d5db;
+  }
+
+  .tag-input-field {
+    background: transparent;
+    color: #f9fafb;
+  }
+
+  .custom-rule {
+    background: #374151;
+    border-color: #4b5563;
+  }
+
+  .rule-field,
+  .rule-condition,
+  .rule-value,
+  .rule-action {
+    background: #4b5563;
+    border-color: #6b7280;
+    color: #f9fafb;
+  }
+
+  .add-rule-btn,
+  .toggle-advanced {
+    background: #4b5563;
+    color: #d1d5db;
+    border-color: #6b7280;
+  }
+
+  .add-rule-btn:hover,
+  .toggle-advanced:hover {
+    background: #6b7280;
+    color: #f3f4f6;
+  }
+
+  .advanced-settings {
+    border-top-color: #4b5563;
+  }
+}

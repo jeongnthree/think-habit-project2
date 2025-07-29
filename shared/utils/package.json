@@ -1,0 +1,20 @@
+{
+  "name": "@think-habit/utils",
+  "version": "1.0.0",
+  "description": "Think-Habit 공통 유틸리티 함수",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.0.0",
+    "jest": "^29.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "zod": "^3.0.0"
+  }
+}

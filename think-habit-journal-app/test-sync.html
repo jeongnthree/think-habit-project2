@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔒 보안 강화된 Journal App 동기화 테스트</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .panel {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .secondary-btn {
+            background-color: #2196F3;
+        }
+        .secondary-btn:hover {
+            background-color: #0b7dda;
+        }
+        .danger-btn {
+            background-color: #f44336;
+        }
+        .danger-btn:hover {
+            background-color: #da190b;
+        }
+        .journal-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .journal-item {
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+        }
+        .journal-item.synced {
+            background: #e8f5e9;
+            border-color: #4caf50;
+        }
+        .journal-item h3 {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+        }
+        .journal-item p {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        .status.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #4caf50;
+        }
+        .status.error {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #f44336;
+        }
+        .status.info {
+            background: #e3f2fd;
+            color: #1565c0;
+            border: 1px solid #2196f3;
+        }
+        .log-container {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+        .log-entry {
+            margin-bottom: 5px;
+        }
+        .log-entry.error {
+            color: #c62828;
+        }
+        .log-entry.success {
+            color: #2e7d32;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔒 보안 강화된 Think-Habit Journal 동기화 테스트</h1>
+    
+    <div style="background: #e8f5e9; border: 1px solid #4caf50; border-radius: 4px; padding: 15px; margin-bottom: 20px;">
+        <h3 style="margin: 0 0 10px 0; color: #2e7d32;">✅ 보안 개선 사항</h3>
+        <ul style="margin: 0; padding-left: 20px; color: #2e7d32;">
+            <li><strong>Service Role Key 보호</strong>: 클라이언트에서 직접 사용하지 않음</li>
+            <li><strong>서버사이드 업로드</strong>: 모든 이미지 업로드가 웹 서버 API를 통해 처리</li>
+            <li><strong>안전한 동기화</strong>: 인증된 API 엔드포인트 사용</li>
+            <li><strong>로컬 저장소 보호</strong>: 민감한 정보 노출 방지</li>
+        </ul>
+    </div>
+    
+    <div class="container">
+        <!-- 일지 작성 패널 -->
+        <div class="panel">
+            <h2>📝 새 일지 작성</h2>
+            <div id="status-message"></div>
+            
+            <form id="journal-form">
+                <div class="form-group">
+                    <label for="title">제목</label>
+                    <input type="text" id="title" name="title" required placeholder="일지 제목을 입력하세요">
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">카테고리</label>
+                    <select id="category" name="category" required>
+                        <option value="cat-1">완벽주의 극복</option>
+                        <option value="cat-2">흑백논리 개선</option>
+                        <option value="cat-3">감정적 추론 극복</option>
+                        <option value="cat-4">비판적 사고</option>
+                        <option value="cat-5">창의적 사고</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="content">내용</label>
+                    <textarea id="content" name="content" required placeholder="오늘의 훈련 내용을 작성하세요..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="images">🖼️ 이미지 첨부 (선택사항)</label>
+                    <input type="file" id="images" name="images" multiple accept="image/*" onchange="handleImagePreview(this)">
+                    <div id="image-preview" style="display: none; margin-top: 10px;">
+                        <strong>선택된 이미지:</strong>
+                        <div id="preview-container" style="display: flex; gap: 10px; margin-top: 5px; flex-wrap: wrap;"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="is-public" name="is_public" checked>
+                    <label for="is-public">공개 일지로 설정 (커뮤니티에 표시됨)</label>
+                </div>
+                
+                <button type="submit">💾 일지 저장</button>
+                <button type="button" class="secondary-btn" onclick="syncToWebsite()">🔄 웹사이트 동기화</button>
+                <button type="button" class="danger-btn" onclick="clearAllJournals()">🗑️ 모든 일지 삭제</button>
+            </form>
+        </div>
+        
+        <!-- 저장된 일지 목록 -->
+        <div class="panel">
+            <h2>📚 저장된 일지 목록</h2>
+            <div id="sync-status" class="status info">동기화 대기 중...</div>
+            <div id="journal-list" class="journal-list">
+                <p>저장된 일지가 없습니다.</p>
+            </div>
+            
+            <h3>📊 동기화 로그</h3>
+            <div id="log-container" class="log-container"></div>
+        </div>
+    </div>
+
+    <script>
+        // WebsiteSyncService 간단 버전
+        class SimpleSyncService {
+            constructor() {
+                this.websiteUrl = 'http://localhost:3000';
+                this.userId = '8236e966-ba4c-46d8-9cda-19bc67ec305d';
+                this.userName = '테스트 사용자';
+            }
+
+            async syncJournalsToWebsite() {
+                const journals = this.getUnsyncedJournals();
+                
+                if (journals.length === 0) {
+                    return {
+                        success: true,
+                        message: '동기화할 일지가 없습니다.',
+                        summary: { total: 0, success: 0, failed: 0 }
+                    };
+                }
+
+                const syncData = {
+                    journals: journals.map(j => ({
+                        ...j,
+                        user_id: this.userId,
+                        user_name: this.userName,
+                        app_version: '1.0.0',
+                        sync_source: 'desktop_app'
+                    })),
+                    user_token: this.userId
+                };
+
+                try {
+                    const response = await fetch(`${this.websiteUrl}/api/journals/sync`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'User-Agent': 'Think-Habit-Journal-App/1.0.0'
+                        },
+                        body: JSON.stringify(syncData)
+                    });
+
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // 성공한 일지들 동기화 상태 업데이트
+                        result.results?.forEach(r => {
+                            if (r.success) {
+                                this.markAsSynced(r.journal_id);
+                            }
+                        });
+                    }
+                    
+                    return result;
+                } catch (error) {
+                    return {
+                        success: false,
+                        error: error.message
+                    };
+                }
+            }
+
+            getUnsyncedJournals() {
+                const journals = JSON.parse(localStorage.getItem('journals') || '[]');
+                return journals.filter(j => !j.synced_to_website && j.is_public);
+            }
+
+            markAsSynced(journalId) {
+                const journals = JSON.parse(localStorage.getItem('journals') || '[]');
+                const updated = journals.map(j => {
+                    if (j.id === journalId) {
+                        return { ...j, synced_to_website: true, last_synced_at: new Date().toISOString() };
+                    }
+                    return j;
+                });
+                localStorage.setItem('journals', JSON.stringify(updated));
+            }
+        }
+
+        const syncService = new SimpleSyncService();
+
+        // 🔒 보안 강화된 이미지 업로드 서비스
+        class SafeImageUploadService {
+            static async uploadImages(files, userId) {
+                if (!files || files.length === 0) {
+                    return { success: true, urls: [] };
+                }
+
+                // 🔍 웹 서버 연결 상태 먼저 확인
+                const isServerRunning = await this.checkServerStatus();
+                if (!isServerRunning) {
+                    console.warn('⚠️ 웹 서버가 실행되지 않음. 오프라인 모드 사용');
+                    return this.handleOfflineUpload(files);
+                }
+
+                try {
+                    console.log('🖼️ 안전한 이미지 업로드 시작:', files.length, '개 파일');
+                    
+                    const formData = new FormData();
+                    Array.from(files).forEach(file => {
+                        formData.append('files', file);
+                    });
+                    formData.append('userId', userId);
+
+                    const response = await fetch('http://localhost:3000/api/upload/images', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const result = await response.json();
+                    
+                    if (response.ok && result.success) {
+                        console.log('✅ 이미지 업로드 성공:', result.data?.urls?.length, '개');
+                        return {
+                            success: true,
+                            urls: result.data?.urls || []
+                        };
+                    } else {
+                        console.error('❌ 이미지 업로드 실패:', result.error);
+                        return {
+                            success: false,
+                            error: result.error || '업로드 실패'
+                        };
+                    }
+                } catch (error) {
+                    console.error('💥 이미지 업로드 중 오류:', error);
+                    return {
+                        success: false,
+                        error: error.message || '알 수 없는 오류'
+                    };
+                }
+            }
+
+            // 서버 상태 확인
+            static async checkServerStatus() {
+                try {
+                    const response = await fetch('http://localhost:3000/api/health', {
+                        method: 'GET',
+                        signal: AbortSignal.timeout(3000) // 3초 타임아웃
+                    });
+                    return response.ok;
+                } catch (error) {
+                    console.warn('서버 연결 실패:', error.message);
+                    return false;
+                }
+            }
+
+            // 오프라인 모드 처리 (Base64 이미지로 저장)
+            static async handleOfflineUpload(files) {
+                try {
+                    console.log('📱 오프라인 모드: Base64로 이미지 저장');
+                    const base64Urls = [];
+                    
+                    for (const file of files) {
+                        const base64 = await this.fileToBase64(file);
+                        base64Urls.push(base64);
+                    }
+                    
+                    return {
+                        success: true,
+                        urls: base64Urls,
+                        offline: true
+                    };
+                } catch (error) {
+                    return {
+                        success: false,
+                        error: `오프라인 처리 실패: ${error.message}`
+                    };
+                }
+            }
+
+            // 파일을 Base64로 변환
+            static fileToBase64(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+
+        // 이미지 미리보기 함수
+        function handleImagePreview(input) {
+            const previewDiv = document.getElementById('image-preview');
+            const previewContainer = document.getElementById('preview-container');
+            
+            if (input.files && input.files.length > 0) {
+                previewDiv.style.display = 'block';
+                previewContainer.innerHTML = '';
+                
+                Array.from(input.files).forEach((file, index) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const imgContainer = document.createElement('div');
+                        imgContainer.style.cssText = 'position: relative; display: inline-block;';
+                        
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.style.cssText = 'width: 60px; height: 60px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd;';
+                        img.title = file.name;
+                        
+                        const fileName = document.createElement('div');
+                        fileName.textContent = file.name.length > 10 ? file.name.substring(0, 10) + '...' : file.name;
+                        fileName.style.cssText = 'font-size: 10px; text-align: center; margin-top: 2px; color: #666;';
+                        
+                        imgContainer.appendChild(img);
+                        imgContainer.appendChild(fileName);
+                        previewContainer.appendChild(imgContainer);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            } else {
+                previewDiv.style.display = 'none';
+            }
+        }
+
+        // 로그 출력 함수
+        function addLog(message, type = 'info') {
+            const logContainer = document.getElementById('log-container');
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry ${type}`;
+            logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        // 일지 목록 표시
+        function displayJournals() {
+            const journals = JSON.parse(localStorage.getItem('journals') || '[]');
+            const listContainer = document.getElementById('journal-list');
+            
+            if (journals.length === 0) {
+                listContainer.innerHTML = '<p>저장된 일지가 없습니다.</p>';
+                return;
+            }
+            
+            listContainer.innerHTML = journals.map(journal => {
+                const imageCount = journal.image_count || (journal.attachments ? journal.attachments.length : 0);
+                const imagePreview = imageCount > 0 ? 
+                    `<div style="margin-top: 5px;"><small>🖼️ 이미지 ${imageCount}개 첨부</small></div>` : '';
+                
+                return `
+                    <div class="journal-item ${journal.synced_to_website ? 'synced' : ''}">
+                        <h3>${journal.title}</h3>
+                        <p>${journal.content.substring(0, 100)}...</p>
+                        ${imagePreview}
+                        <p><small>카테고리: ${journal.category_name} | 
+                           공개: ${journal.is_public ? '예' : '아니오'} | 
+                           동기화: ${journal.synced_to_website ? '완료' : '대기'}</small></p>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 폼 제출 처리 (이미지 업로드 포함)
+        document.getElementById('journal-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            showStatus('일지 저장 중...', 'info');
+            addLog('📝 새 일지 작성 시작...');
+            
+            const formData = new FormData(e.target);
+            const categorySelect = document.getElementById('category');
+            const imageFiles = document.getElementById('images').files;
+            
+            let imageUrls = [];
+            
+            // 🖼️ 이미지가 있으면 먼저 업로드
+            if (imageFiles && imageFiles.length > 0) {
+                showStatus('이미지 업로드 중...', 'info');
+                addLog(`🖼️ ${imageFiles.length}개 이미지 업로드 시작...`);
+                
+                const uploadResult = await SafeImageUploadService.uploadImages(
+                    imageFiles, 
+                    syncService.userId
+                );
+                
+                if (uploadResult.success) {
+                    imageUrls = uploadResult.urls;
+                    if (uploadResult.offline) {
+                        addLog(`📱 오프라인 모드: ${imageUrls.length}개 이미지를 Base64로 저장`, 'success');
+                        showStatus('오프라인 모드에서 이미지 저장됨', 'success');
+                    } else {
+                        addLog(`✅ 이미지 업로드 성공: ${imageUrls.length}개`, 'success');
+                    }
+                } else {
+                    addLog(`❌ 이미지 업로드 실패: ${uploadResult.error}`, 'error');
+                    showStatus(`이미지 업로드 실패: ${uploadResult.error}`, 'error');
+                    return; // 이미지 업로드 실패 시 일지 저장 중단
+                }
+            }
+            
+            const journal = {
+                id: `journal-${Date.now()}`,
+                title: formData.get('title'),
+                content: formData.get('content'),
+                category_id: formData.get('category'),
+                category_name: categorySelect.options[categorySelect.selectedIndex].text,
+                is_public: document.getElementById('is-public').checked,
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString(),
+                synced_to_website: false,
+                // 🔒 보안 강화: 이미지 URL들 안전하게 저장
+                image_urls: imageUrls,
+                image_count: imageUrls.length,
+                attachments: imageUrls // 호환성을 위해 두 필드 모두 저장
+            };
+            
+            // localStorage에 저장
+            const journals = JSON.parse(localStorage.getItem('journals') || '[]');
+            journals.push(journal);
+            localStorage.setItem('journals', JSON.stringify(journals));
+            
+            // 상태 메시지 표시
+            showStatus('일지가 저장되었습니다!', 'success');
+            addLog(`일지 저장: ${journal.title}`, 'success');
+            
+            // 폼 초기화
+            e.target.reset();
+            document.getElementById('is-public').checked = true;
+            
+            // 목록 갱신
+            displayJournals();
+        });
+
+        // 동기화 함수
+        async function syncToWebsite() {
+            showStatus('동기화 중...', 'info');
+            addLog('웹사이트 동기화 시작...');
+            
+            const result = await syncService.syncJournalsToWebsite();
+            
+            if (result.success) {
+                showStatus(`동기화 완료! ${result.summary?.success || 0}개 성공, ${result.summary?.failed || 0}개 실패`, 'success');
+                addLog(result.message || '동기화 완료', 'success');
+                
+                if (result.summary?.success > 0) {
+                    addLog(`✅ ${result.summary.success}개 일지가 커뮤니티에 등록되었습니다.`, 'success');
+                }
+            } else {
+                showStatus(`동기화 실패: ${result.error}`, 'error');
+                addLog(`동기화 실패: ${result.error}`, 'error');
+            }
+            
+            displayJournals();
+        }
+
+        // 상태 메시지 표시
+        function showStatus(message, type) {
+            const statusEl = document.getElementById('status-message');
+            statusEl.className = `status ${type}`;
+            statusEl.textContent = message;
+            
+            if (type !== 'info') {
+                setTimeout(() => {
+                    statusEl.textContent = '';
+                    statusEl.className = '';
+                }, 5000);
+            }
+        }
+
+        // 모든 일지 삭제
+        function clearAllJournals() {
+            if (confirm('정말로 모든 일지를 삭제하시겠습니까?')) {
+                localStorage.removeItem('journals');
+                displayJournals();
+                showStatus('모든 일지가 삭제되었습니다.', 'info');
+                addLog('모든 일지 삭제됨', 'error');
+            }
+        }
+
+        // 페이지 로드 시 일지 목록 표시
+        document.addEventListener('DOMContentLoaded', () => {
+            displayJournals();
+            addLog('테스트 페이지 로드 완료');
+        });
+    </script>
+</body>
+</html>

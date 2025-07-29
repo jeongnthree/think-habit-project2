@@ -1,0 +1,398 @@
+.error-management-panel {
+  background: #f9fafb;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.panel-header {
+  background: white;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.panel-header h2 {
+  margin: 0 0 16px 0;
+  color: #1f2937;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.tab-navigation {
+  display: flex;
+  gap: 4px;
+}
+
+.tab-button {
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-button:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.tab-button.active {
+  background: #3b82f6;
+  color: white;
+}
+
+.panel-content {
+  padding: 24px;
+}
+
+/* 오류 탭 스타일 */
+.errors-tab {
+  max-width: 800px;
+}
+
+.errors-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.errors-header h3 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.refresh-button {
+  padding: 8px 16px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.refresh-button:hover {
+  background: #2563eb;
+}
+
+.no-errors {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 8px;
+  border: 2px dashed #d1d5db;
+}
+
+.no-errors-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.no-errors h4 {
+  margin: 0 0 8px 0;
+  color: #059669;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.no-errors p {
+  margin: 0;
+  color: #6b7280;
+}
+
+.errors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.error-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #e5e7eb;
+}
+
+.error-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.error-platform {
+  background: #f3f4f6;
+  color: #374151;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.error-severity {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.error-time {
+  color: #6b7280;
+  font-size: 0.75rem;
+  margin-left: auto;
+}
+
+.error-card-body h4 {
+  margin: 0 0 8px 0;
+  color: #1f2937;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.error-category {
+  margin: 0 0 12px 0;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.error-suggestions {
+  margin: 12px 0;
+  padding: 12px;
+  background: #f9fafb;
+  border-radius: 6px;
+  border-left: 3px solid #3b82f6;
+}
+
+.error-suggestions strong {
+  color: #374151;
+  font-size: 0.875rem;
+}
+
+.error-suggestions ul {
+  margin: 8px 0 0 0;
+  padding-left: 16px;
+}
+
+.error-suggestions li {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin: 4px 0;
+}
+
+.error-card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.resolve-button {
+  padding: 8px 16px;
+  background: #059669;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.resolve-button:hover {
+  background: #047857;
+}
+
+.dismiss-button {
+  padding: 8px 16px;
+  background: transparent;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dismiss-button:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+/* 분석 탭 스타일 */
+.analytics-tab {
+  max-width: 1000px;
+}
+
+.analytics-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.summary-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.summary-card h4 {
+  margin: 0 0 8px 0;
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.summary-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.summary-value.critical {
+  color: #dc2626;
+}
+
+.summary-value.high {
+  color: #ea580c;
+}
+
+.summary-value.auto {
+  color: #059669;
+}
+
+.analytics-charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.chart-section {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.chart-section h4 {
+  margin: 0 0 16px 0;
+  color: #1f2937;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.category-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.category-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.category-label {
+  min-width: 100px;
+  color: #374151;
+  font-size: 0.875rem;
+  text-transform: capitalize;
+}
+
+.category-bar-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.category-bar-fill {
+  height: 20px;
+  background: #3b82f6;
+  border-radius: 4px;
+  min-width: 4px;
+  transition: width 0.3s ease;
+}
+
+.category-count {
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: 500;
+  min-width: 20px;
+}
+
+.platform-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.platform-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #f9fafb;
+  border-radius: 6px;
+}
+
+.platform-name {
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.platform-count {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .panel-header {
+    padding: 16px 20px;
+  }
+
+  .tab-navigation {
+    flex-wrap: wrap;
+  }
+
+  .panel-content {
+    padding: 20px;
+  }
+
+  .analytics-charts {
+    grid-template-columns: 1fr;
+  }
+
+  .error-card-header {
+    flex-wrap: wrap;
+  }
+
+  .error-card-actions {
+    flex-direction: column;
+  }
+
+  .resolve-button,
+  .dismiss-button {
+    width: 100%;
+  }
+}

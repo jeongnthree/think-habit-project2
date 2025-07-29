@@ -1,0 +1,20 @@
+#!/bin/bash
+
+echo "===================================="
+echo "Think-Habit Journal 설치 프로그램"
+echo "===================================="
+echo ""
+echo "이 프로그램은 Think-Habit Journal 데스크톱 앱의"
+echo "macOS 데모 설치 프로그램입니다."
+echo ""
+echo "실제 버전은 곧 출시 예정입니다!"
+echo ""
+echo "지원 플랫폼:"
+echo "- macOS 11.0 이상"
+echo "- Apple Silicon 네이티브 지원"
+echo "- 메뉴바 위젯"
+echo ""
+echo "문의: support@think-habit.com"
+echo ""
+echo "Press any key to continue..."
+read -n 1

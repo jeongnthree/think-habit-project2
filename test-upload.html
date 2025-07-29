@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>간단한 업로드 테스트</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .container {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+      }
+      .success {
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+        color: #155724;
+      }
+      .error {
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+        color: #721c24;
+      }
+      button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 10px 5px;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      button:disabled {
+        background-color: #6c757d;
+        cursor: not-allowed;
+      }
+      input[type='file'] {
+        margin: 10px 0;
+        padding: 5px;
+      }
+      .log {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        padding: 10px;
+        margin: 10px 0;
+        font-family: monospace;
+        white-space: pre-wrap;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 10px;
+        margin: 10px 0;
+      }
+      .image-item {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 10px;
+      }
+      .image-item img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🧪 간단한 업로드 테스트</h1>
+
+    <div class="container">
+      <h2>파일 선택</h2>
+      <input type="file" id="fileInput" accept="image/*" multiple />
+      <div id="fileInfo"></div>
+
+      <h2>테스트 버튼</h2>
+      <button onclick="testAPI()">API 연결 테스트</button>
+      <button onclick="uploadFiles()" id="uploadBtn">파일 업로드</button>
+
+      <h2>로그</h2>
+      <div id="log" class="log"></div>
+
+      <div id="result"></div>
+    </div>
+
+    <script>
+      const log = document.getElementById('log');
+      const fileInput = document.getElementById('fileInput');
+      const fileInfo = document.getElementById('fileInfo');
+      const result = document.getElementById('result');
+      const uploadBtn = document.getElementById('uploadBtn');
+
+      function addLog(message) {
+        const timestamp = new Date().toLocaleTimeString();
+        log.textContent += `[${timestamp}] ${message}\n`;
+        log.scrollTop = log.scrollHeight;
+        console.log(message);
+      }
+
+      fileInput.addEventListener('change', function (e) {
+        const files = Array.from(e.target.files);
+        if (files.length > 0) {
+          const fileList = files
+            .map(
+              f =>
+                `${f.name} (${(f.size / 1024 / 1024).toFixed(2)}MB, ${f.type})`
+            )
+            .join('\n');
+          fileInfo.innerHTML = `<strong>선택된 파일:</strong><br>${fileList.replace(/\n/g, '<br>')}`;
+          addLog(`${files.length}개 파일 선택됨`);
+        } else {
+          fileInfo.innerHTML = '';
+        }
+      });
+
+      async function testAPI() {
+        addLog('API 연결 테스트 시작...');
+
+        try {
+          const response = await fetch('/api/upload/simple', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ test: true }),
+          });
+
+          addLog(`API 응답 상태: ${response.status}`);
+
+          const data = await response.json();
+          addLog(`API 응답: ${JSON.stringify(data, null, 2)}`);
+
+          if (response.ok) {
+            result.innerHTML =
+              '<div class="container success">✅ API 연결 성공!</div>';
+          } else {
+            result.innerHTML = `<div class="container error">❌ API 오류: ${data.error}</div>`;
+          }
+        } catch (error) {
+          addLog(`API 테스트 오류: ${error.message}`);
+          result.innerHTML = `<div class="container error">❌ 연결 오류: ${error.message}</div>`;
+        }
+      }
+
+      async function uploadFiles() {
+        const files = Array.from(fileInput.files);
+
+        if (files.length === 0) {
+          alert('파일을 선택해주세요.');
+          return;
+        }
+
+        uploadBtn.disabled = true;
+        uploadBtn.textContent = '업로드 중...';
+        result.innerHTML = '';
+
+        addLog(`${files.length}개 파일 업로드 시작...`);
+
+        try {
+          const formData = new FormData();
+
+          files.forEach((file, index) => {
+            addLog(
+              `파일 ${index + 1}: ${file.name} (${file.size} bytes, ${file.type})`
+            );
+            formData.append('files', file);
+          });
+
+          formData.append('userId', 'html-test-user');
+
+          addLog('서버로 업로드 요청 전송...');
+
+          const response = await fetch('/api/upload/simple', {
+            method: 'POST',
+            body: formData,
+          });
+
+          addLog(`서버 응답 상태: ${response.status}`);
+
+          const data = await response.json();
+          addLog(`서버 응답 데이터: ${JSON.stringify(data, null, 2)}`);
+
+          if (response.ok && data.success) {
+            addLog('✅ 업로드 성공!');
+
+            let resultHTML = '<div class="container success">';
+            resultHTML += '<h3>✅ 업로드 성공!</h3>';
+            resultHTML += `<p><strong>업로드된 파일:</strong> ${data.data.successCount}개</p>`;
+            resultHTML += `<p><strong>전체 파일:</strong> ${data.data.totalFiles}개</p>`;
+            resultHTML += `<p><strong>업로드 시간:</strong> ${data.data.uploadedAt}</p>`;
+
+            if (data.data.urls && data.data.urls.length > 0) {
+              resultHTML += '<div class="image-grid">';
+              data.data.urls.forEach((url, index) => {
+                resultHTML += `
+                                <div class="image-item">
+                                    <img src="${url}" alt="업로드된 이미지 ${index + 1}">
+                                    <p style="font-size: 12px; word-break: break-all;">${url}</p>
+                                </div>
+                            `;
+              });
+              resultHTML += '</div>';
+            }
+
+            if (data.warnings) {
+              resultHTML += `<p style="color: orange;"><strong>경고:</strong> ${data.warnings.join(', ')}</p>`;
+            }
+
+            resultHTML += '</div>';
+            result.innerHTML = resultHTML;
+          } else {
+            throw new Error(
+              data.error || `HTTP ${response.status}: 업로드 실패`
+            );
+          }
+        } catch (error) {
+          addLog(`❌ 업로드 오류: ${error.message}`);
+          result.innerHTML = `<div class="container error">❌ 업로드 실패: ${error.message}</div>`;
+        } finally {
+          uploadBtn.disabled = false;
+          uploadBtn.textContent = '파일 업로드';
+        }
+      }
+
+      // 페이지 로드 시 초기 메시지
+      addLog('페이지 로드 완료. 테스트를 시작하세요.');
+    </script>
+  </body>
+</html>

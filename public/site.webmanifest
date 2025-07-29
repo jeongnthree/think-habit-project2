@@ -1,0 +1,74 @@
+{
+  "name": "Think-Habit Lite",
+  "short_name": "Think-Habit",
+  "description": "생각하는 습관을 기르는 간단하고 효과적인 훈련 플랫폼",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "ko",
+  "categories": ["education", "productivity", "lifestyle"],
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "새 일지 작성",
+      "short_name": "일지 작성",
+      "description": "새로운 훈련 일지를 작성합니다",
+      "url": "/training",
+      "icons": [
+        {
+          "src": "/icons/journal-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "커뮤니티",
+      "short_name": "커뮤니티",
+      "description": "다른 학습자들의 일지를 확인합니다",
+      "url": "/community",
+      "icons": [
+        {
+          "src": "/icons/community-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/dashboard-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "대시보드 화면"
+    },
+    {
+      "src": "/screenshots/dashboard-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "모바일 대시보드"
+    }
+  ]
+}

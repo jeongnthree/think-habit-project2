@@ -1,0 +1,180 @@
+import { createClient } from '@/lib/supabase/server';
+import { NextRequest, NextResponse } from 'next/server';
+
+/**
+ * Supabase OAuth 콜백 처리
+ * Google OAuth 인증 후 리디렉션되는 엔드포인트
+ */
+export async function GET(request: NextRequest) {
+  const requestUrl = new URL(request.url);
+  const code = requestUrl.searchParams.get('code');
+  const error = requestUrl.searchParams.get('error');
+  const error_code = requestUrl.searchParams.get('error_code');
+  const error_description = requestUrl.searchParams.get('error_description');
+  const redirectTo = requestUrl.searchParams.get('redirectTo') || '/dashboard';
+  
+  // URL fragment에서 access_token 확인 (implicit flow 감지)
+  const fragment = requestUrl.hash;
+  console.log('URL 전체:', request.url);
+  console.log('Fragment:', fragment);
+
+  console.log('🚨 서버사이드 OAuth 콜백 처리:', {
+    code: !!code,
+    codeValue: code,
+    error,
+    error_code,
+    error_description: error_description
+      ? decodeURIComponent(error_description)
+      : null,
+    redirectTo,
+    fullUrl: request.url,
+    searchParams: Object.fromEntries(requestUrl.searchParams),
+    pathname: requestUrl.pathname
+  });
+
+  // 추가 디버깅 정보
+  if (code) {
+    console.log('✅ 인증 코드 수신됨, 세션 교환 시도...');
+  } else if (error) {
+    console.log('❌ OAuth 오류 발생:', {
+      error,
+      error_code,
+      description: error_description
+        ? decodeURIComponent(error_description)
+        : null,
+    });
+  }
+
+  // 에러 처리
+  if (error) {
+    console.error('OAuth 에러:', error);
+    return NextResponse.redirect(
+      new URL(
+        `/login?error=${encodeURIComponent('Google 로그인에 실패했습니다.')}`,
+        requestUrl.origin
+      )
+    );
+  }
+
+  // 코드 확인 - Fragment가 있을 경우 클라이언트 처리로 넘김
+  if (!code) {
+    console.log('🔍 인증 코드가 없음 - Fragment 처리를 위해 클라이언트로 전달');
+    
+    // URL에 fragment가 포함되어 있을 가능성이 있으므로 
+    // 클라이언트 사이드에서 처리하도록 HTML 응답 반환
+    return new Response(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>인증 처리 중...</title>
+        <script>
+          // Fragment 확인
+          if (window.location.hash.includes('access_token')) {
+            console.log('🔄 Fragment 감지, 클라이언트 사이드 처리로 전환');
+            // 페이지 새로고침하여 클라이언트 컴포넌트가 처리하도록 함
+            window.location.href = window.location.pathname + window.location.search;
+          } else {
+            // Fragment도 없으면 로그인 페이지로
+            window.location.href = '/login?error=' + encodeURIComponent('인증 코드가 없습니다.');
+          }
+        </script>
+      </head>
+      <body>
+        <p>인증 처리 중...</p>
+      </body>
+      </html>
+    `, {
+      headers: { 'Content-Type': 'text/html' }
+    });
+  }
+
+  try {
+    // Supabase 클라이언트 생성
+    const supabase = createClient();
+
+    // OAuth 코드를 세션으로 교환
+    const { data, error: exchangeError } =
+      await supabase.auth.exchangeCodeForSession(code);
+
+    if (exchangeError) {
+      console.error('세션 교환 오류:', exchangeError);
+      return NextResponse.redirect(
+        new URL(
+          `/login?error=${encodeURIComponent(exchangeError.message)}`,
+          requestUrl.origin
+        )
+      );
+    }
+
+    if (data.user) {
+      console.log('OAuth 로그인 성공:', data.user.email);
+
+      // 사용자 프로필 확인 및 생성
+      const { data: existingProfile, error: profileError } = await supabase
+        .from('users')
+        .select('*')
+        .eq('auth_id', data.user.id)
+        .single();
+
+      // 프로필이 없으면 생성
+      if (profileError || !existingProfile) {
+        console.log('새 사용자 프로필 생성:', data.user.email);
+
+        const { error: insertError } = await supabase.from('users').insert({
+          auth_id: data.user.id,
+          email: data.user.email,
+          role: 1, // 기본 역할: 학습자
+          status: 'active',
+          profile: {
+            name:
+              data.user.user_metadata?.full_name ||
+              data.user.user_metadata?.name ||
+              '사용자',
+            avatar_url:
+              data.user.user_metadata?.avatar_url ||
+              data.user.user_metadata?.picture,
+            preferences: {
+              notifications: {
+                email: true,
+                push: true,
+              },
+              privacy: {
+                profile_visibility: 'public',
+              },
+            },
+          },
+        });
+
+        if (insertError) {
+          console.error('사용자 프로필 생성 오류:', insertError);
+          // 프로필 생성 실패해도 로그인은 성공으로 처리
+        }
+      }
+    }
+
+    // 성공적으로 인증되면 리디렉션
+    const response = NextResponse.redirect(
+      new URL(redirectTo, requestUrl.origin)
+    );
+
+    // 쿠키 설정 (필요한 경우)
+    if (data.session) {
+      response.cookies.set('supabase-auth-token', data.session.access_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24 * 7, // 7일
+      });
+    }
+
+    return response;
+  } catch (err) {
+    console.error('OAuth 콜백 처리 중 오류:', err);
+    return NextResponse.redirect(
+      new URL(
+        '/login?error=인증+처리+중+오류가+발생했습니다.',
+        requestUrl.origin
+      )
+    );
+  }
+}
