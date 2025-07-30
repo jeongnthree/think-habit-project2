@@ -133,16 +133,17 @@ export function DiagnosticSession({
         id: 'mock-session-' + Date.now(),
         userId: 'mock-user',
         templateId: templateId,
-        status: 'in_progress',
+        status: 'in_progress' as const,
         startedAt: new Date().toISOString(),
-        totalQuestions: 8,
-        answeredQuestions: 0,
+        responses: [],
       };
 
       const mockFirstQuestion = {
         id: 'perfectionism_1',
         text: '일을 할 때 완벽하지 않으면 의미가 없다고 생각한다',
-        type: 'likert' as const,
+        category: 'perfectionism',
+        type: 'scale' as const,
+        required: true,
         scale: 5,
         labels: [
           '전혀 그렇지 않다',
