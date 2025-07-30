@@ -89,12 +89,12 @@ export default function TwoStageDiagnosisPage() {
       if (!categoryScores[response.category]) {
         categoryScores[response.category] = { total: 0, count: 0, average: 0 };
       }
-      categoryScores[response.category].total += response.score;
-      categoryScores[response.category].count += 1;
+      categoryScores[response.category]!.total += response.score;
+      categoryScores[response.category]!.count += 1;
     });
 
     Object.keys(categoryScores).forEach(category => {
-      const data = categoryScores[category];
+      const data = categoryScores[category]!;
       data.average = data.total / data.count;
     });
 
