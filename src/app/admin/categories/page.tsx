@@ -114,8 +114,8 @@ export default function CategoriesPage() {
         // 수정
         const updateData: CategoryUpdateRequest = {
           name: formData.name.trim(),
-          description: formData.description.trim() || null,
-          template: formData.template.trim() || null,
+          description: formData.description.trim() || undefined,
+          template: formData.template.trim() || undefined,
         };
         
         const response = await updateCategory(editingCategory.id, updateData);
