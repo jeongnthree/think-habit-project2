@@ -4,15 +4,6 @@
 
 [build.environment]
   NODE_VERSION = "18"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-
-[functions]
-  directory = "netlify/functions"
-  node_bundler = "esbuild"
-
-[build.environment]
   NEXT_PUBLIC_SUPABASE_URL = "https://gmvqcycnppuzixugzxvy.supabase.co"
   NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdtdnFjeWNucHB1eml4dWd6eHZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIzMTU0NzYsImV4cCI6MjA2Nzg5MTQ3Nn0.5NodA2qksds_fUdlzgx7OZnN8OvzHitzdSvTdBWqoo8"
   NEXT_PUBLIC_APP_URL = "https://생각습관.com"
@@ -29,6 +20,13 @@
   NEXT_PUBLIC_ENABLE_COMMUNITY = "true"
   NEXT_PUBLIC_ENABLE_NOTIFICATIONS = "true"
   NEXT_PUBLIC_ENABLE_FILE_UPLOAD = "true"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
 
 [[redirects]]
   from = "/download"
