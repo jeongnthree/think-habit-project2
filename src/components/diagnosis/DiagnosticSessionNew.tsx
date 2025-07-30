@@ -66,12 +66,12 @@ export function DiagnosticSession({
       // 목업 세션 생성
       const mockSession: DiagnosticSessionType = {
         id: sessionId || 'mock-session-' + Date.now(),
-        user_id: 'mock-user',
-        template_id: templateId || 'mock-template',
+        userId: 'mock-user',
+        templateId: templateId || 'mock-template',
         status: 'in_progress',
-        started_at: new Date().toISOString(),
-        total_questions: mockQuestions.length,
-        answered_questions: 0,
+        startedAt: new Date().toISOString(),
+        totalQuestions: mockQuestions.length,
+        answeredQuestions: 0,
       };
 
       const firstQuestion: CurrentQuestion = {

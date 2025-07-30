@@ -59,12 +59,12 @@ export function DiagnosticSession({
       // 목업 모드: 바로 첫 번째 질문 시작
       const mockSession = {
         id: sessionId || 'mock-session-' + Date.now(),
-        user_id: 'mock-user',
-        template_id: templateId || 'mock-template',
+        userId: 'mock-user',
+        templateId: templateId || 'mock-template',
         status: 'in_progress',
-        started_at: new Date().toISOString(),
-        total_questions: 8,
-        answered_questions: 0,
+        startedAt: new Date().toISOString(),
+        totalQuestions: 8,
+        answeredQuestions: 0,
       };
 
       const mockFirstQuestion = {
@@ -130,12 +130,12 @@ export function DiagnosticSession({
       // API 실패 시 목업 데이터 사용
       const mockSession = {
         id: 'mock-session-' + Date.now(),
-        user_id: 'mock-user',
-        template_id: templateId,
+        userId: 'mock-user',
+        templateId: templateId,
         status: 'in_progress',
-        started_at: new Date().toISOString(),
-        total_questions: 8,
-        answered_questions: 0,
+        startedAt: new Date().toISOString(),
+        totalQuestions: 8,
+        answeredQuestions: 0,
       };
 
       const mockFirstQuestion = {
