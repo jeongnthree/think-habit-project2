@@ -4,7 +4,7 @@ import { Button, Input } from '@/components/ui';
 import { Category } from '@/types';
 import React, { useState } from 'react';
 
-interface CategoryFormData {
+export interface CategoryFormData {
   name: string;
   description: string;
   template: string;

@@ -3,8 +3,7 @@
 // Admin Category Create Page - 카테고리 생성 페이지
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { CategoryForm } from "@/components/admin/CategoryForm";
-import { CategoryFormData } from "@/types";
+import { CategoryForm, CategoryFormData } from "@/components/admin/CategoryForm";
 
 export default function CreateCategoryPage() {
   const router = useRouter();
