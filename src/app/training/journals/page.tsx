@@ -174,6 +174,7 @@ function JournalListContent() {
 
       return () => clearTimeout(timer);
     }
+    return undefined;
   }, [deleted, searchParams, router]);
 
   // Get current category name for breadcrumb
