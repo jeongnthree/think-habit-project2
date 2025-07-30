@@ -49,7 +49,6 @@ export async function GET(request: NextRequest) {
     }
 
     const { searchParams } = new URL(request.url);
-    const area = searchParams.get('area') as ThinkingArea | null;
     const isActive = searchParams.get('is_active');
     const search = searchParams.get('search');
     const page = parseInt(searchParams.get('page') || '1');
@@ -57,14 +56,11 @@ export async function GET(request: NextRequest) {
     const offset = (page - 1) * limit;
 
     let query = supabase
-      .from('thinking_habit_categories')
+      .from('categories')
       .select('*')
       .order('created_at', { ascending: false });
 
     // 필터 적용
-    if (area) {
-      query = query.eq('area', area);
-    }
     if (isActive !== null) {
       query = query.eq('is_active', isActive === 'true');
     }
