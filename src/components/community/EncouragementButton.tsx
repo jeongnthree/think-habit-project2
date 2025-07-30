@@ -68,7 +68,7 @@ export function EncouragementButton({
 
   return (
     <Button
-      variant={hasUserEncouraged ? 'default' : 'outline'}
+      variant={hasUserEncouraged ? 'primary' : 'outline'}
       onClick={handleEncourage}
       disabled={isLoading || disabled}
       aria-label={
