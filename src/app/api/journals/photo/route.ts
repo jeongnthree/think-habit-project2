@@ -62,6 +62,11 @@ export async function POST(request: NextRequest) {
       const photo = photos[i];
       const caption = captions[i] || '';
 
+      // photo가 undefined인 경우 건너뛰기
+      if (!photo) {
+        continue;
+      }
+
       // 파일명 생성 (중복 방지)
       const fileExt = photo.name.split('.').pop();
       const fileName = `${studentId}/${journal.id}/${Date.now()}-${i}.${fileExt}`;
