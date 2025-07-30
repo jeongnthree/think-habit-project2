@@ -396,13 +396,13 @@ async function updateProgressTracking(
 
       // 현재 연속 기록 계산
       if (uniqueDates.length > 0) {
-        const latestDate = uniqueDates[0];
+        const latestDate = uniqueDates[0]!;
         if (latestDate === today || latestDate === yesterday) {
           currentStreak = 1;
 
           for (let i = 1; i < uniqueDates.length; i++) {
-            const currentDate = new Date(uniqueDates[i]);
-            const prevDate = new Date(uniqueDates[i - 1]);
+            const currentDate = new Date(uniqueDates[i]!);
+            const prevDate = new Date(uniqueDates[i - 1]!);
             const dayDiff = Math.floor(
               (prevDate.getTime() - currentDate.getTime()) /
                 (24 * 60 * 60 * 1000)
@@ -420,8 +420,8 @@ async function updateProgressTracking(
       // 최고 연속 기록 계산 (최근 30일 내)
       let tempStreak = 1;
       for (let i = 1; i < uniqueDates.length; i++) {
-        const currentDate = new Date(uniqueDates[i]);
-        const prevDate = new Date(uniqueDates[i - 1]);
+        const currentDate = new Date(uniqueDates[i]!);
+        const prevDate = new Date(uniqueDates[i - 1]!);
         const dayDiff = Math.floor(
           (prevDate.getTime() - currentDate.getTime()) / (24 * 60 * 60 * 1000)
         );
