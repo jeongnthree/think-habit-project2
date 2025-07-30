@@ -36,10 +36,9 @@ export async function POST(request: NextRequest) {
       } = await supabase.auth.getUser();
       
       if (authError || !user) {
-        logError(new Error('Authentication failed'), { 
+        logError(new Error(`Authentication failed: ${authError?.message || 'No user found'}`), { 
           requestId, 
-          endpoint: 'POST /api/training/journals/structured',
-          authError: authError?.message 
+          endpoint: 'POST /api/training/journals/structured'
         });
         return createErrorResponse(
           '인증이 필요합니다', 
