@@ -21,7 +21,7 @@ export default function BulkAssignmentForm({
     student_ids: [],
     category_ids: [],
     weekly_goal: 1,
-    start_date: new Date().toISOString().split("T")[0],
+    start_date: new Date().toISOString().split("T")[0]!,
     end_date: "",
   });
 
