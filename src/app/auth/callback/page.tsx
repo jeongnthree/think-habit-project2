@@ -23,11 +23,11 @@ export default function AuthCallback() {
         // URL에서 파라미터와 fragment 모두 확인
         const currentUrl = window.location.href;
         const hashParams = new URLSearchParams(window.location.hash.substring(1));
-        const redirectTo = searchParams.get('redirectTo') || '/dashboard';
+        const redirectTo = searchParams?.get('redirectTo') || '/dashboard';
         
         console.log('전체 URL:', currentUrl);
         console.log('Hash params:', Array.from(hashParams.entries()));
-        console.log('Search params:', Array.from(searchParams.entries()));
+        console.log('Search params:', Array.from(searchParams?.entries() || []));
 
         // Fragment에서 access_token 확인 (implicit flow)
         const accessToken = hashParams.get('access_token');
@@ -37,7 +37,7 @@ export default function AuthCallback() {
           accessToken: !!accessToken,
           refreshToken: !!refreshToken,
           hashParamsSize: hashParams.size,
-          searchParamsSize: searchParams.size,
+          searchParamsSize: searchParams?.size || 0,
           hashContent: window.location.hash,
           allHashParams: Array.from(hashParams.entries())
         });
