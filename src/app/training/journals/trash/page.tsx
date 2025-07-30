@@ -101,6 +101,7 @@ export default function TrashPage() {
       }, 3000);
       return () => clearTimeout(timer);
     }
+    return undefined;
   }, [restored, permanentlyDeleted, router]);
 
   return (
