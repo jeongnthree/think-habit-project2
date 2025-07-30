@@ -70,7 +70,7 @@ export default function DiagnosticSessionPage() {
   const params = useParams();
   const searchParams = useSearchParams();
   const sessionId = params?.id as string;
-  const templateId = searchParams.get('templateId');
+  const templateId = searchParams?.get('templateId');
 
   const [template, setTemplate] = useState<DiagnosticTemplate | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
