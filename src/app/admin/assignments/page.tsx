@@ -31,7 +31,7 @@ export default function AssignmentsPage() {
     studentId: '',
     categoryId: '',
     weeklyGoal: 1,
-    startDate: new Date().toISOString().split('T')[0],
+    startDate: new Date().toISOString().split('T')[0] || '',
     endDate: '',
   });
   const [saving, setSaving] = useState(false);
@@ -78,7 +78,7 @@ export default function AssignmentsPage() {
       studentId: '',
       categoryId: '',
       weeklyGoal: 1,
-      startDate: new Date().toISOString().split('T')[0],
+      startDate: new Date().toISOString().split('T')[0] || '',
       endDate: '',
     });
     setEditingAssignment(null);
