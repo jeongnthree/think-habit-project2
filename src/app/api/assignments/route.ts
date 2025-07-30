@@ -56,11 +56,24 @@ export async function POST(request: NextRequest) {
     const assignedBy = 'admin-user-id';
 
     // 중복 할당 확인
+    const studentId = body.student_ids?.[0];
+    const categoryId = body.category_ids?.[0];
+    
+    if (!studentId || !categoryId) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: '유효한 학생 ID와 카테고리 ID가 필요합니다.',
+        },
+        { status: 400 }
+      );
+    }
+    
     const { data: existing } = await supabase
       .from('assignments')
       .select('id')
-      .eq('student_id', body.student_ids[0])
-      .eq('category_id', body.category_ids[0])
+      .eq('student_id', studentId)
+      .eq('category_id', categoryId)
       .eq('is_active', true)
       .single();
 
@@ -78,8 +91,8 @@ export async function POST(request: NextRequest) {
     const { data, error } = await supabase
       .from('assignments')
       .insert({
-        student_id: body.student_ids[0],
-        category_id: body.category_ids[0],
+        student_id: studentId,
+        category_id: categoryId,
         assigned_by: assignedBy,
         weekly_goal: body.weekly_goal,
         start_date: body.start_date,

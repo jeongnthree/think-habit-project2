@@ -100,7 +100,7 @@ function analyzeOverallScore(
     analysis.recommendations.push(
       '전문가와의 상담을 통해 체계적인 인지치료를 받으시기를 권장합니다.'
     );
-    const topConcern = analysis.topConcerns[0];
+    const topConcern = analysis.topConcerns?.[0];
     if (topConcern) {
       analysis.recommendations.push(
         '특히 ' + topConcern.label + ' 영역에 집중적인 관심이 필요합니다.'

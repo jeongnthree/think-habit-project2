@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
         // 간단한 파일명 생성
         const timestamp = Date.now();
         const randomId = Math.random().toString(36).substring(2, 8);
-        const extension = file.name.split('.').pop() || 'jpg';
+        const extension = file.name?.split('.').pop() || 'jpg';
         const fileName = `test/${timestamp}-${randomId}.${extension}`;
 
         console.log('업로드할 파일명:', fileName);
