@@ -99,7 +99,7 @@ function extractUserFromToken(token: string): any {
       return null;
     }
 
-    const payload = JSON.parse(atob(parts[1]));
+    const payload = JSON.parse(atob(parts[1]!));
     
     // 토큰 만료 확인
     if (payload.exp && payload.exp < Math.floor(Date.now() / 1000)) {
