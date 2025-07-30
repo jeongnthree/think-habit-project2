@@ -97,7 +97,7 @@ export async function GET(request: NextRequest) {
     const currentWeekProgress = await updateWeeklyProgress(
       userId,
       categoryId,
-      journals || []
+      (journals || []) as any
     );
 
     // 일관성 점수 계산
@@ -225,7 +225,7 @@ export async function POST(request: NextRequest) {
     const progressData = await updateWeeklyProgress(
       userId,
       categoryId,
-      journals || []
+      (journals || []) as any
     );
 
     // 할당에서 목표 가져오기
