@@ -83,7 +83,7 @@ export default function DiagnosticSessionPage() {
     }
   }, [templateId]);
 
-  const currentQuestion = SAMPLE_QUESTIONS[currentQuestionIndex];
+  const currentQuestion = SAMPLE_QUESTIONS[currentQuestionIndex]!;
   const isLastQuestion = currentQuestionIndex === SAMPLE_QUESTIONS.length - 1;
 
   const handleStart = () => {
