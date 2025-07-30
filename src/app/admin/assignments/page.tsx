@@ -99,7 +99,7 @@ export default function AssignmentsPage() {
       studentId: assignment.student_id,
       categoryId: assignment.category_id,
       weeklyGoal: assignment.weekly_goal,
-      startDate: assignment.start_date || new Date().toISOString().split('T')[0],
+      startDate: assignment.start_date || new Date().toISOString().split('T')[0] || '',
       endDate: assignment.end_date || '',
     });
     setEditingAssignment(assignment);
