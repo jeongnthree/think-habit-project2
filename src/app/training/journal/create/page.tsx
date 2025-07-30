@@ -60,11 +60,8 @@ function JournalCreateContent() {
                 name: '기본 훈련 카테고리',
                 description: '생각습관 훈련을 위한 기본 카테고리입니다.',
                 template: '훈련 내용을 자유롭게 작성해주세요.',
-                is_active: true,
-                created_at: new Date().toISOString(),
-                updated_at: new Date().toISOString(),
               }}
-              userId='current-user-id'
+              studentId='current-user-id'
               onSave={journal => {
                 console.log('훈련 일지 저장:', journal);
                 // 저장 후 훈련 센터로 이동
