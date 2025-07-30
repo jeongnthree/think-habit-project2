@@ -136,8 +136,8 @@ class PerformanceMonitor {
     return {
       count: values.length,
       average: sum / values.length,
-      min: values[0],
-      max: values[values.length - 1],
+      min: values[0] || 0,
+      max: values[values.length - 1] || 0,
       p95: values[p95Index] || 0,
       recent: filteredMetrics.slice(-10).map(m => m.value),
     };
@@ -253,7 +253,7 @@ export function monitorWebVitals(): void {
     try {
       const lcpObserver = new PerformanceObserver(list => {
         const entries = list.getEntries();
-        const lastEntry = entries[entries.length - 1];
+        const lastEntry = entries[entries.length - 1]!;
         performanceMonitor.recordMetric('web_vital_lcp', lastEntry.startTime);
       });
       lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });

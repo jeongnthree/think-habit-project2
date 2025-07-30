@@ -102,10 +102,10 @@ export function calculateScoreStatistics(scores: number[]) {
 
   const median =
     scores.length % 2 === 0
-      ? (sortedScores[scores.length / 2 - 1] +
-          sortedScores[scores.length / 2]) /
+      ? (sortedScores[scores.length / 2 - 1]! +
+          sortedScores[scores.length / 2]!) /
         2
-      : sortedScores[Math.floor(scores.length / 2)];
+      : sortedScores[Math.floor(scores.length / 2)]!;
 
   const variance =
     scores.reduce((acc, score) => acc + Math.pow(score - average, 2), 0) /
