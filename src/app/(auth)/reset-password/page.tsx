@@ -40,8 +40,8 @@ export default function ResetPasswordPage() {
   } = useAuthContext();
 
   // URL 파라미터 확인 (토큰이 있으면 비밀번호 업데이트 모드)
-  const accessToken = searchParams.get('access_token');
-  const type = searchParams.get('type');
+  const accessToken = searchParams?.get('access_token');
+  const type = searchParams?.get('type');
 
   /**
    * 초기화 - URL 파라미터에 따라 모드 결정
