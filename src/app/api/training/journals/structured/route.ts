@@ -9,6 +9,7 @@ import {
     HTTP_STATUS,
     validateInput
 } from '@/utils/server-validation';
+import { structuredJournalCreateSchema } from '@/utils/api-schemas';
 import { NextRequest } from 'next/server';
 
 
