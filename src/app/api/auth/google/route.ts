@@ -2,7 +2,7 @@ import {
   AuthResult,
   GoogleAuthResponse,
   GoogleUserInfo,
-} from '@/shared/types/auth';
+} from '../../../../../shared/types/auth';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
