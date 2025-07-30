@@ -1,0 +1,5 @@
+# Netlify 리다이렉트 설정
+/download  /downloads  301
+
+# SPA 라우팅을 위한 설정
+/*    /index.html   200
