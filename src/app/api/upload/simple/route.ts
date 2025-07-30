@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
 
     // 각 파일 업로드
     for (let i = 0; i < files.length; i++) {
-      const file = files[i];
+      const file = files[i]!;
       console.log(`파일 ${i + 1} 업로드 시작:`, {
         name: file.name,
         size: file.size,
