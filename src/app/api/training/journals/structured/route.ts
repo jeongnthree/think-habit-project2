@@ -6,7 +6,8 @@ import {
     validateRequest,
     logError,
     ERROR_CODES,
-    HTTP_STATUS
+    HTTP_STATUS,
+    validateInput
 } from '@/utils/server-validation';
 import { NextRequest } from 'next/server';
 
