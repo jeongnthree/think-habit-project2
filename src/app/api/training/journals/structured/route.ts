@@ -332,7 +332,7 @@ export async function POST(request: NextRequest) {
         requestId
       );
     }
-  }, 'POST /api/training/journals/structured', requestId);
+  }, 'POST /api/training/journals/structured');
 }
 
 // 진행률 추적 업데이트 함수
