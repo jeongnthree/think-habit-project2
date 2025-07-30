@@ -561,6 +561,7 @@ export interface AssignmentUpdateRequest {
 }
 
 export interface JournalCreateRequest {
+  studentId: string;
   category_id: string;
   title: string;
   content: string;
