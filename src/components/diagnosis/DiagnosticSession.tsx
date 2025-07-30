@@ -132,7 +132,7 @@ export function DiagnosticSession({
       const mockSession = {
         id: 'mock-session-' + Date.now(),
         userId: 'mock-user',
-        templateId: templateId,
+        templateId: templateId || 'mock-template',
         status: 'in_progress' as const,
         startedAt: new Date().toISOString(),
         responses: [],
