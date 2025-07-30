@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 export async function GET() {
   try {
     // 기본 헬스체크
-    const healthCheck = {
+    const healthCheck: any = {
       status: 'ok',
       timestamp: new Date().toISOString(),
       uptime: process.uptime(),
