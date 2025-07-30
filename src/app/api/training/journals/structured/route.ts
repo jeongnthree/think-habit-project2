@@ -3,7 +3,8 @@ import {
     createErrorResponse,
     createSuccessResponse,
     withPerformanceMonitoring,
-    validateRequest
+    validateRequest,
+    logError
 } from '@/utils/server-validation';
 import { NextRequest } from 'next/server';
 
