@@ -94,6 +94,7 @@ export default function NewJournalPage() {
           category_id: finalCategoryId,
           title: '상황 분석',
           description: '오늘 경험한 상황을 객관적으로 분석해보세요',
+          prompt: '어떤 상황이었나요? 구체적으로 설명해주세요.',
           order_index: 1,
           is_required: true,
           difficulty_level: 'easy',
@@ -106,6 +107,7 @@ export default function NewJournalPage() {
           category_id: finalCategoryId,
           title: '사고 과정 돌아보기',
           description: '그 상황에서 어떤 생각을 했는지 돌아보세요',
+          prompt: '그때 어떤 생각들이 들었나요? 감정은 어땐나요?',
           order_index: 2,
           is_required: true,
           difficulty_level: 'medium',
@@ -119,6 +121,7 @@ export default function NewJournalPage() {
           title: '질문하기',
           description:
             '상황에 대해 궁금한 점이나 더 알고 싶은 것들을 질문해보세요',
+          prompt: '이 상황에 대해 어떤 질문을 해볼 수 있을까요?',
           order_index: 3,
           is_required: false,
           difficulty_level: 'hard',
