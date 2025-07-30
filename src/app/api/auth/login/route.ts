@@ -1,4 +1,4 @@
-import { AuthResult, LoginCredentials } from '@/shared/types/auth';
+import { AuthResult, LoginCredentials } from '../../../../../shared/types/auth';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
