@@ -114,7 +114,7 @@ export async function GET(request: NextRequest) {
     const formattedRecentJournals = recentJournals?.map(journal => ({
       id: journal.id,
       title: journal.title,
-      categoryName: journal.category?.name || '미분류',
+      categoryName: (journal.category as any)?.[0]?.name || '미분류',
       createdAt: journal.created_at,
       isPublic: journal.is_public,
     })) || [];
