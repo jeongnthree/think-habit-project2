@@ -286,7 +286,7 @@ export class JournalAPI {
     }
 
     // 파일명 생성 (유니크)
-    const fileExt = file.name.split('.').pop();
+    const fileExt = file.name?.split('.').pop() || 'unknown';
     const fileName = `${userId}/${journalId}/${Date.now()}_${Math.random().toString(36).substring(2)}.${fileExt}`;
 
     // Supabase Storage에 업로드
