@@ -96,7 +96,7 @@ export async function POST(
     let questionText = '';
     let sectionTitle = '';
 
-    for (const section of template.questions.sections) {
+    for (const section of (template as any)[0].questions.sections) {
       const question = section.questions.find((q: any) => q.id === question_id);
       if (question) {
         questionFound = true;
@@ -174,7 +174,7 @@ export async function POST(
 
     // 다음 질문 찾기
     const { nextQuestion, isCompleted } = findNextQuestion(
-      template.questions.sections,
+      (template as any)[0].questions.sections,
       sessionId,
       supabase
     );
@@ -197,7 +197,7 @@ export async function POST(
         next_question: isSessionCompleted
           ? null
           : await getNextQuestionData(
-              template.questions.sections,
+              (template as any)[0].questions.sections,
               sessionId,
               supabase
             ),
