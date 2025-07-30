@@ -15,7 +15,7 @@ interface TaskTemplatePageData {
 export default function TaskTemplatesPage() {
   const params = useParams();
   const router = useRouter();
-  const categoryId = params.categoryId as string;
+  const categoryId = params?.categoryId as string;
 
   const [data, setData] = useState<TaskTemplatePageData | null>(null);
   const [loading, setLoading] = useState(true);
