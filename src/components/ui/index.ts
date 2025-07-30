@@ -5,12 +5,11 @@ export { Breadcrumb, type BreadcrumbItem } from './Breadcrumb';
 export { Button, type ButtonProps } from './Button';
 export {
   Card,
-  CardBody,
+  CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
-  type CardBodyProps,
-  type CardFooterProps,
-  type CardHeaderProps,
+  CardTitle,
   type CardProps,
 } from './Card';
 export { Input, type InputProps } from './Input';

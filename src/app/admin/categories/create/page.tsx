@@ -3,7 +3,7 @@
 // Admin Category Create Page - 카테고리 생성 페이지
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import CategoryForm from "@/components/admin/CategoryForm";
+import { CategoryForm } from "@/components/admin/CategoryForm";
 import { CategoryFormData } from "@/types";
 
 export default function CreateCategoryPage() {
@@ -72,9 +72,9 @@ export default function CreateCategoryPage() {
 
         {/* 카테고리 폼 */}
         <CategoryForm
-          onSubmit={handleSubmit}
+          onSave={handleSubmit}
           onCancel={handleCancel}
-          isLoading={isLoading}
+          loading={isLoading}
         />
       </div>
     </div>

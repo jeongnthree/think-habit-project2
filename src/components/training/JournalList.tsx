@@ -3,7 +3,7 @@
 import { Button, Card } from '@/components/ui';
 import { useAccessibility } from '@/components/ui/AccessibilityProvider';
 import { HelpContent, HelpTooltip } from '@/components/ui/HelpTooltip';
-import { LazyImage } from '@/components/ui/LazyImage';
+import LazyImage from '@/components/ui/LazyImage';
 import { JournalWithDetails } from '@/types/database';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
