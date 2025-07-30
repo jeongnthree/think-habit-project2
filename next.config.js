@@ -20,7 +20,7 @@ const nextConfig = {
   },
   
   // Netlify 배포를 위한 추가 설정
-  target: 'serverless',
+  // target 옵션은 Next.js 13+ 에서 deprecated 되었으므로 제거
 };
 
 module.exports = nextConfig;

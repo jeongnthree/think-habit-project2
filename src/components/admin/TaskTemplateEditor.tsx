@@ -138,6 +138,7 @@ export function TaskTemplateEditor({
         category_id: categoryId,
         title: task.title.trim(),
         description: task.description.trim() || null,
+        prompt: task.description.trim() || task.title.trim(),
         order_index: task.order_index,
         is_required: task.is_required,
         difficulty_level: task.difficulty_level,

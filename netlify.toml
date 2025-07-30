@@ -2,8 +2,15 @@
   command = "npm run build"
   publish = ".next"
 
+[build.environment]
+  NODE_VERSION = "18"
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
 
 [build.environment]
   NEXT_PUBLIC_SUPABASE_URL = "https://gmvqcycnppuzixugzxvy.supabase.co"
