@@ -16,13 +16,36 @@ export interface DiagnosticTemplate {
   updatedAt: string;
 }
 
+export interface TwoStageRatingConfig {
+  stage1_labels: string[];
+  stage2_labels: string[];
+  final_scale: number;
+  stage1_instruction?: string;
+  stage2_instruction?: string;
+}
+
+export interface TwoStageResponse {
+  stage1_value: number;
+  stage2_value: number;
+  final_score: number;
+  stage1_label: string;
+  stage2_label: string;
+}
+
 export interface DiagnosticQuestion {
   id: string;
   text: string;
   category: string;
-  type: 'two-stage' | 'scale' | 'multiple-choice';
+  type: 'two-stage' | 'two_stage_rating' | 'scale' | 'multiple-choice' | 'boolean' | 'text';
   options?: string[];
   required: boolean;
+  // two-stage rating 관련 속성
+  two_stage_config?: TwoStageRatingConfig;
+  // scale 관련 속성
+  scale?: number;
+  labels?: string[];
+  // 공통 속성
+  help_text?: string;
 }
 
 export interface DiagnosticSession {

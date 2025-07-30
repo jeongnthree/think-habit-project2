@@ -178,7 +178,7 @@ export function DiagnosticSession({
           />
         );
 
-      case 'likert':
+      case 'scale':
         return (
           <div className='space-y-3'>
             <p className='text-sm text-gray-600 mb-4'>

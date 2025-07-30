@@ -6,7 +6,7 @@ export const mockQuestions: (DiagnosticQuestion & { section_title: string })[] =
       id: 'perfectionism_1',
       text: '일을 할 때 완벽하지 않으면 의미가 없다고 생각한다',
       category: 'perfectionism',
-      type: 'two-stage',
+      type: 'two_stage_rating',
       required: true,
       two_stage_config: {
         stage1_labels: ['상', '중', '하'],
@@ -22,7 +22,7 @@ export const mockQuestions: (DiagnosticQuestion & { section_title: string })[] =
       id: 'perfectionism_2',
       text: '실수를 하면 자신을 심하게 비난한다',
       category: 'perfectionism',
-      type: 'two-stage',
+      type: 'two_stage_rating',
       required: true,
       two_stage_config: {
         stage1_labels: ['상', '중', '하'],
@@ -38,7 +38,7 @@ export const mockQuestions: (DiagnosticQuestion & { section_title: string })[] =
       id: 'blackwhite_1',
       text: '사람이나 상황을 좋거나 나쁘게만 판단한다',
       category: 'blackwhite',
-      type: 'two-stage',
+      type: 'two_stage_rating',
       required: true,
       two_stage_config: {
         stage1_labels: ['상', '중', '하'],
@@ -54,7 +54,7 @@ export const mockQuestions: (DiagnosticQuestion & { section_title: string })[] =
       id: 'catastrophic_1',
       text: '작은 문제가 생기면 최악의 상황을 먼저 생각한다',
       category: 'catastrophic',
-      type: 'two-stage',
+      type: 'two_stage_rating',
       required: true,
       two_stage_config: {
         stage1_labels: ['상', '중', '하'],
@@ -70,7 +70,7 @@ export const mockQuestions: (DiagnosticQuestion & { section_title: string })[] =
       id: 'personalization_1',
       text: '나쁜 일이 생기면 내 탓이라고 생각한다',
       category: 'personalization',
-      type: 'two-stage',
+      type: 'two_stage_rating',
       required: true,
       two_stage_config: {
         stage1_labels: ['상', '중', '하'],
@@ -86,7 +86,7 @@ export const mockQuestions: (DiagnosticQuestion & { section_title: string })[] =
       id: 'emotional_1',
       text: '기분이 나쁘면 실제로 나쁜 일이 일어날 것이라고 생각한다',
       category: 'emotional',
-      type: 'two-stage',
+      type: 'two_stage_rating',
       required: true,
       two_stage_config: {
         stage1_labels: ['상', '중', '하'],
@@ -102,7 +102,7 @@ export const mockQuestions: (DiagnosticQuestion & { section_title: string })[] =
       id: 'perfectionism_3',
       text: '완벽하게 할 수 없다면 아예 시작하지 않는다',
       category: 'perfectionism',
-      type: 'two-stage',
+      type: 'two_stage_rating',
       required: true,
       two_stage_config: {
         stage1_labels: ['상', '중', '하'],
@@ -118,7 +118,7 @@ export const mockQuestions: (DiagnosticQuestion & { section_title: string })[] =
       id: 'blackwhite_2',
       text: '중간 지점이나 회색 영역을 인정하기 어렵다',
       category: 'blackwhite',
-      type: 'two-stage',
+      type: 'two_stage_rating',
       required: true,
       two_stage_config: {
         stage1_labels: ['상', '중', '하'],

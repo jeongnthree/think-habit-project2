@@ -58,21 +58,21 @@ INSERT INTO diagnostic_templates (id, name, description, type, questions, scorin
                     {
                         "id": "perfectionism_1",
                         "text": "일을 할 때 완벽하지 않으면 의미가 없다고 생각한다",
-                        "type": "likert",
+                        "type": "scale",
                         "scale": 5,
                         "labels": ["전혀 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "매우 그렇다"]
                     },
                     {
                         "id": "perfectionism_2", 
                         "text": "실수를 하면 자신을 심하게 비난한다",
-                        "type": "likert",
+                        "type": "scale",
                         "scale": 5,
                         "labels": ["전혀 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "매우 그렇다"]
                     },
                     {
                         "id": "perfectionism_3",
                         "text": "완벽하게 할 수 없다면 아예 시작하지 않는다",
-                        "type": "likert", 
+                        "type": "scale", 
                         "scale": 5,
                         "labels": ["전혀 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "매우 그렇다"]
                     }
@@ -84,14 +84,14 @@ INSERT INTO diagnostic_templates (id, name, description, type, questions, scorin
                     {
                         "id": "blackwhite_1",
                         "text": "사람이나 상황을 좋거나 나쁘게만 판단한다",
-                        "type": "likert",
+                        "type": "scale",
                         "scale": 5,
                         "labels": ["전혀 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "매우 그렇다"]
                     },
                     {
                         "id": "blackwhite_2",
                         "text": "중간 지점이나 회색 영역을 인정하기 어렵다",
-                        "type": "likert",
+                        "type": "scale",
                         "scale": 5,
                         "labels": ["전혀 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "매우 그렇다"]
                     }
@@ -103,14 +103,14 @@ INSERT INTO diagnostic_templates (id, name, description, type, questions, scorin
                     {
                         "id": "catastrophic_1",
                         "text": "작은 문제가 생기면 최악의 상황을 먼저 생각한다",
-                        "type": "likert",
+                        "type": "scale",
                         "scale": 5,
                         "labels": ["전혀 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "매우 그렇다"]
                     },
                     {
                         "id": "catastrophic_2",
                         "text": "앞으로 일어날 일에 대해 걱정이 많다",
-                        "type": "likert",
+                        "type": "scale",
                         "scale": 5,
                         "labels": ["전혀 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "매우 그렇다"]
                     }
@@ -122,14 +122,14 @@ INSERT INTO diagnostic_templates (id, name, description, type, questions, scorin
                     {
                         "id": "personalization_1",
                         "text": "나쁜 일이 생기면 내 탓이라고 생각한다",
-                        "type": "likert",
+                        "type": "scale",
                         "scale": 5,
                         "labels": ["전혀 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "매우 그렇다"]
                     },
                     {
                         "id": "personalization_2",
                         "text": "다른 사람이 기분 나빠하면 내가 뭔가 잘못했다고 생각한다",
-                        "type": "likert",
+                        "type": "scale",
                         "scale": 5,
                         "labels": ["전혀 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "매우 그렇다"]
                     }
@@ -141,14 +141,14 @@ INSERT INTO diagnostic_templates (id, name, description, type, questions, scorin
                     {
                         "id": "emotional_1",
                         "text": "기분이 나쁘면 실제로 나쁜 일이 일어날 것이라고 생각한다",
-                        "type": "likert",
+                        "type": "scale",
                         "scale": 5,
                         "labels": ["전혀 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "매우 그렇다"]
                     },
                     {
                         "id": "emotional_2",
                         "text": "감정이 사실을 말해준다고 믿는다",
-                        "type": "likert",
+                        "type": "scale",
                         "scale": 5,
                         "labels": ["전혀 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "매우 그렇다"]
                     }
@@ -212,21 +212,21 @@ INSERT INTO diagnostic_templates (id, name, description, type, target_goal, ques
                     {
                         "id": "learning_perfectionism_1",
                         "text": "공부할 때 완벽하게 이해하지 못하면 다음으로 넘어가지 않는다",
-                        "type": "likert",
+                        "type": "scale",
                         "scale": 5,
                         "labels": ["전혀 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "매우 그렇다"]
                     },
                     {
                         "id": "learning_catastrophic_1", 
                         "text": "시험에서 실수하면 모든 것이 끝났다고 생각한다",
-                        "type": "likert",
+                        "type": "scale",
                         "scale": 5,
                         "labels": ["전혀 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "매우 그렇다"]
                     },
                     {
                         "id": "learning_blackwhite_1",
                         "text": "성적이 좋지 않으면 나는 공부를 못하는 사람이라고 생각한다",
-                        "type": "likert",
+                        "type": "scale",
                         "scale": 5,
                         "labels": ["전혀 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "매우 그렇다"]
                     }
