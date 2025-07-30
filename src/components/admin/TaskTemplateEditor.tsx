@@ -99,6 +99,11 @@ export function TaskTemplateEditor({
     const newTasks = [...tasks];
     const draggedTask = newTasks[draggedIndex];
 
+    if (!draggedTask) {
+      setDraggedIndex(null);
+      return;
+    }
+
     // 드래그된 태스크 제거
     newTasks.splice(draggedIndex, 1);
 
