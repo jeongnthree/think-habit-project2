@@ -61,7 +61,7 @@ export function DiagnosticSession({
         id: sessionId || 'mock-session-' + Date.now(),
         userId: 'mock-user',
         templateId: templateId || 'mock-template',
-        status: 'in_progress' as const,
+        status: 'in-progress' as const,
         startedAt: new Date().toISOString(),
         responses: [],
       };
@@ -69,7 +69,9 @@ export function DiagnosticSession({
       const mockFirstQuestion = {
         id: 'perfectionism_1',
         text: '일을 할 때 완벽하지 않으면 의미가 없다고 생각한다',
-        type: 'likert' as const,
+        category: 'perfectionism',
+        type: 'scale' as const,
+        required: true,
         scale: 5,
         labels: [
           '전혀 그렇지 않다',
