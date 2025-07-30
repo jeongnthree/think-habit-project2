@@ -65,7 +65,10 @@ export async function GET(request: NextRequest) {
       currentDate.setHours(0, 0, 0, 0);
 
       for (let i = 0; i < sortedJournals.length; i++) {
-        const journalDate = new Date(sortedJournals[i].getTime());
+        const journal = sortedJournals[i];
+        if (!journal) break;
+        
+        const journalDate = new Date(journal.getTime());
         journalDate.setHours(0, 0, 0, 0);
 
         const diffDays = Math.floor((currentDate.getTime() - journalDate.getTime()) / (1000 * 60 * 60 * 24));
