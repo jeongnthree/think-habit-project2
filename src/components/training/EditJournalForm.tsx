@@ -316,10 +316,10 @@ export function EditJournalForm({
         }));
       } else if (journal.journal_type === 'photo') {
         // Handle photo updates
-        const photosToDelete = photos.filter(p => p.toDelete).map(p => p.id);
+        const photosToDelete = photos.filter(p => p.toDelete && p.id).map(p => p.id!);
         const photosToUpdate = photos
-          .filter(p => !p.toDelete && !p.isNew)
-          .map(p => ({ id: p.id, caption: p.caption }));
+          .filter(p => !p.toDelete && !p.isNew && p.id)
+          .map(p => ({ id: p.id!, caption: p.caption }));
         const newPhotos = photos.filter(p => p.isNew && p.file);
 
         updateData.photos_to_delete = photosToDelete;
