@@ -285,12 +285,9 @@ export async function POST(request: NextRequest) {
       );
 
       // Log successful journal creation
-      logInfo('Structured journal created successfully', {
+      logInfo(`Structured journal created successfully (journalId: ${journal.id}, categoryId: ${journalData.category_id}, completion: ${completionPercentage}%)`, {
         requestId,
         userId: user.id,
-        journalId: journal.id,
-        categoryId: journalData.category_id,
-        completionPercentage,
       });
 
       // 성공 응답 (더 상세한 정보 포함)
