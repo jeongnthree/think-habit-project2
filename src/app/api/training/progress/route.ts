@@ -87,11 +87,11 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // 주간 리셋 확인
-    const lastProgressUpdate = progressRecords?.[0]?.updated_at;
-    if (lastProgressUpdate) {
-      await resetWeeklyProgressIfNeeded(userId, categoryId, lastProgressUpdate);
-    }
+    // 주간 리셋 확인 (현재 구현되지 않음)
+    // const lastProgressUpdate = progressRecords?.[0]?.updated_at;
+    // if (lastProgressUpdate) {
+    //   await resetWeeklyProgressIfNeeded(userId, categoryId, lastProgressUpdate);
+    // }
 
     // 현재 주 진행률 계산
     const currentWeekProgress = await updateWeeklyProgress(
