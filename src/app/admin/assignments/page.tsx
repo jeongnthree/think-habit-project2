@@ -147,8 +147,8 @@ export default function AssignmentsPage() {
         // 수정
         const updateData: AssignmentUpdateRequest = {
           weekly_goal: formData.weeklyGoal,
-          start_date: formData.startDate || null,
-          end_date: formData.endDate || null,
+          start_date: formData.startDate || undefined,
+          end_date: formData.endDate || undefined,
         };
         
         const response = await updateAssignment(editingAssignment.id, updateData);
