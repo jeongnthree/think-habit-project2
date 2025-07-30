@@ -114,9 +114,9 @@ export async function POST(request: NextRequest) {
     const body: CategoryCreateRequest = await request.json();
 
     // 입력 데이터 검증
-    if (!body.name || !body.area) {
+    if (!body.name) {
       return NextResponse.json(
-        { error: 'Name and area are required' },
+        { error: 'Name is required' },
         { status: 400 }
       );
     }
@@ -124,17 +124,12 @@ export async function POST(request: NextRequest) {
     const categoryData = {
       name: body.name,
       description: body.description,
-      area: body.area,
-      icon: body.icon,
-      color: body.color,
-      difficulty_level: body.difficulty_level || 1,
-      estimated_time_minutes: body.estimated_time_minutes,
+      template: body.template,
       is_active: body.is_active ?? true,
-      metadata: body.metadata || {},
     };
 
     const { data: category, error } = await supabase
-      .from('thinking_habit_categories')
+      .from('categories')
       .insert([categoryData])
       .select()
       .single();
