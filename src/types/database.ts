@@ -420,6 +420,7 @@ export interface ProgressTracking {
   completion_rate: number;
   current_streak: number;
   best_streak: number;
+  total_entries: number;
   last_entry_date: string | null;
   created_at: string;
   updated_at: string;
@@ -815,18 +816,6 @@ export interface CommunityPost {
   updated_at: string;
 }
 
-// 진행률 추적 타입
-export interface ProgressTracking {
-  id: string;
-  user_id: string;
-  category_id: string;
-  current_streak: number;
-  best_streak: number;
-  total_entries: number;
-  last_entry_date: string | null;
-  created_at: string;
-  updated_at: string;
-}
 
 // 감사 로그 타입
 export interface AuditLog {

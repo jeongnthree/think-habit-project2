@@ -28,11 +28,10 @@ const mockJournals: JournalWithDetails[] = [
     category: {
       id: 'cat1',
       name: '논리적 사고',
-      color: '#3B82F6',
     },
     student: {
       id: 'user1',
-      display_name: '김학습',
+      full_name: '김학습',
       avatar_url: null,
     },
     task_completions: [],
@@ -53,11 +52,10 @@ const mockJournals: JournalWithDetails[] = [
     category: {
       id: 'cat1',
       name: '창의적 사고',
-      color: '#8B5CF6',
     },
     student: {
       id: 'user1',
-      display_name: '김학습',
+      full_name: '김학습',
       avatar_url: null,
     },
     task_completions: [],

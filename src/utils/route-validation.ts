@@ -35,7 +35,7 @@ export function validateJournalRouteParams(
     if (error instanceof z.ZodError) {
       return {
         success: false,
-        error: error.errors[0]?.message || '잘못된 파라미터입니다.',
+        error: error.issues[0]?.message || '잘못된 파라미터입니다.',
         data: null,
       };
     }
@@ -64,7 +64,7 @@ export function validateOptionalParams(params: Record<string, string | null>) {
     if (error instanceof z.ZodError) {
       return {
         success: false,
-        error: error.errors[0]?.message || '잘못된 파라미터입니다.',
+        error: error.issues[0]?.message || '잘못된 파라미터입니다.',
         data: null,
       };
     }

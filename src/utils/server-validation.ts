@@ -129,7 +129,7 @@ export function createSuccessResponse<T>(
 export function zodErrorToValidationErrors(
   error: z.ZodError
 ): ValidationError[] {
-  return error.errors.map(err => ({
+  return error.issues.map(err => ({
     field: err.path.join('.'),
     message: err.message,
     code: err.code,
@@ -158,7 +158,7 @@ export function validateInput<T>(
           ERROR_CODES.VALIDATION_FAILED,
           HTTP_STATUS.BAD_REQUEST,
           validationErrors,
-          { schema_errors: error.errors },
+          { schema_errors: error.issues },
           requestId
         ),
       };
@@ -428,7 +428,7 @@ export async function validateRequest(
     return {
       success: true,
       requestId,
-      ...(user && { user }),
+      user: user || undefined,
     };
   } catch (error) {
     console.error('Request validation error:', error);

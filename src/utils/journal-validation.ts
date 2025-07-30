@@ -150,7 +150,7 @@ export function validateStructuredJournal(
       const errors: Record<string, string[]> = {};
       const fieldErrors: Record<string, string> = {};
 
-      error.errors.forEach(err => {
+      error.issues.forEach(err => {
         const path = err.path.join('.');
         if (!errors[path]) {
           errors[path] = [];
@@ -190,7 +190,7 @@ export function validatePhotoJournal(
       const errors: Record<string, string[]> = {};
       const fieldErrors: Record<string, string> = {};
 
-      error.errors.forEach(err => {
+      error.issues.forEach(err => {
         const path = err.path.join('.');
         if (!errors[path]) {
           errors[path] = [];
@@ -230,7 +230,7 @@ export function validateTaskTemplate(
       const errors: Record<string, string[]> = {};
       const fieldErrors: Record<string, string> = {};
 
-      error.errors.forEach(err => {
+      error.issues.forEach(err => {
         const path = err.path.join('.');
         if (!errors[path]) {
           errors[path] = [];

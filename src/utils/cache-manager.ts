@@ -44,7 +44,9 @@ class CacheManager<T = any> {
     // Remove oldest entries if cache is full
     if (this.cache.size >= this.options.maxSize) {
       const oldestKey = this.cache.keys().next().value;
-      this.cache.delete(oldestKey);
+      if (oldestKey) {
+        this.cache.delete(oldestKey);
+      }
     }
 
     this.cache.set(key, entry);

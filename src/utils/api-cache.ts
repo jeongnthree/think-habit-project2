@@ -34,7 +34,7 @@ interface JournalListResponse {
 /**
  * Generate cache key for journal list requests
  */
-function generateJournalListCacheKey(params: JournalListParams): string {
+function generateJournalListCacheKey(params: JournalListParams = {}): string {
   const sortedParams = Object.keys(params)
     .sort()
     .reduce(

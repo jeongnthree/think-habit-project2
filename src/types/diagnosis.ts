@@ -29,7 +29,7 @@ export interface DiagnosticSession {
   id: string;
   templateId: string;
   userId: string;
-  status: 'in-progress' | 'completed' | 'abandoned';
+  status: 'in_progress' | 'completed' | 'abandoned';
   startedAt: string;
   completedAt?: string;
   responses: QuestionResponse[];

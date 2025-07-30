@@ -96,7 +96,6 @@ export function withApiHandler<T = any>(
             requestId,
             endpoint: request.url,
             method: request.method,
-            authError: authError?.message,
           });
 
           return createErrorResponse(
@@ -151,7 +150,6 @@ export function withApiHandler<T = any>(
         method: request.method,
         userId: user?.id,
         duration,
-        status: result.status,
       });
 
       return result;
@@ -164,7 +162,6 @@ export function withApiHandler<T = any>(
         endpoint: request.url,
         method: request.method,
         userAgent: request.headers.get('user-agent') || undefined,
-        duration,
       });
 
       return createErrorResponse(
@@ -331,7 +328,6 @@ export function withFileUploadHandler<T = any>(
     } catch (error: any) {
       logError(error, {
         requestId,
-        operation: 'file_upload_validation',
       });
 
       return createErrorResponse(
@@ -362,7 +358,6 @@ export async function withTransaction<T>(
   } catch (error: any) {
     logError(error, {
       requestId,
-      operation: 'database_transaction',
     });
     throw error;
   }

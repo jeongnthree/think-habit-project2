@@ -68,7 +68,7 @@ export function DiagnosticSession({
         id: sessionId || 'mock-session-' + Date.now(),
         userId: 'mock-user',
         templateId: templateId || 'mock-template',
-        status: 'in-progress',
+        status: 'in_progress',
         startedAt: new Date().toISOString(),
         responses: [],
       };

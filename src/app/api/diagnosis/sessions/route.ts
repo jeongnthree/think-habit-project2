@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
       .insert({
         template_id: templateId,
         user_id: userId,
-        status: 'in-progress',
+        status: 'in_progress',
         started_at: new Date().toISOString(),
       })
       .select()

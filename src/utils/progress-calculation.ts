@@ -636,7 +636,7 @@ function getMonthName(monthIndex: number): string {
     '11월',
     '12월',
   ];
-  return months[monthIndex];
+  return months[monthIndex] || '?월';
 }
 
 // 연속 기록 히스토리 분석
@@ -700,10 +700,12 @@ function analyzeSeasonalPattern(trends: ProgressTrend[]): {
   const monthlyData: { [month: string]: number[] } = {};
 
   trends.forEach(trend => {
-    if (!monthlyData[trend.monthName]) {
+    if (trend.monthName && !monthlyData[trend.monthName]) {
       monthlyData[trend.monthName] = [];
     }
-    monthlyData[trend.monthName].push(trend.rate);
+    if (trend.monthName) {
+      monthlyData[trend.monthName].push(trend.rate);
+    }
   });
 
   const monthlyAverages: { [month: string]: number } = {};
@@ -963,6 +965,7 @@ export async function updateWeeklyProgress(
     completion_rate: completionRate,
     current_streak: streakData.current,
     best_streak: streakData.best,
+    total_entries: weeklyJournals.length,
     last_entry_date: lastEntryDate,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
