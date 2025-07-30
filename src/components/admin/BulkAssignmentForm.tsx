@@ -250,10 +250,11 @@ export default function BulkAssignmentForm({
                       />
                       <div className="text-sm">
                         <div className="font-medium">{category.name}</div>
-                        <div className="text-gray-500">
-                          {category.area} • {category.training_type} •{" "}
-                          {category.difficulty_level}단계
-                        </div>
+                        {category.description && (
+                          <div className="text-gray-500">
+                            {category.description}
+                          </div>
+                        )}
                       </div>
                     </label>
                   ))}
