@@ -7,7 +7,8 @@ import {
     logError,
     ERROR_CODES,
     HTTP_STATUS,
-    validateInput
+    validateInput,
+    withDatabaseTransaction
 } from '@/utils/server-validation';
 import { structuredJournalCreateSchema } from '@/utils/api-schemas';
 import { NextRequest } from 'next/server';
