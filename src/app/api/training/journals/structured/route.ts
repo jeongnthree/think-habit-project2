@@ -5,6 +5,7 @@ import {
     withPerformanceMonitoring,
     validateRequest,
     logError,
+    logInfo,
     ERROR_CODES,
     HTTP_STATUS,
     validateInput,
