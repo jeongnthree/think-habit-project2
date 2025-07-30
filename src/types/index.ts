@@ -51,3 +51,31 @@ export interface FormState<T> {
   isSubmitting: boolean;
   isValid: boolean;
 }
+
+// BulkAssignment 관련 타입들
+export interface BulkAssignmentData {
+  student_ids: string[];
+  category_ids: string[];
+  weekly_goal: number;
+  start_date: string;
+  end_date: string;
+}
+
+export interface CategoryResponse {
+  id: string;
+  name: string;
+  description?: string | null;
+  template?: string | null;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface BulkAssignmentProps {
+  students: UserProfile[];
+  categories: CategoryResponse[];
+  onSubmit: (data: BulkAssignmentData) => void;
+  onCancel: () => void;
+  isLoading?: boolean;
+  className?: string;
+}
