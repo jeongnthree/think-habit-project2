@@ -344,7 +344,7 @@ export function DiagnosticSession({
           ...mockQuestions[nextIndex],
           question_number: nextIndex + 1,
           total_questions: progress.total,
-        };
+        } as CurrentQuestion;
         setCurrentQuestion(nextQuestion);
         setCurrentResponse(null);
       } else {

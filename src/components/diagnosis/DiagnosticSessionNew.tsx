@@ -124,11 +124,11 @@ export function DiagnosticSession({
 
       // 다음 질문이 있는지 확인
       if (nextIndex < mockQuestions.length) {
-        const nextQuestion: CurrentQuestion = {
+        const nextQuestion = {
           ...mockQuestions[nextIndex],
           question_number: nextIndex + 1,
           total_questions: mockQuestions.length,
-        };
+        } as CurrentQuestion;
         setCurrentQuestion(nextQuestion);
         setCurrentResponse(null);
       } else {
