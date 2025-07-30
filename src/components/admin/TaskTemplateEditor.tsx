@@ -75,7 +75,7 @@ export function TaskTemplateEditor({
   // 태스크 업데이트
   const updateTask = (index: number, field: keyof TaskFormData, value: any) => {
     const newTasks = [...tasks];
-    newTasks[index] = { ...newTasks[index], [field]: value };
+    newTasks[index] = { ...newTasks[index], [field]: value } as TaskFormData;
     setTasks(newTasks);
   };
 
