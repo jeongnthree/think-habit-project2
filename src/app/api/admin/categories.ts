@@ -1,9 +1,8 @@
 import {
+  Category,
   CategoryCreateRequest,
   CategoryUpdateRequest,
   Database,
-  ThinkingArea,
-  ThinkingHabitCategory,
 } from '@/types/database';
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
@@ -171,26 +170,17 @@ export async function PUT(request: NextRequest) {
 
     const body: CategoryUpdateRequest = await request.json();
 
-    const updateData: Partial<ThinkingHabitCategory> = {};
+    const updateData: Partial<Category> = {};
 
     // 허용된 필드만 업데이트
     if (body.name !== undefined) updateData.name = body.name;
     if (body.description !== undefined)
       updateData.description = body.description;
-    if (body.area !== undefined) updateData.area = body.area;
-    if (body.icon !== undefined) updateData.icon = body.icon;
-    if (body.color !== undefined) updateData.color = body.color;
-    if (body.difficulty_level !== undefined)
-      updateData.difficulty_level = body.difficulty_level;
-    if (body.estimated_time_minutes !== undefined)
-      updateData.estimated_time_minutes = body.estimated_time_minutes;
+    if (body.template !== undefined) updateData.template = body.template;
     if (body.is_active !== undefined) updateData.is_active = body.is_active;
-    if (body.metadata !== undefined) updateData.metadata = body.metadata;
-
-    updateData.updated_at = new Date().toISOString();
 
     const { data: category, error } = await supabase
-      .from('thinking_habit_categories')
+      .from('categories')
       .update(updateData)
       .eq('id', categoryId)
       .select()
