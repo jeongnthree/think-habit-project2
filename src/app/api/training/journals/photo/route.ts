@@ -167,6 +167,12 @@ export async function POST(request: NextRequest) {
 
     for (let i = 0; i < photoFiles.length; i++) {
       const file = photoFiles[i];
+      
+      // file이 undefined인 경우 건너뛰기
+      if (!file) {
+        continue;
+      }
+      
       const metadata = extractMetadata(file);
 
       try {
