@@ -385,7 +385,7 @@ async function updateProgressTracking(
       const journalDates = recentJournals.map((j: any) =>
         new Date(j.created_at).toDateString()
       );
-      const uniqueDates = [...new Set(journalDates)].sort(
+      const uniqueDates = Array.from(new Set(journalDates)).sort(
         (a, b) => new Date(b).getTime() - new Date(a).getTime()
       );
 
