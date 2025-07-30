@@ -116,7 +116,7 @@ export async function GET(request: NextRequest) {
             1,
             Math.ceil(
               (Date.now() -
-                new Date(journals[journals.length - 1].created_at).getTime()) /
+                new Date(journals[journals.length - 1]!.created_at).getTime()) /
                 (1000 * 60 * 60 * 24)
             )
           )
