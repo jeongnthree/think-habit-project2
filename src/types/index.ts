@@ -58,7 +58,7 @@ export interface BulkAssignmentData {
   category_ids: string[];
   weekly_goal: number;
   start_date: string;
-  end_date: string;
+  end_date: string | undefined;
 }
 
 export interface CategoryResponse {
