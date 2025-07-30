@@ -382,7 +382,7 @@ async function updateProgressTracking(
 
     if (recentJournals && recentJournals.length > 0) {
       // 날짜별로 그룹화
-      const journalDates = recentJournals.map(j =>
+      const journalDates = recentJournals.map((j: any) =>
         new Date(j.created_at).toDateString()
       );
       const uniqueDates = [...new Set(journalDates)].sort(
