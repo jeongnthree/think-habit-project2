@@ -61,10 +61,9 @@ export function DiagnosticSession({
         id: sessionId || 'mock-session-' + Date.now(),
         userId: 'mock-user',
         templateId: templateId || 'mock-template',
-        status: 'in_progress',
+        status: 'in_progress' as const,
         startedAt: new Date().toISOString(),
-        totalQuestions: 8,
-        answeredQuestions: 0,
+        responses: [],
       };
 
       const mockFirstQuestion = {

@@ -70,8 +70,7 @@ export function DiagnosticSession({
         templateId: templateId || 'mock-template',
         status: 'in_progress',
         startedAt: new Date().toISOString(),
-        totalQuestions: mockQuestions.length,
-        answeredQuestions: 0,
+        responses: [],
       };
 
       const firstQuestion: CurrentQuestion = {
