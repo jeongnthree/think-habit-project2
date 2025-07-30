@@ -227,11 +227,9 @@ export async function POST(request: NextRequest) {
           .single();
 
         if (journalError || !journal) {
-          logError(new Error('Journal creation failed'), {
+          logError(new Error(`Journal creation failed: ${journalError?.message || 'Unknown error'} (categoryId: ${journalData.category_id})`), {
             requestId,
             userId: user.id,
-            categoryId: journalData.category_id,
-            databaseError: journalError?.message,
           });
           throw new Error('일지 생성에 실패했습니다');
         }
@@ -250,10 +248,8 @@ export async function POST(request: NextRequest) {
           .insert(taskCompletionRecords);
 
         if (completionError) {
-          logError(new Error('Task completion creation failed'), {
+          logError(new Error(`Task completion creation failed: ${completionError?.message || 'Unknown error'} (journalId: ${journal.id})`), {
             requestId,
-            journalId: journal.id,
-            databaseError: completionError?.message,
           });
 
           // Rollback journal creation
@@ -496,11 +492,8 @@ async function updateProgressTracking(
       last_entry_date: new Date().toISOString().split('T')[0],
     };
   } catch (error: any) {
-    logError(error, {
+    logError(new Error(`Progress tracking update failed: ${error?.message || 'Unknown error'} (userId: ${userId}, categoryId: ${categoryId})`), {
       requestId,
-      userId,
-      categoryId,
-      operation: 'updateProgressTracking',
     });
     
     // 진행률 업데이트 실패 시 기본값 반환
