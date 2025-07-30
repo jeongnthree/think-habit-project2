@@ -631,7 +631,7 @@ export default function SignUpPage() {
                   required={selectedType !== 'organization'}
                   value={formData.birthDate}
                   onChange={handleInputChange}
-                  max={new Date().toISOString().split('T')[0]} // 오늘 날짜까지만 선택 가능
+                  max={new Date().toISOString().split('T')[0]!} // 오늘 날짜까지만 선택 가능
                   className='block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
                 />
                 {selectedType !== 'organization' && (

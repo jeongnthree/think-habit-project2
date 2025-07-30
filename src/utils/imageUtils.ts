@@ -77,7 +77,7 @@ export async function compressImage(
               // 새 파일 생성
               const compressedFile = new File(
                 [blob],
-                file.name.replace(/\.[^/.]+$/, '') + '.' + format.split('/')[1],
+                file.name.replace(/\.[^/.]+$/, '') + '.' + format.split('/')[1]!,
                 {
                   type: format,
                   lastModified: Date.now(),
