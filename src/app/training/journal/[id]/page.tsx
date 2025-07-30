@@ -85,7 +85,7 @@ export default function JournalDetailPage() {
 
   const params = useParams();
   const router = useRouter();
-  const journalId = params.id as string;
+  const journalId = params?.id as string;
 
   // 일지 및 댓글 로드
   const loadJournalData = async () => {

@@ -69,7 +69,7 @@ const SAMPLE_QUESTIONS: DiagnosticQuestion[] = [
 export default function DiagnosticSessionPage() {
   const params = useParams();
   const searchParams = useSearchParams();
-  const sessionId = params.id as string;
+  const sessionId = params?.id as string;
   const templateId = searchParams.get('templateId');
 
   const [template, setTemplate] = useState<DiagnosticTemplate | null>(null);

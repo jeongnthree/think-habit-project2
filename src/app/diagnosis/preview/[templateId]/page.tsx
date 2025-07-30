@@ -57,7 +57,7 @@ const SAMPLE_QUESTIONS = [
 
 export default function DiagnosticPreviewPage() {
   const params = useParams();
-  const templateId = params.templateId as string;
+  const templateId = params?.templateId as string;
   const [template, setTemplate] = useState<DiagnosticTemplate | null>(null);
 
   useEffect(() => {

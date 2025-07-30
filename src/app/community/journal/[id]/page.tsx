@@ -43,7 +43,7 @@ export default function CommunityJournalDetailPage() {
 
   const params = useParams();
   const router = useRouter();
-  const journalId = params.id as string;
+  const journalId = params?.id as string;
 
   // 일지 정보 로드
   const loadJournal = async () => {

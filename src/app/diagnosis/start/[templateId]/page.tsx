@@ -32,7 +32,7 @@ const SAMPLE_TEMPLATES: Record<string, DiagnosticTemplate> = {
 export default function DiagnosticStartPage() {
   const params = useParams();
   const router = useRouter();
-  const templateId = params.templateId as string;
+  const templateId = params?.templateId as string;
 
   const [template, setTemplate] = useState<DiagnosticTemplate | null>(null);
   const [isAgreed, setIsAgreed] = useState(false);

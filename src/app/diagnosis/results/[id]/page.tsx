@@ -22,7 +22,7 @@ interface ResultsData {
 
 export default function DiagnosticResultsPage() {
   const params = useParams();
-  const sessionId = params.id as string;
+  const sessionId = params?.id as string;
   const [resultsData, setResultsData] = useState<ResultsData | null>(null);
   const [results, setResults] = useState<DiagnosticResults | null>(null);
 
