@@ -579,7 +579,7 @@ describe('Journal API Integration Tests', () => {
     it('should handle partial failures in related operations', async () => {
       // Mock journal creation success but task completion failure
       const mockClient = createMockSupabaseClient();
-      let callCount = 0;
+      const callCount = 0;
       mockClient.from = jest.fn((table: string) => {
         if (table === 'journals') {
           return {

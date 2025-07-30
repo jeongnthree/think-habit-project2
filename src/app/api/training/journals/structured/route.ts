@@ -386,7 +386,7 @@ async function updateProgressTracking(
         new Date(j.created_at).toDateString()
       );
       const uniqueDates = [...new Set(journalDates)].sort(
-        (a: string, b: string) => new Date(b).getTime() - new Date(a).getTime()
+        (a, b) => new Date(b).getTime() - new Date(a).getTime()
       );
 
       const today = new Date().toDateString();
