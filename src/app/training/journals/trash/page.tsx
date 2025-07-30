@@ -22,8 +22,8 @@ export default function TrashPage() {
   });
 
   // Check for success messages from URL params
-  const restored = searchParams.get('restored');
-  const permanentlyDeleted = searchParams.get('permanently_deleted');
+  const restored = searchParams?.get('restored');
+  const permanentlyDeleted = searchParams?.get('permanently_deleted');
 
   const loadDeletedJournals = useCallback(
     async (page = 1) => {
