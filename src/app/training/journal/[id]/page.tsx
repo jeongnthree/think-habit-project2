@@ -39,7 +39,10 @@ const mockJournal: Journal & { category: Category } = {
 
 이번 훈련을 통해 정보를 무비판적으로 받아들이지 않고, 다각도로 검토하는 습관을 기를 수 있었습니다.`,
   attachments: ['news-article-screenshot.png'],
+  journal_type: 'structured' as const,
   is_public: true,
+  deleted_at: null,
+  deleted_by: null,
   created_at: new Date(Date.now() - 86400000).toISOString(),
   updated_at: new Date(Date.now() - 86400000).toISOString(),
   category: {
