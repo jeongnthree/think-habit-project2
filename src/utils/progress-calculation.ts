@@ -23,7 +23,7 @@ export function getWeekEndDate(date: Date = new Date()): Date {
 
 // 날짜를 YYYY-MM-DD 형식으로 변환
 export function formatDateForDB(date: Date): string {
-  return date.toISOString().split('T')[0];
+  return date.toISOString().split('T')[0]!;
 }
 
 // 두 날짜 사이의 일수 계산
@@ -951,7 +951,7 @@ export async function updateWeeklyProgress(
     targetCount > 0 ? Math.round((completedCount / targetCount) * 100) : 0;
 
   const lastEntryDate =
-    allJournalDates.length > 0 ? allJournalDates.sort().reverse()[0] : null;
+    allJournalDates.length > 0 ? allJournalDates.sort().reverse()[0]! : null;
 
   return {
     id: '', // 실제 구현에서는 DB에서 생성
