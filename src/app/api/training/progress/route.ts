@@ -1,10 +1,8 @@
 import { createClient } from '@/lib/supabase/server';
 import {
   calculateConsistencyScore,
-  compareWithPreviousWeek,
   formatDateForDB,
   getWeekStartDate,
-  predictWeeklyGoalCompletion,
   updateWeeklyProgress,
 } from '@/utils/progress-calculation';
 import { NextRequest, NextResponse } from 'next/server';
@@ -103,11 +101,12 @@ export async function GET(request: NextRequest) {
     // 일관성 점수 계산
     const consistencyData = calculateConsistencyScore(progressRecords || []);
 
-    // 진행률 히스토리 분석
-    const historyAnalysis = analyzeProgressHistory(
-      progressRecords || [],
-      weeks
-    );
+    // 진행률 히스토리 분석 (현재 구현되지 않음)
+    // const historyAnalysis = analyzeProgressHistory(
+    //   progressRecords || [],
+    //   weeks
+    // );
+    const historyAnalysis = null;
 
     // 목표 달성 예측
     const averageDailyEntries =
@@ -123,18 +122,21 @@ export async function GET(request: NextRequest) {
           )
         : 0;
 
-    const prediction = predictWeeklyGoalCompletion(
-      currentWeekProgress,
-      averageDailyEntries
-    );
+    // 목표 달성 예측 (현재 구현되지 않음)
+    // const prediction = predictWeeklyGoalCompletion(
+    //   currentWeekProgress,
+    //   averageDailyEntries
+    // );
+    const prediction = null;
 
-    // 이전 주와 비교
+    // 이전 주와 비교 (현재 구현되지 않음)
     const previousWeek =
       progressRecords && progressRecords.length > 1 ? progressRecords[1] : null;
-    const comparison = compareWithPreviousWeek(
-      currentWeekProgress,
-      previousWeek
-    );
+    // const comparison = compareWithPreviousWeek(
+    //   currentWeekProgress,
+    //   previousWeek
+    // );
+    const comparison = null;
 
     return NextResponse.json({
       currentWeek: currentWeekProgress,
