@@ -24,8 +24,28 @@ console.log('🚀 Supabase 클라이언트 초기화:', {
   isValidUrl: isValidUrl(supabaseUrl),
 });
 
+// localStorage 사용 가능 여부 확인
+const isLocalStorageAvailable = () => {
+  try {
+    const test = '__localStorage_test__';
+    window.localStorage.setItem(test, test);
+    window.localStorage.removeItem(test);
+    return true;
+  } catch (e) {
+    console.warn('localStorage is not available:', e);
+    return false;
+  }
+};
+
 // Supabase 클라이언트 생성
 export const supabase = createClient<Database>(
   isValidUrl(supabaseUrl) ? supabaseUrl : 'https://example.supabase.co',
-  supabaseAnonKey
+  supabaseAnonKey,
+  {
+    auth: {
+      persistSession: isLocalStorageAvailable(),
+      storageKey: 'think-habit-auth',
+      storage: isLocalStorageAvailable() ? window.localStorage : undefined,
+    },
+  }
 );
