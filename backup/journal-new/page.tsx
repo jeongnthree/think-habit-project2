@@ -9,6 +9,8 @@ import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { useJournalNavigation } from '@/hooks/useJournalNavigation';
 import { Category, TaskTemplate } from '@/types/database';
 
+export const dynamic = 'force-dynamic';
+
 export default function NewJournalPage() {
   const [category, setCategory] = useState<Category | null>(null);
   const [taskTemplates, setTaskTemplates] = useState<TaskTemplate[]>([]);

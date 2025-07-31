@@ -10,6 +10,8 @@ import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+export const dynamic = 'force-dynamic';
+
 // 샘플 템플릿 데이터 (실제로는 API에서 가져와야 함)
 const SAMPLE_TEMPLATES: Record<string, DiagnosticTemplate> = {
   'basic-thinking-habits': {

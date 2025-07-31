@@ -6,6 +6,8 @@ import { Category, TaskTemplate } from '@/types/database';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+export const dynamic = 'force-dynamic';
+
 export default function StructuredJournalPage() {
   const [category, setCategory] = useState<Category | null>(null);
   const [taskTemplates, setTaskTemplates] = useState<TaskTemplate[]>([]);

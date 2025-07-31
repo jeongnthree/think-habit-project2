@@ -1,7 +1,7 @@
 'use client';
 
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Achievement } from '@/utils/progress-calculation';
 import { Award, Lock, Star } from 'lucide-react';
 import { useState } from 'react';

@@ -7,6 +7,9 @@ import { Category } from '@/types/database';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+// Force dynamic rendering to avoid useSearchParams issues
+export const dynamic = 'force-dynamic';
+
 export default function PhotoJournalPage() {
   const [category, setCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(true);

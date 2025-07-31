@@ -15,6 +15,8 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+export const dynamic = 'force-dynamic';
+
 export default function ResetPasswordPage() {
   // 상태 관리
   const [step, setStep] = useState<'request' | 'success' | 'update'>('request');

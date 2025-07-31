@@ -14,6 +14,8 @@ import { Suspense, useEffect, useState } from 'react';
 // 페이지 컴포넌트에서 사용할 수 있는 검색 파라미터 타입
 // 현재는 직접 useSearchParams를 사용하므로 인터페이스가 필요 없음
 
+export const dynamic = 'force-dynamic';
+
 function JournalListContent() {
   const searchParams = useSearchParams();
   const router = useRouter();

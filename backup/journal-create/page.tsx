@@ -4,6 +4,8 @@ import { JournalForm } from '@/components/training/JournalForm';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 
+export const dynamic = 'force-dynamic';
+
 function JournalCreateContent() {
   const router = useRouter();
   const searchParams = useSearchParams();

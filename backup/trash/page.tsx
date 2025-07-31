@@ -8,6 +8,8 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 
+export const dynamic = 'force-dynamic';
+
 export default function TrashPage() {
   const router = useRouter();
   const searchParams = useSearchParams();

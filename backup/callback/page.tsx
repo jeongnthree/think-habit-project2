@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * OAuth 콜백 페이지 (클라이언트 사이드)
  * URL fragment에서 access_token을 처리하기 위함

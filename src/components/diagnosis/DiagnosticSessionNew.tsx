@@ -73,8 +73,19 @@ export function DiagnosticSession({
         responses: [],
       };
 
+      const firstMockQuestion = mockQuestions[0];
+      if (!firstMockQuestion) {
+        throw new Error('No mock questions available');
+      }
+
       const firstQuestion: CurrentQuestion = {
-        ...mockQuestions[0],
+        ...firstMockQuestion,
+        id: firstMockQuestion.id || 'question-1',
+        text: firstMockQuestion.text || '질문',
+        category: firstMockQuestion.category || 'general',
+        type: firstMockQuestion.type || 'scale',
+        required: firstMockQuestion.required !== false,
+        section_title: firstMockQuestion.section_title || '진단 질문',
         question_number: 1,
         total_questions: mockQuestions.length,
       };

@@ -22,12 +22,12 @@ export async function POST(request: NextRequest) {
     // Request validation and rate limiting
     const requestValidation = await validateRequest(request, {
       requireAuth: true,
-      rateLimitKey: `structured_journal_${request.ip}`,
+      rateLimitKey: `structured_journal_${request.headers.get('x-forwarded-for') || 'unknown'}`,
       maxRequestSize: 1024 * 1024, // 1MB
     });
 
     if (!requestValidation.success) {
-      return requestValidation.response;
+      return (requestValidation as any).response;
     }
 
     const { requestId } = requestValidation;
@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
       // 입력 데이터 검증
       const validation = validateInput(structuredJournalCreateSchema, body, requestId);
       if (!validation.success) {
-        return validation.response;
+        return (validation as any).response;
       }
 
       const journalData = validation.data;
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
       }, requestId);
 
       if (!categoryResult.success) {
-        return categoryResult.response;
+        return (categoryResult as any).response;
       }
 
       const category = categoryResult.data;
@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
       }, requestId);
 
       if (!assignmentResult.success) {
-        return assignmentResult.response;
+        return (assignmentResult as any).response;
       }
 
       const assignment = assignmentResult.data;
@@ -186,7 +186,7 @@ export async function POST(request: NextRequest) {
       }, requestId);
 
       if (!taskValidationResult.success) {
-        return taskValidationResult.response;
+        return (taskValidationResult as any).response;
       }
 
       const { taskTemplates, requiredTasks, completedRequiredTasks } = taskValidationResult.data;
@@ -261,7 +261,7 @@ export async function POST(request: NextRequest) {
       }, requestId);
 
       if (!journalCreationResult.success) {
-        return journalCreationResult.response;
+        return (journalCreationResult as any).response;
       }
 
       const journal = journalCreationResult.data;

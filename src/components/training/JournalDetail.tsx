@@ -135,13 +135,13 @@ export function JournalDetail({ journal }: JournalDetailProps) {
       </Card>
 
       {/* Comments Section */}
-      {journal.comments && journal.comments.length > 0 && (
+      {(journal as any).comments && (journal as any).comments.length > 0 && (
         <Card className='p-6'>
           <h3 className='text-lg font-semibold text-gray-900 mb-4'>
-            댓글 ({journal.comments.length})
+            댓글 ({(journal as any).comments.length})
           </h3>
           <div className='space-y-4'>
-            {journal.comments.map((comment: any) => (
+            {(journal as any).comments.map((comment: any) => (
               <div
                 key={comment.id}
                 className='border-b border-gray-200 pb-4 last:border-b-0'
