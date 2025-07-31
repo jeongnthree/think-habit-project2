@@ -1,7 +1,7 @@
 [build]
   command = "npm run build"
   publish = ".next"
-
+  
 [build.environment]
   NODE_VERSION = "18"
   NEXT_PUBLIC_SUPABASE_URL = "https://gmvqcycnppuzixugzxvy.supabase.co"
@@ -28,6 +28,7 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
+# 기존 리다이렉트
 [[redirects]]
   from = "/download"
   to = "/downloads"
