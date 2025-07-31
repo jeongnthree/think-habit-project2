@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 // Students API Route - GET /api/students
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";

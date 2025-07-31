@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import fs from 'fs';
 import { NextRequest, NextResponse } from 'next/server';
 import path from 'path';
