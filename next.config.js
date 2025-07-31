@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Vercel 및 Netlify 배포 최적화  
-  output: 'standalone',
+  // Netlify 배포를 위해 output 설정 제거
+  // output: 'standalone',
   
   // 기본 설정
   reactStrictMode: true,
@@ -21,7 +21,7 @@ const nextConfig = {
 
   // 환경 변수
   env: {
-    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL || 'https://생각습관.com',
+    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL || 'https://think-habit.com',
   },
   
   // Netlify 배포를 위한 추가 설정
