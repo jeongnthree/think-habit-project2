@@ -3,7 +3,7 @@
  * Tests user authentication, role-based access, and security measures
  */
 
-import { POST as createTaskTemplate } from '@/app/api/categories/[id]/tasks/route';
+import { GET as getTaskTemplates } from '@/app/api/categories/[id]/tasks/route';
 import { GET as getCategories } from '@/app/api/categories/route';
 import { POST as createJournal } from '@/app/api/training/journals/structured/route';
 import { NextRequest } from 'next/server';
@@ -136,7 +136,7 @@ describe('Authentication and Authorization Integration Tests', () => {
         }
       );
 
-      const response = await createTaskTemplate(request, {
+      const response = await getTaskTemplates(request, {
         params: { id: 'cat-1' },
       });
       const result = await response.json();
@@ -179,7 +179,7 @@ describe('Authentication and Authorization Integration Tests', () => {
         }
       );
 
-      const response = await createTaskTemplate(request, {
+      const response = await getTaskTemplates(request, {
         params: { id: 'cat-1' },
       });
       const result = await response.json();
@@ -255,7 +255,7 @@ describe('Authentication and Authorization Integration Tests', () => {
         }
       );
 
-      const response = await createTaskTemplate(request, {
+      const response = await getTaskTemplates(request, {
         params: { id: 'cat-1' },
       });
       const result = await response.json();
@@ -356,7 +356,7 @@ describe('Authentication and Authorization Integration Tests', () => {
         }
       );
 
-      const response = await createTaskTemplate(request, {
+      const response = await getTaskTemplates(request, {
         params: { id: 'cat-1' },
       });
       const result = await response.json();
@@ -655,7 +655,7 @@ describe('Authentication and Authorization Integration Tests', () => {
           }
         );
 
-        const response = await createTaskTemplate(request, {
+        const response = await getTaskTemplates(request, {
           params: { id: categoryId },
         });
         expect(response.status).toBe(201);

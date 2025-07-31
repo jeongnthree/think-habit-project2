@@ -64,6 +64,7 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
 interface SkeletonProps {
   className?: string;
   animate?: boolean;
+  'data-testid'?: string;
 }
 
 export const Skeleton: React.FC<SkeletonProps> = ({

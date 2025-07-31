@@ -72,7 +72,7 @@ export interface CategoryResponse {
 }
 
 export interface BulkAssignmentProps {
-  students: UserProfile[];
+  students: import('./database').UserProfile[];
   categories: CategoryResponse[];
   onSubmit: (data: BulkAssignmentData) => void;
   onCancel: () => void;

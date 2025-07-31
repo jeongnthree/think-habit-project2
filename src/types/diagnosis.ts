@@ -46,6 +46,7 @@ export interface DiagnosticQuestion {
   labels?: string[];
   // 공통 속성
   help_text?: string;
+  section_title?: string;
 }
 
 export interface DiagnosticSession {
@@ -83,4 +84,17 @@ export interface DiagnosticResults {
   improvements: string[];
   recommendations: string[];
   completedAt: string;
+}
+
+export interface CurrentQuestion {
+  id: string;
+  text: string;
+  category: string;
+  type: 'two-stage' | 'two_stage_rating' | 'scale' | 'multiple-choice' | 'boolean' | 'text';
+  options?: string[];
+  required: boolean;
+  two_stage_config?: TwoStageRatingConfig;
+  scale?: number;
+  labels?: string[];
+  help_text?: string;
 }

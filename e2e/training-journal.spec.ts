@@ -212,7 +212,7 @@ test.describe('Training Journal System', () => {
       await page.goto('/training/journal/new/structured?categoryId=cat-1');
 
       // Complete first task
-      const firstTaskCheckbox = page.getByLabelText('1. 기사 요약하기');
+      const firstTaskCheckbox = page.getByLabel('1. 기사 요약하기');
       await firstTaskCheckbox.click();
 
       // Should show confirmation modal
@@ -258,7 +258,7 @@ test.describe('Training Journal System', () => {
       await titleInput.fill('비판적 사고 훈련 일지');
 
       // Complete at least one task
-      const firstTaskCheckbox = page.getByLabelText('1. 기사 요약하기');
+      const firstTaskCheckbox = page.getByLabel('1. 기사 요약하기');
       await firstTaskCheckbox.click();
       await page.getByText('완료').click();
 
@@ -506,7 +506,7 @@ test.describe('Training Journal System', () => {
       const titleInput = page.getByPlaceholder('일지 제목을 입력하세요');
       await titleInput.fill('테스트 일지');
 
-      const firstTaskCheckbox = page.getByLabelText('1. 기사 요약하기');
+      const firstTaskCheckbox = page.getByLabel('1. 기사 요약하기');
       await firstTaskCheckbox.click();
       await page.getByText('완료').click();
 
@@ -576,16 +576,16 @@ test.describe('Training Journal System', () => {
       await page.goto('/training/journals/journal-1/edit');
 
       // Should load existing data
-      await expect(page.getByDisplayValue('편집 테스트 일지')).toBeVisible();
-      await expect(page.getByDisplayValue('기존 성찰 내용')).toBeVisible();
+      await expect(page.locator(`input[value="편집 테스트 일지"]`)).toBeVisible();
+      await expect(page.locator(`input[value="기존 성찰 내용"]`)).toBeVisible();
 
       // Edit title
-      const titleInput = page.getByDisplayValue('편집 테스트 일지');
+      const titleInput = page.locator(`input[value="편집 테스트 일지"]`);
       await titleInput.clear();
       await titleInput.fill('수정된 일지 제목');
 
       // Edit reflection
-      const reflectionTextarea = page.getByDisplayValue('기존 성찰 내용');
+      const reflectionTextarea = page.locator(`input[value="기존 성찰 내용"]`);
       await reflectionTextarea.clear();
       await reflectionTextarea.fill('수정된 성찰 내용');
 
@@ -602,7 +602,7 @@ test.describe('Training Journal System', () => {
       await page.goto('/training/journals/journal-1/edit');
 
       // Make changes
-      const titleInput = page.getByDisplayValue('편집 테스트 일지');
+      const titleInput = page.locator(`input[value="편집 테스트 일지"]`);
       await titleInput.clear();
       await titleInput.fill('변경된 제목');
 
@@ -827,7 +827,7 @@ test.describe('Training Journal System', () => {
       const titleInput = page.getByPlaceholder('일지 제목을 입력하세요');
       await titleInput.fill('실시간 업데이트 테스트');
 
-      const firstTaskCheckbox = page.getByLabelText('1. 기사 요약하기');
+      const firstTaskCheckbox = page.getByLabel('1. 기사 요약하기');
       await firstTaskCheckbox.click();
       await page.getByText('완료').click();
 
@@ -858,7 +858,7 @@ test.describe('Training Journal System', () => {
       const titleInput = page.getByPlaceholder('일지 제목을 입력하세요');
       await titleInput.fill('테스트 일지');
 
-      const firstTaskCheckbox = page.getByLabelText('1. 기사 요약하기');
+      const firstTaskCheckbox = page.getByLabel('1. 기사 요약하기');
       await firstTaskCheckbox.click();
       await page.getByText('완료').click();
 
@@ -909,7 +909,7 @@ test.describe('Training Journal System', () => {
       const titleInput = page.getByPlaceholder('일지 제목을 입력하세요');
       await titleInput.fill('수정된 일지');
 
-      const firstTaskCheckbox = page.getByLabelText('1. 기사 요약하기');
+      const firstTaskCheckbox = page.getByLabel('1. 기사 요약하기');
       await firstTaskCheckbox.click();
       await page.getByText('완료').click();
 
@@ -975,7 +975,7 @@ test.describe('Training Journal System', () => {
       const titleInput = page.getByPlaceholder('일지 제목을 입력하세요');
       await titleInput.fill('세션 만료 테스트');
 
-      const firstTaskCheckbox = page.getByLabelText('1. 기사 요약하기');
+      const firstTaskCheckbox = page.getByLabel('1. 기사 요약하기');
       await firstTaskCheckbox.click();
       await page.getByText('완료').click();
 

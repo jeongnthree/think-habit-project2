@@ -73,7 +73,7 @@ describe('API Endpoints Integration Tests', () => {
   describe('Journal Creation API', () => {
     it('should handle structured journal creation request', async () => {
       // Mock the API route handler
-      const mockHandler = jest.fn().mockResolvedValue(
+      const mockHandler = jest.fn().mockImplementation((request: NextRequest) => Promise.resolve(
         new Response(
           JSON.stringify({
             success: true,
@@ -87,7 +87,7 @@ describe('API Endpoints Integration Tests', () => {
             headers: { 'Content-Type': 'application/json' },
           }
         )
-      );
+      ));
 
       const journalData = {
         title: 'Integration Test Journal',
@@ -137,7 +137,7 @@ describe('API Endpoints Integration Tests', () => {
 
       require('@/lib/supabase/server').createClient.mockReturnValue(mockClient);
 
-      const mockHandler = jest.fn().mockResolvedValue(
+      const mockHandler = jest.fn().mockImplementation((request: NextRequest) => Promise.resolve(
         new Response(
           JSON.stringify({
             error: '인증이 필요합니다',
@@ -147,7 +147,7 @@ describe('API Endpoints Integration Tests', () => {
             headers: { 'Content-Type': 'application/json' },
           }
         )
-      );
+      ));
 
       const journalData = {
         title: 'Unauthorized Journal',
@@ -183,7 +183,7 @@ describe('API Endpoints Integration Tests', () => {
         }
       );
 
-      const mockHandler = jest.fn().mockResolvedValue(
+      const mockHandler = jest.fn().mockImplementation((request: NextRequest) => Promise.resolve(
         new Response(
           JSON.stringify({
             error: '입력 데이터가 올바르지 않습니다',
@@ -196,7 +196,7 @@ describe('API Endpoints Integration Tests', () => {
             headers: { 'Content-Type': 'application/json' },
           }
         )
-      );
+      ));
 
       const invalidData = {
         title: '',
@@ -225,7 +225,7 @@ describe('API Endpoints Integration Tests', () => {
 
   describe('Progress Tracking API', () => {
     it('should retrieve progress data', async () => {
-      const mockHandler = jest.fn().mockResolvedValue(
+      const mockHandler = jest.fn().mockImplementation((request: NextRequest) => Promise.resolve(
         new Response(
           JSON.stringify({
             currentWeek: {
@@ -242,7 +242,7 @@ describe('API Endpoints Integration Tests', () => {
             headers: { 'Content-Type': 'application/json' },
           }
         )
-      );
+      ));
 
       const url = new URL('http://localhost/api/training/progress');
       url.searchParams.set('userId', 'test-user-1');
@@ -259,7 +259,7 @@ describe('API Endpoints Integration Tests', () => {
     });
 
     it('should update progress after journal creation', async () => {
-      const mockHandler = jest.fn().mockResolvedValue(
+      const mockHandler = jest.fn().mockImplementation((request: NextRequest) => Promise.resolve(
         new Response(
           JSON.stringify({
             success: true,
@@ -273,7 +273,7 @@ describe('API Endpoints Integration Tests', () => {
             headers: { 'Content-Type': 'application/json' },
           }
         )
-      );
+      ));
 
       const request = new NextRequest(
         'http://localhost/api/training/progress',
@@ -317,7 +317,7 @@ describe('API Endpoints Integration Tests', () => {
 
       require('@/lib/supabase/server').createClient.mockReturnValue(mockClient);
 
-      const mockHandler = jest.fn().mockResolvedValue(
+      const mockHandler = jest.fn().mockImplementation((request: NextRequest) => Promise.resolve(
         new Response(
           JSON.stringify({
             error: '일지 저장에 실패했습니다',
@@ -327,7 +327,7 @@ describe('API Endpoints Integration Tests', () => {
             headers: { 'Content-Type': 'application/json' },
           }
         )
-      );
+      ));
 
       const journalData = {
         title: 'Database Error Test',
@@ -386,7 +386,7 @@ describe('API Endpoints Integration Tests', () => {
 
       require('@/lib/supabase/server').createClient.mockReturnValue(mockClient);
 
-      const mockHandler = jest.fn().mockResolvedValue(
+      const mockHandler = jest.fn().mockImplementation((request: NextRequest) => Promise.resolve(
         new Response(
           JSON.stringify({
             success: true,
@@ -397,7 +397,7 @@ describe('API Endpoints Integration Tests', () => {
             headers: { 'Content-Type': 'application/json' },
           }
         )
-      );
+      ));
 
       const journalData = {
         title: 'Consistency Test',
@@ -432,7 +432,7 @@ describe('API Endpoints Integration Tests', () => {
 
   describe('Error Handling and Recovery', () => {
     it('should handle malformed JSON requests', async () => {
-      const mockHandler = jest.fn().mockResolvedValue(
+      const mockHandler = jest.fn().mockImplementation((request: NextRequest) => Promise.resolve(
         new Response(
           JSON.stringify({
             error: '잘못된 요청 형식입니다',
@@ -442,7 +442,7 @@ describe('API Endpoints Integration Tests', () => {
             headers: { 'Content-Type': 'application/json' },
           }
         )
-      );
+      ));
 
       const request = new NextRequest(
         'http://localhost/api/training/journals/structured',
@@ -463,7 +463,7 @@ describe('API Endpoints Integration Tests', () => {
     });
 
     it('should handle missing required headers', async () => {
-      const mockHandler = jest.fn().mockResolvedValue(
+      const mockHandler = jest.fn().mockImplementation((request: NextRequest) => Promise.resolve(
         new Response(
           JSON.stringify({
             error: '잘못된 요청 형식입니다',
@@ -473,7 +473,7 @@ describe('API Endpoints Integration Tests', () => {
             headers: { 'Content-Type': 'application/json' },
           }
         )
-      );
+      ));
 
       const request = new NextRequest(
         'http://localhost/api/training/journals/structured',
@@ -492,7 +492,7 @@ describe('API Endpoints Integration Tests', () => {
     });
 
     it('should handle rate limiting', async () => {
-      const mockHandler = jest.fn().mockResolvedValue(
+      const mockHandler = jest.fn().mockImplementation((request: NextRequest) => Promise.resolve(
         new Response(
           JSON.stringify({
             error: '요청이 너무 많습니다. 잠시 후 다시 시도해주세요.',
@@ -505,7 +505,7 @@ describe('API Endpoints Integration Tests', () => {
             },
           }
         )
-      );
+      ));
 
       const request = new NextRequest(
         'http://localhost/api/training/journals/structured',
@@ -535,7 +535,7 @@ describe('API Endpoints Integration Tests', () => {
 
   describe('Performance and Optimization', () => {
     it('should handle concurrent requests efficiently', async () => {
-      const mockHandler = jest.fn().mockResolvedValue(
+      const mockHandler = jest.fn().mockImplementation((request: NextRequest) => Promise.resolve(
         new Response(
           JSON.stringify({
             success: true,
@@ -546,7 +546,7 @@ describe('API Endpoints Integration Tests', () => {
             headers: { 'Content-Type': 'application/json' },
           }
         )
-      );
+      ));
 
       const journalData = {
         title: 'Concurrent Test',
@@ -599,7 +599,7 @@ describe('API Endpoints Integration Tests', () => {
 
       require('@/lib/supabase/server').createClient.mockReturnValue(mockClient);
 
-      const mockHandler = jest.fn().mockResolvedValue(
+      const mockHandler = jest.fn().mockImplementation((request: NextRequest) => Promise.resolve(
         new Response(
           JSON.stringify({
             success: true,
@@ -610,7 +610,7 @@ describe('API Endpoints Integration Tests', () => {
             headers: { 'Content-Type': 'application/json' },
           }
         )
-      );
+      ));
 
       const journalData = {
         title: 'Query Optimization Test',

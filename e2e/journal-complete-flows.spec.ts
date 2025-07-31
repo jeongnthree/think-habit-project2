@@ -196,7 +196,7 @@ test.describe('Complete Journal Creation Flows', () => {
       await titleInput.fill('완전한 비판적 사고 일지');
 
       // Complete first task (required)
-      const firstTaskCheckbox = page.getByLabelText('1. 기사 요약하기');
+      const firstTaskCheckbox = page.getByLabel('1. 기사 요약하기');
       await firstTaskCheckbox.click();
 
       // Should show completion confirmation
@@ -217,7 +217,7 @@ test.describe('Complete Journal Creation Flows', () => {
       await expect(page.getByText('완료: 1/3 태스크')).toBeVisible();
 
       // Complete second task (required)
-      const secondTaskCheckbox = page.getByLabelText('2. 편향성 분석하기');
+      const secondTaskCheckbox = page.getByLabel('2. 편향성 분석하기');
       await secondTaskCheckbox.click();
       await page.getByText('완료').click();
 
@@ -231,7 +231,7 @@ test.describe('Complete Journal Creation Flows', () => {
       await expect(page.getByText('완료: 2/3 태스크')).toBeVisible();
 
       // Complete optional third task
-      const thirdTaskCheckbox = page.getByLabelText('3. 대안적 관점 제시하기');
+      const thirdTaskCheckbox = page.getByLabel('3. 대안적 관점 제시하기');
       await thirdTaskCheckbox.click();
       await page.getByText('완료').click();
 
@@ -288,7 +288,7 @@ test.describe('Complete Journal Creation Flows', () => {
       await titleInput.fill('임시저장된 일지');
 
       // Complete only one task
-      const firstTaskCheckbox = page.getByLabelText('1. 기사 요약하기');
+      const firstTaskCheckbox = page.getByLabel('1. 기사 요약하기');
       await firstTaskCheckbox.click();
       await page.getByText('완료').click();
 
@@ -328,7 +328,7 @@ test.describe('Complete Journal Creation Flows', () => {
       ).toBeVisible();
 
       // Complete one required task
-      const firstTaskCheckbox = page.getByLabelText('1. 기사 요약하기');
+      const firstTaskCheckbox = page.getByLabel('1. 기사 요약하기');
       await firstTaskCheckbox.click();
       await page.getByText('완료').click();
 
@@ -637,7 +637,7 @@ test.describe('Complete Journal Creation Flows', () => {
       const titleInput = page.getByPlaceholder('일지 제목을 입력하세요');
       await expect(titleInput).toHaveAttribute('aria-label', '일지 제목');
 
-      const firstTaskCheckbox = page.getByLabelText('1. 기사 요약하기');
+      const firstTaskCheckbox = page.getByLabel('1. 기사 요약하기');
       await expect(firstTaskCheckbox).toHaveAttribute('role', 'checkbox');
 
       const progressIndicator = page.getByText('훈련 진행률');
@@ -654,7 +654,7 @@ test.describe('Complete Journal Creation Flows', () => {
       await expect(progressRegion).toBeVisible();
 
       // Complete a task and verify announcement
-      const firstTaskCheckbox = page.getByLabelText('1. 기사 요약하기');
+      const firstTaskCheckbox = page.getByLabel('1. 기사 요약하기');
       await firstTaskCheckbox.click();
       await page.getByText('완료').click();
 
@@ -686,7 +686,7 @@ test.describe('Complete Journal Creation Flows', () => {
       const titleInput = page.getByPlaceholder('일지 제목을 입력하세요');
       await titleInput.fill('로딩 테스트 일지');
 
-      const firstTaskCheckbox = page.getByLabelText('1. 기사 요약하기');
+      const firstTaskCheckbox = page.getByLabel('1. 기사 요약하기');
       await firstTaskCheckbox.click();
       await page.getByText('완료').click();
 
@@ -745,7 +745,7 @@ test.describe('Complete Journal Creation Flows', () => {
       await titleInput.fill('모바일 테스트');
 
       // Checkboxes should be large enough for touch
-      const firstTaskCheckbox = page.getByLabelText('1. 기사 요약하기');
+      const firstTaskCheckbox = page.getByLabel('1. 기사 요약하기');
       const checkboxSize = await firstTaskCheckbox.boundingBox();
       expect(checkboxSize?.width).toBeGreaterThan(44); // Minimum touch target size
       expect(checkboxSize?.height).toBeGreaterThan(44);

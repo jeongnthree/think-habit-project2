@@ -13,7 +13,7 @@ export interface AuthUser {
  */
 export async function getCurrentUser(): Promise<AuthUser | null> {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
 
     const {
       data: { user },
@@ -90,7 +90,7 @@ export async function getAuthUserFromRequest(
   request: NextRequest
 ): Promise<AuthUser | null> {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
 
     const {
       data: { user },

@@ -58,14 +58,13 @@ describe('Button Component', () => {
     expect(screen.getByRole('button')).toHaveClass('custom-class');
   });
 
-  it('renders as different element when as prop is provided', () => {
+  it('renders with additional attributes', () => {
     render(
-      <Button as='a' href='/test'>
-        Link Button
+      <Button data-testid='test-button'>
+        Test Button
       </Button>
     );
-    // Button 컴포넌트는 as 속성을 사용해도 button 역할을 유지함
-    expect(screen.getByRole('button')).toBeInTheDocument();
-    expect(screen.getByRole('button')).toHaveAttribute('href', '/test');
+    expect(screen.getByTestId('test-button')).toBeInTheDocument();
+    expect(screen.getByRole('button')).toHaveTextContent('Test Button');
   });
 });

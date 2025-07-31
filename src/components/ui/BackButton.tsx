@@ -8,7 +8,7 @@ interface BackButtonProps {
   href?: string;
   label?: string;
   className?: string;
-  variant?: 'default' | 'outline' | 'ghost';
+  variant?: 'primary' | 'outline' | 'ghost';
   onClick?: () => void;
 }
 

@@ -703,7 +703,7 @@ function analyzeSeasonalPattern(trends: ProgressTrend[]): {
     if (trend.monthName && !monthlyData[trend.monthName]) {
       monthlyData[trend.monthName] = [];
     }
-    if (trend.monthName) {
+    if (trend.monthName && monthlyData[trend.monthName]) {
       monthlyData[trend.monthName].push(trend.rate);
     }
   });

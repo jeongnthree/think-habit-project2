@@ -511,7 +511,7 @@ export function withPerformanceMonitoring<T>(
     })
     .catch(error => {
       const duration = Date.now() - startTime;
-      logError(error, { requestId, endpoint: operationName, duration });
+      logError(error, { requestId, endpoint: operationName });
       throw error;
     });
 }

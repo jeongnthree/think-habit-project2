@@ -1,6 +1,6 @@
 import { DiagnosticQuestion } from '@/types/diagnosis';
 
-export const mockQuestions: (DiagnosticQuestion & { section_title: string })[] =
+export const mockQuestions: DiagnosticQuestion[] =
   [
     {
       id: 'perfectionism_1',

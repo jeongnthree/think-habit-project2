@@ -317,7 +317,7 @@ export interface TaskTemplateInsert {
   category_id: string;
   title: string;
   description?: string | null;
-  order_index?: number;
+  order_index: number;
   is_required?: boolean;
   difficulty_level?: DifficultyLevel;
   estimated_minutes?: number | null;
@@ -378,8 +378,10 @@ export interface JournalPhoto {
   order_index: number;
   file_size: number | null;
   file_type: string | null;
-  width: number | null;
-  height: number | null;
+  width?: number | null;
+  height?: number | null;
+  ocr_text?: string | null;
+  auto_tags?: string[] | null;
   created_at: string;
 }
 
@@ -603,17 +605,6 @@ export interface TaskTemplateUpdateRequest {
   estimated_minutes?: number;
 }
 
-export interface StructuredJournalCreateRequest {
-  category_id: string;
-  title: string;
-  task_completions: {
-    task_template_id: string;
-    is_completed: boolean;
-    completion_note?: string;
-  }[];
-  reflection?: string;
-  is_public?: boolean;
-}
 
 export interface PhotoJournalCreateRequest {
   category_id: string;
@@ -648,6 +639,10 @@ export interface StudentWithAssignments extends UserProfile {
 export interface JournalWithDetails extends Journal {
   category: Category;
   student: UserProfile;
+  task_completions?: TaskCompletion[];
+  journal_photos?: JournalPhoto[];
+  attachments?: any[];
+  deleted_by?: string | null;
   comments_count: number;
 }
 
@@ -753,27 +748,23 @@ export interface PhotoUploadRequest {
   caption?: string;
 }
 
-export interface PhotoJournalCreateRequest {
-  category_id: string;
-  title: string;
-  content: string;
-  photos: PhotoUploadRequest[];
-  voice_memo?: File;
-  is_public?: boolean;
-  journal_type: 'photo' | 'mixed';
-}
 
 export interface StructuredJournalCreateRequest {
   category_id: string;
   title: string;
-  responses: {
+  task_completions: {
+    task_template_id: string;
+    is_completed: boolean;
+    completion_note?: string;
+  }[];
+  responses?: {
     question_id: string;
     question: string;
     answer: string;
   }[];
-  reflection: string;
+  reflection?: string;
   is_public?: boolean;
-  journal_type: 'structured';
+  journal_type?: 'structured';
 }
 
 // API 응답 타입

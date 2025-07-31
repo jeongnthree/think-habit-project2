@@ -84,7 +84,7 @@ export function withApiHandler<T = any>(
       }
 
       // Initialize Supabase client
-      const supabase = createClient();
+      const supabase = await createClient();
       let user = null;
 
       // Authentication

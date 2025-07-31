@@ -406,7 +406,7 @@ describe('Journal Validation', () => {
       expect(result.success).toBe(true);
       expect(result.data?.title).toBe('제목');
       expect(result.data?.reflection).toBe('성찰');
-      expect(result.data?.task_completions[0].completion_note).toBe('메모');
+      expect(result.data?.task_completions?.[0]?.completion_note).toBe('메모');
     });
   });
 });

@@ -281,7 +281,7 @@ export function useOfflineQueue<T>(queueKey: string) {
 
       for (let i = 0; i < queue.length; i++) {
         try {
-          const success = await processor(queue[i]);
+          const success = await processor(queue[i]!);
           if (success) {
             processedIndices.push(i);
           }
