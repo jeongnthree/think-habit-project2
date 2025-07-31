@@ -23,7 +23,7 @@ export async function GET(
   { params }: { params: { categoryId: string; taskId: string } }
 ) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
 
     // 사용자 인증 확인
     const {
@@ -90,7 +90,7 @@ export async function PUT(
   { params }: { params: { categoryId: string; taskId: string } }
 ) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
 
     // 사용자 인증 확인
     const {
@@ -191,7 +191,7 @@ export async function DELETE(
   { params }: { params: { categoryId: string; taskId: string } }
 ) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
 
     // 사용자 인증 확인
     const {

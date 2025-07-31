@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Supabase 클라이언트 생성
-    const supabase = createClient();
+    const supabase = await createClient();
 
     const syncResults = [];
 
@@ -323,7 +323,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
 
     // 마지막 동기화 이후 변경된 일지 확인
     try {

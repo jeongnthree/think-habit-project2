@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 // GET /api/diagnosis/templates - 진단 템플릿 목록 조회
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
 
     const category = searchParams.get('category');
@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
 // POST /api/diagnosis/templates - 새 진단 템플릿 생성 (관리자 전용)
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const body = await request.json();
 
     const {

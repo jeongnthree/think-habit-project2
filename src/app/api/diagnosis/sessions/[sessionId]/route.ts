@@ -7,7 +7,7 @@ export async function GET(
   { params }: { params: { sessionId: string } }
 ) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { sessionId } = params;
 
     // 세션 정보 조회
@@ -62,7 +62,7 @@ export async function PUT(
   { params }: { params: { sessionId: string } }
 ) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { sessionId } = params;
     const body = await request.json();
 
@@ -123,7 +123,7 @@ export async function DELETE(
   { params }: { params: { sessionId: string } }
 ) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { sessionId } = params;
 
     // 관련 응답 먼저 삭제

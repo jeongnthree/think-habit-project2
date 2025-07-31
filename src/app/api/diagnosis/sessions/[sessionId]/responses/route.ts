@@ -10,7 +10,7 @@ export async function POST(
   { params }: { params: { sessionId: string } }
 ) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { sessionId } = params;
 
     // 사용자 인증 확인

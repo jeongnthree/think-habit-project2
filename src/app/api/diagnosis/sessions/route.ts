@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 // GET /api/diagnosis/sessions - 사용자의 진단 세션 목록 조회
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
 
     const userId = searchParams.get('userId');
@@ -62,7 +62,7 @@ export async function GET(request: NextRequest) {
 // POST /api/diagnosis/sessions - 새 진단 세션 시작
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const body = await request.json();
 
     const { templateId, userId } = body;

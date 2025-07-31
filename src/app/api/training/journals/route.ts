@@ -10,7 +10,7 @@ const CACHE_HEADERS = {
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
 
     // Extract filter parameters
