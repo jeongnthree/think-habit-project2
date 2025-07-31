@@ -422,7 +422,7 @@ export function DiagnosticSession({
           </div>
         );
 
-      case 'multiple_choice':
+      case 'multiple-choice':
         return (
           <div className='space-y-2'>
             {currentQuestion.options?.map((option, index) => (
