@@ -24,8 +24,9 @@ console.log('🚀 Supabase 클라이언트 초기화:', {
   isValidUrl: isValidUrl(supabaseUrl),
 });
 
-// localStorage 사용 가능 여부 확인
+// localStorage 사용 가능 여부 확인 (클라이언트에서만)
 const isLocalStorageAvailable = () => {
+  if (typeof window === 'undefined') return false;
   try {
     const test = '__localStorage_test__';
     window.localStorage.setItem(test, test);
@@ -45,7 +46,7 @@ export const supabase = createClient<Database>(
     auth: {
       persistSession: isLocalStorageAvailable(),
       storageKey: 'think-habit-auth',
-      storage: isLocalStorageAvailable() ? window.localStorage : undefined,
+      storage: isLocalStorageAvailable() ? (typeof window !== 'undefined' ? window.localStorage : undefined) : undefined,
     },
   }
 );
