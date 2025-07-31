@@ -191,7 +191,7 @@ export default function BulkAssignmentForm({
                       disabled={isLoading}
                     />
                     <span className="text-sm">
-                      {student.name} ({student.member_type})
+                      {student.full_name || student.email} ({student.role})
                     </span>
                   </label>
                 ))}
